@@ -4,8 +4,10 @@ import { createMainPage } from './components/main';
 import { renderRegisterPage } from './components/views/register/registerPage'
 import { renderEnterPage } from './components/views/enter/enterPage'
 import { renderTextbookPage } from './components/views/textbook/textbookPage'
+import { renderAudiocallPage } from './components/views/audiocall/audiocallPage'
 
 createMainPage();
 renderRegisterPage()
 renderEnterPage()
 renderTextbookPage()
+renderAudiocallPage()

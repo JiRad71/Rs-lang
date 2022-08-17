@@ -28,7 +28,7 @@ a {
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
-  line-height: 50px;
+  line-height: 30px;
   color: #ffffff;
   text-decoration: none;
 }
@@ -60,7 +60,7 @@ a:hover {
 .header {
   height: 70px;
   width: 100%;
-  background: #0f0f0f;
+  background: #202020;
 }
 
 .header .wrapper {
@@ -174,7 +174,7 @@ main a {
 
 .heading {
   margin: 30px auto;
-  width: 100px;
+  width: 300px;
   text-align: center;
 }
 
@@ -378,9 +378,63 @@ main a {
   background-color: #CDCDCD;
 }
 
+/* аудиовызов */
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+.voice {
+  width: 100px;
+  height: 100px;
+  background-image: url(../asset/Speaker_Icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(30%) sepia(20%) saturate(13%) hue-rotate(14deg) brightness(97%) contrast(88%);
+  cursor: pointer;
+  transition: .5s;
+}
+
+.voice:hover {
+  filter: invert(0%) sepia(0%) saturate(7489%) hue-rotate(296deg) brightness(94%) contrast(103%);
+}
+
+.words-to-guess {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.word-to-guess {
+  padding: 10px;
+  transition: .5s;
+}
+
+.word-to-guess:hover {
+  background-color: #bababa;
+}
+
+.next-word {
+  background: transparent;
+  border: 1px border #cdcdcd;
+  padding: 10px 20px;
+  box-shadow: 5px 5px 2px 1px rgba(56, 56, 56, 0.2);
+  cursor: pointer;
+}
+
+.next-word:hover {
+  box-shadow: none;
+}
+
 .footer {
   max-width: 100%;
-  background-color: #0f0f0f;
+  background-color: #202020;
 }
 
 .footer .wrapper {
