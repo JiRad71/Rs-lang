@@ -5,8 +5,10 @@
     "module": "es6",
     "target": "es5",
     "strict": true,
-    "moduleResolution":"node",  
+    "moduleResolution": "node",
     "allowJs": true
   },
-  "files": ["src/index.ts", "module.d.ts"]
+  "files": [
+    "src/index.ts"
+  ]
 }
