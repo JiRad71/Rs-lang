@@ -60,7 +60,7 @@ a:hover {
 .header {
   height: 70px;
   width: 100%;
-  background: #000000;
+  background: #0f0f0f;
 }
 
 .header .wrapper {
@@ -184,16 +184,17 @@ main a {
   align-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
-  margin: 0 auto;
+  margin: 30px auto;
 
 }
 
 .words .item {
   display: flex;
-  max-width: 330px;
+  min-width: 330px;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
+  border: 1px solid #cfcfcf;
   border-radius: 22px;
 }
 
@@ -212,7 +213,7 @@ main a {
 }
 
 .item__word-eng {
-  color: green;
+  color: #008000;
   font-weight: bold;
 }
 
@@ -268,37 +269,118 @@ main a {
   width: 50%;
   height: 100%;
   border-radius: 0 0 0 20px;
-  background-color: green;
+  background-color: #c9c9c9;
   font-weight: bold;
   cursor: pointer;
+  border: none;
+  color: #ffffff;
 }
 
 .learned {
   width: 50%;
   height: 100%;
   border-radius: 0 0 20px 0;
-  background-color: yellow;
+  background-color: #3e3e3e;
   font-weight: bold;
   cursor: pointer;
+  border: none;
+  color: #ffffff;
+}
+
+.pagination {
+  display: grid;
+  grid-template-columns: repeat(5, 52px);
+  column-gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.button_start,
+.button_left,
+.button_active,
+.buttom_right,
+.buttom_end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 13px 11px;
+  width: 52px;
+  height: 52px;
+  box-sizing: border-box;
+  transition: 0.5s;
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 115%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.button_active {
+  background: #CDCDCD;
+}
+
+.button_start,
+.button_left,
+.buttom_right,
+.buttom_end {
+  border: 2px solid #CDCDCD;
+}
+
+.button_start:hover,
+.button_left:hover,
+.buttom_right:hover,
+.buttom_end:hover {
+  background: #CDCDCD;
+  cursor: pointer;
+}
+
+.button_start.none_active,
+.button_left.none_active,
+.buttom_right.none_active,
+.buttom_end.none_active {
+  border: 2px solid #CDCDCD;
+  color: #CDCDCD;
+}
+
+.button_start.none_active:hover,
+.button_left.none_active:hover,
+.buttom_right.none_active:hover,
+.buttom_end.none_active:hover {
+  border: 2px solid #CDCDCD;
+  color: #CDCDCD;
+  background-color: transparent;
+  cursor: auto;
 }
 
 .chapters {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   padding: 5px;
-  margin: 0 auto;
+  margin: 30px auto;
   justify-content: center;
+  line-height: 30px;
 }
 
 .chapter {
-  border: 1px solid black;
+  border: 1px solid #CDCDCD;
+  border-radius: 10px;
   cursor: pointer;
   padding: 5px;
+  transition: .5s;
+}
+
+.chapter:hover {
+  background-color: #CDCDCD;
 }
 
 .footer {
   max-width: 100%;
-  background-color: #000000;
+  background-color: #0f0f0f;
 }
 
 .footer .wrapper {

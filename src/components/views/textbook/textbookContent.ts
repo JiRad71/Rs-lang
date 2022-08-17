@@ -5,7 +5,7 @@ export const renderTextbookContent = (): string => `
   <div class="item">
     <div class="wrapper">
       <div class="item__img">
-        <img src="asset/afraid.jpg" alt="">
+        <img src="../../../public/img/afraid.jpg" alt="">
       </div>
       <p class="item__word">
         <span class="item__word-eng">afraid</span>
@@ -32,7 +32,7 @@ export const renderTextbookContent = (): string => `
   <div class="item">
     <div class="wrapper">
       <div class="item__img">
-        <img src="asset/afraid.jpg" alt="">
+        <img src="../../../public/img/afraid.jpg" alt="">
       </div>
       <p class="item__word">
         <span class="item__word-eng">afraid</span>
@@ -59,7 +59,7 @@ export const renderTextbookContent = (): string => `
   <div class="item">
     <div class="wrapper">
       <div class="item__img">
-        <img src="asset/afraid.jpg" alt="">
+        <img src="../../../public/img/afraid.jpg" alt="">
       </div>
       <p class="item__word">
         <span class="item__word-eng">afraid</span>
@@ -86,7 +86,7 @@ export const renderTextbookContent = (): string => `
   <div class="item">
     <div class="wrapper">
       <div class="item__img">
-        <img src="asset/afraid.jpg" alt="">
+        <img src="../../../public/img/afraid.jpg" alt="">
       </div>
       <p class="item__word">
         <span class="item__word-eng">afraid</span>
@@ -113,7 +113,7 @@ export const renderTextbookContent = (): string => `
   <div class="item">
     <div class="wrapper">
       <div class="item__img">
-        <img src="asset/afraid.jpg" alt="">
+        <img src="../../../public/img/afraid.jpg" alt="">
       </div>
       <p class="item__word">
         <span class="item__word-eng">afraid</span>
@@ -139,7 +139,13 @@ export const renderTextbookContent = (): string => `
   </div>
 </div>
 
-<div class="pagination"></div>
+<div class="pagination">
+  <div class="button_start none_active">&lt;&lt;</div>
+  <div class="button_left none_active">&lt;</div>
+  <div class="button_active">1</div>
+  <div class="buttom_right">&gt;</div>
+  <div class="buttom_end">&gt;&gt;</div>
+</div>
 
 <div class="chapters">
   <div class="chapter">Раздел 1</div>
