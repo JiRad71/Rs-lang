@@ -72,7 +72,7 @@ class Authorization extends Component {
       body: JSON.stringify(data),
     });
     return resp;
-  };
+  }
 }
 
 export default Authorization;
