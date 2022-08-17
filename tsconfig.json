@@ -8,5 +8,5 @@
     "moduleResolution":"node",  
     "allowJs": true
   },
-  "files": ["src/index.ts", "module.d.ts"]
+  "files": ["src/index.ts"]
 }
