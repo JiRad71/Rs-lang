@@ -1,4 +1,4 @@
-import Authorization from './app/authorization';
+import Authorization from './app/pages/authorization';
 import './styles/authorization.css';
 import '../node_modules/normalize.css';
 
