@@ -1,4 +1,5 @@
-.statistics-simple {
+.statistics-simple,
+.statistics-term {
   display: flex;
   justify-content: center;
   align-content: space-between;
@@ -9,8 +10,9 @@
 
 .statistics__item {
   display: flex;
+  width: 520px;
   flex-direction: column;
-  padding: 0 30px;
+  padding: 0 30px 30px 30px;
   align-items: center;
   box-shadow: 5px 5px 2px 1px rgb(0 0 255 / 20%);
   border: 1px solid #cfcfcf;
@@ -29,7 +31,7 @@
   display: flex;
   gap: 10px;
   padding: 5px;
-  margin: 30px auto;
+  margin: 30px auto 0 auto;
   justify-content: center;
   line-height: 30px;
 }
@@ -59,14 +61,14 @@
 }
 
 @media (max-width: 950px) {
-  body .statistics {
+  body .wrapper-main .statistics {
     font-size: 20px;
     line-height: 30px;
   }
 }
 
 @media (max-width: 768px) {
-  body .statistics {
+  body .wrapper-main .statistics {
     font-size: 12px;
     line-height: 20px;
   }

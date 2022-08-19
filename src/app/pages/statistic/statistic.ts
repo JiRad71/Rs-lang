@@ -43,6 +43,23 @@ class Statistic extends Component {
     const td11 = new Component(tr6.node, 'td', '', 'Самая длинная серия правильных ответов');
     const td12 = new Component(tr6.node, 'td', '', '0');
 
+
+
+
+
+
+
+    const statisticsTerm = new Component(this.node, 'div', 'statistics-term');
+
+    const staisticsWordsDay = new Component(statisticsTerm.node, 'div', 'ctatistic__words-day statistics__item');
+    const titleH3WodsDay = new Component(staisticsWordsDay.node, 'h3', '', 'Количество новых слов за день');
+    const canvasWordsDay = new Component(staisticsWordsDay.node, 'canvas', 'words-day statistics-canvas');
+
+
+    const staisticsWordsAll = new Component(statisticsTerm.node, 'div', 'staistics__words statistics__item');
+    const titleH3WordsAll = new Component(staisticsWordsAll.node, 'h3', '', 'Всего изучено слов');
+    const canvasWordsAll = new Component(staisticsWordsAll.node, 'canvas', 'words-all statistics-canvas');
+
   }
 }
 
