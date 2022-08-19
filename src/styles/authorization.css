@@ -1,16 +1,13 @@
 .authorization {
-  width: 400px;
-  padding: 40px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #191919;
+  background: #202020;
   text-align: center;
+  height: 85.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .title {
   color: white;
-  text-transform: uppercase;
   font-weight: 500;
 }
 .input {
@@ -35,10 +32,10 @@
 
 }
 .input:focus {
-  background: #3498db;
+  background: #576167;
 }
 .login, .signin {
-  width: 280px;
+  width: 300px;
   border: 0;
   background: none;
   display: block;
