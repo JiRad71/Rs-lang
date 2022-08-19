@@ -1,0 +1,54 @@
+.authorization {
+  background: #202020;
+  text-align: center;
+  height: 85.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  color: white;
+  font-weight: 500;
+}
+.input {
+  width: 280px;
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+
+}
+.input:hover {
+  width: 300px;
+  border-color: #2ecc71;
+  transition: 0.4s;
+
+}
+.input:focus {
+  background: #576167;
+}
+.login, .signin {
+  width: 300px;
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.login:hover, .signin:hover {
+  background: #2ecc71 ;
+}

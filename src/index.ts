@@ -1,13 +1,7 @@
-import './css/style.css';
-import './css/normalise.css';
-import { createMainPage } from './components/main';
-import { renderRegisterPage } from './components/views/register/registerPage'
-import { renderEnterPage } from './components/views/enter/enterPage'
-import { renderTextbookPage } from './components/views/textbook/textbookPage'
-import { renderAudiocallPage } from './components/views/audiocall/audiocallPage'
+import '../node_modules/normalize.css';
+import './styles/authorization.css';
+import './styles/style.css';
+import Controller from './app/controller';
 
-createMainPage();
-renderRegisterPage()
-renderEnterPage()
-renderTextbookPage()
-renderAudiocallPage()
+const controller = new Controller(document.body);
+
