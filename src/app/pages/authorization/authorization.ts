@@ -1,4 +1,5 @@
-import Component from "../common/Component";
+import Component from "../../../common/Component";
+import Footer from "../footer";
 
 interface IUserData {
   email: string,
@@ -8,18 +9,18 @@ interface IUserData {
 class Authorization extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'authorization');
-    const title = new Component(this.node, 'h3', 'title', 'Authorization');
+   
     const form = new Component(this.node, 'form', 'form');
-
+    const title = new Component(form.node, 'h3', 'title', 'Bведите адрес электронной почты и пароль');
     const inputEmail = document.createElement('input');
     inputEmail.className = 'input';
     inputEmail.setAttribute('type', 'email');
-    inputEmail.setAttribute('placeholder', 'email');
+    inputEmail.setAttribute('placeholder', 'Email');
 
     const inputPassword = document.createElement('input');
     inputPassword.className = 'input';
     inputPassword.setAttribute('type', 'password');
-    inputPassword.setAttribute('placeholder', 'password');
+    inputPassword.setAttribute('placeholder', 'Password');
     inputPassword.setAttribute('autocomplete', 'off');
 
     form.node.append(inputEmail, inputPassword);
@@ -59,6 +60,8 @@ class Authorization extends Component {
          window.localStorage.setItem('token', `${resp.token}`); // получаем токен, сохраняем в локал сторэйдж
         });
     };
+
+
 
   }
 

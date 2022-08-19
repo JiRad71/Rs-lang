@@ -1,5 +1,6 @@
-import Authorization from './app/authorization';
-import './styles/authorization.css';
 import '../node_modules/normalize.css';
+import './styles/authorization.css';
+import './styles/style.css';
+import Controller from './app/controller';
 
-const authorization = new Authorization(document.body);
+const controller = new Controller(document.body);
