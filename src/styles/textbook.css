@@ -15,6 +15,7 @@
 }
 
 .words .item {
+  font-size: 16px;
   display: flex;
   width: 410px;
   flex-direction: column;
@@ -26,7 +27,7 @@
 
 .words .item .wrapper {
   display: flex;
-  height: 510px;
+  height: 550px;
   width: 390px;
   flex-direction: column;
   align-items: center;
@@ -41,10 +42,12 @@
 
 .item__img {
   width: 300px;
+  height: 200px;
 }
 
 .item__img img {
   width: 100%;
+  height: 100%;
   border-radius: 10px;
 }
 
