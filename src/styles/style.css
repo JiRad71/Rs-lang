@@ -114,6 +114,12 @@ button:hover {
   margin: 0 auto;
 }
 
+.heading {
+  margin: 30px auto;
+  width: 300px;
+  text-align: center;
+}
+
 .devs {
   margin-bottom: 50px;
 }
