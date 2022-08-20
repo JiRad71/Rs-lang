@@ -65,6 +65,7 @@
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .item__word span {
@@ -86,6 +87,7 @@
 .item__example {
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
 }
 
 .item__explain-eng,
