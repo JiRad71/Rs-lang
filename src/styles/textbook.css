@@ -220,3 +220,52 @@
 .chapter:hover {
   background-color: #CDCDCD;
 }
+
+/* arrows */
+
+.vertical-arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 42px;
+  height: 89px;
+}
+
+.arrow-up,
+.arrow-down {
+  width: 40px;
+  height: 40px;
+  background-color: #4d4d64;
+  opacity: .5;
+  border: none;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.arrow-up:hover,
+.arrow-down:hover {
+  background-color: #8282b9;
+}
+
+.arrow {
+  border: solid rgb(255, 255, 255);
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-bottom: 5px;
+}
+
+/* end arrows */

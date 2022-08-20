@@ -14,8 +14,10 @@ class Controller extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode);
     const header = new Header(parentNode);
+    header.node.setAttribute('id', 'header')
     const wrapperMain = new Component(parentNode, 'div', 'wrapper-main');
     const footer = new Footer(parentNode);
+    footer.node.setAttribute('id', 'footer')
     const main = new MainPage(wrapperMain.node);
 
     header.mainBtn.node.onclick = () => this.replace(wrapperMain, new MainPage(wrapperMain.node));
