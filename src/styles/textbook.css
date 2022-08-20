@@ -27,6 +27,7 @@
 .words .item .wrapper {
   display: flex;
   height: 570px;
+  width: 310px;
   flex-direction: column;
   align-items: center;
   padding: 10px;
@@ -63,6 +64,11 @@
 .item__word {
   display: flex;
   gap: 5px;
+  flex-wrap: wrap;
+}
+
+.item__word span {
+  align-self: center;
 }
 
 .item__speaker {
