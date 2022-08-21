@@ -1,3 +1,7 @@
+.textbook {
+  padding: 0 20px;
+}
+
 .heading {
   margin: 30px auto;
   width: 300px;
@@ -11,19 +15,30 @@
   flex-wrap: wrap;
   gap: 20px;
   margin: 30px auto;
-
 }
 
 .words .item {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 18px;
   display: flex;
-  width: 410px;
-  flex-direction: column;
+  width: 100%;
+  gap: 30px;
   align-items: center;
-  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
+  box-shadow: 5px 5px 2px 1px rgb(0 0 255 / 20%);
   border: 1px solid #cfcfcf;
   border-radius: 22px;
+  padding-right: 20px;
 }
+
+@media (max-width: 768px) {
+  .words .item {
+    gap: 0;
+    flex-direction: column;
+    padding-right: 0;
+    max-width: 500px;
+  }
+}
+
 
 .words .item .wrapper {
   display: flex;
@@ -42,13 +57,39 @@
 
 .item__img {
   width: 300px;
-  height: 200px;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .item__img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .item__img img {
-  width: 100%;
+  width: 300px;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 22px 0 0 22px;
+}
+
+@media (max-width: 768px) {
+  .item__img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 22px 22px 0 0;
+  }
+}
+
+.item__words-translate p {
+  padding: 0;
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+  .item__words-translate p {
+    padding: 0 20px;
+  }
 }
 
 .item__word-eng {
@@ -105,32 +146,52 @@
 
 .item__buttons {
   display: flex;
-  width: 100%;
-  height: 60px;
-  background-color: black;
-  border-radius: 0 0 20px 20px;
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .item__buttons {
+    max-width: 100%;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 0;
+  }
 }
 
 .difficult {
   width: 50%;
   height: 100%;
-  border-radius: 0 0 0 20px;
+  border-radius: 0;
   background-color: #c9c9c9;
   font-weight: bold;
   cursor: pointer;
   border: none;
   color: #ffffff;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .difficult {
+    border-radius: 0 0 0 20px;
+  }
 }
 
 .learned {
   width: 50%;
   height: 100%;
-  border-radius: 0 0 20px 0;
+  border-radius: 0;
   background-color: #3e3e3e;
   font-weight: bold;
   cursor: pointer;
   border: none;
   color: #ffffff;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .learned {
+    border-radius: 0 0 20px 0;
+  }
 }
 
 .pagination {
