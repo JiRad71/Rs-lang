@@ -1,28 +1,7 @@
 import { group } from "console";
 import Component from "../../../common/Component";
-
-interface IWordsData {
-  id: string
-  group: number
-  page: number
-  word: string
-  image: string
-  audio: string
-  audioMeaning: string
-  audioExample: string
-  textMeaning: string
-  textExample: string
-  transcription: string
-  wordTranslate: string
-  textMeaningTranslate: string
-  textExampleTranslate: string
-}
-
-enum URL {
-  url = 'https://rss-lang-backends.herokuapp.com/words/',
-  page = '&page=',
-  group = '?group='
-}
+import { IWordsData } from '../../../asset/utils/types'
+import { URL } from '../../../asset/utils/types'
 
 class TextBook extends Component {
   words: Component<HTMLElement>;
@@ -41,9 +20,6 @@ class TextBook extends Component {
     this.words = new Component(this.node, 'div', 'words');
     this.itemWrapper = new Component(this.words.node, 'div', 'words');
     this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`);
-
-
-
 
     const pagination = new Component(this.node, 'div', 'pagination')
     const buttonStart = new Component(pagination.node, 'div', 'button_start none_active', '&lt;&lt;')

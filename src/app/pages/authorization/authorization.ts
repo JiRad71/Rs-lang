@@ -1,10 +1,6 @@
 import Component from "../../../common/Component";
 import Footer from "../footer";
-
-interface IUserData {
-  email: string,
-  password: string,
-}
+import { IUserData } from '../../../asset/utils/types';
 
 class Authorization extends Component {
   constructor(parentNode: HTMLElement) {
@@ -60,8 +56,6 @@ class Authorization extends Component {
          window.localStorage.setItem('token', `${resp.token}`); // получаем токен, сохраняем в локал сторэйдж
         });
     };
-
-
 
   }
 

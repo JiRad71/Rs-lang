@@ -7,8 +7,7 @@ import AudioCall from './pages/audiocall/audioCall';
 import SprintGame from './pages/sprint/sprintGame';
 import Statistic from './pages/statistic/statistic';
 import Authorization from "./pages/authorization/authorization";
-
-type PageTypes = MainPage | TextBook | AudioCall | SprintGame | Authorization;
+import { PageTypes } from '../asset/utils/types';
 
 class Controller extends Component {
   wrapperMain: Component<HTMLElement>;
