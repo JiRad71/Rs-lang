@@ -31,15 +31,16 @@ class TextBook extends Component {
   currentChapter: number;
   currentPage: number;
   currentPageIndex: number;
-  buttonActive: any;
+  buttonActive: Component<HTMLElement>;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'textbook');
     this.currentChapter = 0;
     this.currentPage = 0;
-    this.currentPageIndex = 1
+    this.currentPageIndex = 1;
     this.words = new Component(this.node, 'div', 'words');
-    this.itemWrapper = new Component(this.words.node, 'div', 'words')
-    this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
+    this.itemWrapper = new Component(this.words.node, 'div', 'words');
+    this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`);
 
 
 

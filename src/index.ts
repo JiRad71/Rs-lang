@@ -6,4 +6,4 @@ import './styles/style.css';
 import Controller from './app/controller';
 
 const controller = new Controller(document.body);
-
+controller.initRouter();
