@@ -7,28 +7,78 @@ import AudioCall from './pages/audiocall/audioCall';
 import SprintGame from './pages/sprint/sprintGame';
 import Statistic from './pages/statistic/statistic';
 import Authorization from "./pages/authorization/authorization";
-
-type PageTypes = MainPage | TextBook | AudioCall | SprintGame | Authorization;
+import { PageTypes } from '../asset/utils/types';
 
 class Controller extends Component {
+  wrapperMain: Component<HTMLElement>;
+  onReqest: () => void;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode);
     const header = new Header(parentNode);
-    const wrapperMain = new Component(parentNode, 'div', 'wrapper-main');
+    header.node.setAttribute('id', 'header');
+    this.wrapperMain = new Component(parentNode, 'div', 'wrapper-main');
     const footer = new Footer(parentNode);
-    const main = new MainPage(wrapperMain.node);
+    footer.node.setAttribute('id', 'footer');
+    const main = new MainPage(this.wrapperMain.node);
 
-    header.mainBtn.node.onclick = () => this.replace(wrapperMain, new MainPage(wrapperMain.node));
-    header.textBookBtn.node.onclick = () => this.replace(wrapperMain, new TextBook(wrapperMain.node));
-    header.audioCallBtn.node.onclick = () => this.replace(wrapperMain, new AudioCall(wrapperMain.node));
-    header.sprintBtn.node.onclick = () => this.replace(wrapperMain, new SprintGame(wrapperMain.node));
-    header.statisticBtn.node.onclick = () => this.replace(wrapperMain, new Statistic(wrapperMain.node));
-    header.authorizationBtn.node.onclick = () => this.replace(wrapperMain, new Authorization(wrapperMain.node));
+    header.mainBtn.node.onclick = () => {
+      location.hash = header.mainBtn.node.id;
+
+    }
+    header.textBookBtn.node.onclick = () => {
+      location.hash = header.textBookBtn.node.id;
+    }
+   
+    header.audioCallBtn.node.onclick = () => {
+      location.hash = header.audioCallBtn.node.id;
+    }
+    
+    header.sprintBtn.node.onclick = () => {
+      location.hash = header.sprintBtn.node.id;
+    }
+    
+    header.statisticBtn.node.onclick = () => {
+      location.hash = header.statisticBtn.node.id;
+    }
+    
+    header.authorizationBtn.node.onclick = () => {
+      location.hash = header.authorizationBtn.node.id;
+    }
+   
 
   }
 
   private replace(place: Component<HTMLElement>, newPage: PageTypes) {
     place.node.replaceChild(newPage.node, place.node.childNodes[0]);
+  }
+
+  handleRoute() {
+    const route = document.location.hash ? document.location.hash.slice(1) : '';
+
+    if (route && route === 'main') {
+      this.replace(this.wrapperMain, new MainPage(this.wrapperMain.node));
+    }
+    if (route && route === 'textbook') {
+      this.replace(this.wrapperMain,new TextBook(this.wrapperMain.node));
+    }
+    if (route && route === 'audio-call') {
+      this.replace(this.wrapperMain, new AudioCall(this.wrapperMain.node));
+    }
+    if (route && route === 'sprint') {
+      this.replace(this.wrapperMain, new SprintGame(this.wrapperMain.node));
+    }
+    if (route && route === 'statistic') {
+      this.replace(this.wrapperMain, new Statistic(this.wrapperMain.node));
+    }
+    if (route && route === 'authorization') {
+      this.replace(this.wrapperMain, new Authorization(this.wrapperMain.node));
+    }
+  }
+
+  initRouter() {
+    addEventListener('hashchange', this.handleRoute.bind(this));
+    this.handleRoute();
   }
 }
 

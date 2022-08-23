@@ -107,11 +107,18 @@ button:hover {
 
 .wrapper-main {
   color: #000000;
+  min-height: calc(100% - 165px);
 }
 
 .main .wrapper {
   max-width: 1440px;
   margin: 0 auto;
+}
+
+.heading {
+  margin: 30px auto;
+  width: 300px;
+  text-align: center;
 }
 
 .devs {
