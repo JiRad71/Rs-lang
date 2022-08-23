@@ -8,6 +8,10 @@
   margin: 30px auto;
 }
 
+.statistics-term {
+  display: none;
+}
+
 .statistics__item {
   display: flex;
   width: 520px;

@@ -107,6 +107,7 @@ button:hover {
 
 .wrapper-main {
   color: #000000;
+  min-height: calc(100% - 165px);
 }
 
 .main .wrapper {
