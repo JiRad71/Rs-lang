@@ -13,7 +13,7 @@ class GameField extends Component {
     super(parentNode, 'div', 'game-field');
     this.data = data;
 
-    const closeBtn = new Component(this.node, 'button', '', 'close');
+    const closeBtn = new Component(this.node, 'button', 'close-btn', 'close');
     closeBtn.node.onclick = () => this.onClose();
 
     const fieldContainer = new Component(this.node, 'div', 'container');
@@ -24,10 +24,6 @@ class GameField extends Component {
     const circle1 = new Component(progress.node, 'span', 'progress__item');
     const circle2 = new Component(progress.node, 'span', 'progress__item');
     const circle3 = new Component(progress.node, 'span', 'progress__item');
-    
-    // const question = new Component(fieldContainer.node, 'p', 'question', `${data[0].word}`);
-    
-
   }
 }
 
