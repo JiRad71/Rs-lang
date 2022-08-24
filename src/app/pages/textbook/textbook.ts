@@ -11,6 +11,8 @@ class TextBook extends Component {
   currentPage: number;
   currentPageIndex: number;
   buttonActive: Component<HTMLElement>;
+  itemButtons: Component<HTMLElement>;
+  chapterHard: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'textbook');
@@ -97,7 +99,7 @@ class TextBook extends Component {
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       }
     }
-    const chapterHard = new Component(chapters.node, 'div', 'chapter', 'Сложные слова')
+    this.chapterHard = new Component(chapters.node, 'div', 'chapter', 'Сложные слова')
   }
 
   private updatePagginator() {
@@ -141,9 +143,11 @@ class TextBook extends Component {
         itemSpeakerExample.node.onclick = () => {
           new Audio(`https://rss-lang-backends.herokuapp.com/${element.audioExample}`).play();
         }
-        const itemButtons = new Component(itemWordsTranslate.node, 'div', 'item__buttons')
-        const btnDifficult = new Component(itemButtons.node, 'button', 'difficult', 'Сложное')
-        const btnLearned = new Component(itemButtons.node, 'button', 'learned', 'Изученное')
+        this.itemButtons = new Component(itemWordsTranslate.node, 'div', 'item__buttons')
+        this.itemButtons.node.classList.add('hidden');
+        
+        const btnDifficult = new Component(this.itemButtons.node, 'button', 'difficult', 'Сложное')
+        const btnLearned = new Component(this.itemButtons.node, 'button', 'learned', 'Изученное')
       });
     })
   }

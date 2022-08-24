@@ -1,4 +1,7 @@
 import Component from "../../common/Component";
+import AuthModel from "../../app/pages/authorization/authModel";
+import Auth from "./authorization/Auth";
+import { URL } from '../../asset/utils/types';
 
 class Header extends Component {
   btnList: Component[] = [];
@@ -8,7 +11,8 @@ class Header extends Component {
   statisticBtn: Component<HTMLElement>;
   mainBtn: Component<HTMLElement>;
   authorizationBtn: Component<HTMLElement>;
-
+  authUser: Component<HTMLElement>;
+  btnsWrap: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'header', 'header');
@@ -31,11 +35,9 @@ class Header extends Component {
     this.statisticBtn = new Component(menu.node, 'button', 'navigation-menu__item', 'Статистика');
     this.statisticBtn.node.setAttribute('id', 'statistic');
 
-    const authorization = new Component(wrapper.node, 'div', 'auth');
-    this.authorizationBtn = new Component(authorization.node, 'button', 'navigation-menu__item', 'Bход | Регистрация');
-    this.authorizationBtn.node.setAttribute('id', 'authrozation');
-
-
+    this.btnsWrap = new Component(wrapper.node, 'div', 'auth');
+    this.authorizationBtn = new Component(this.btnsWrap.node, 'button', 'navigation-menu__item', 'Bход | Регистрация');
+    this.authorizationBtn.node.setAttribute('id', 'authorization');
   }
 }
 

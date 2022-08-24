@@ -8,8 +8,11 @@ export type PageTypes = MainPage | TextBook | AudioCall | SprintGame | Authoriza
 
 export enum URL {
   url = 'https://rss-lang-backends.herokuapp.com/words/',
+  shortUrl = 'https://rss-lang-backends.herokuapp.com/',
   page = '&page=',
-  group = '?group='
+  group = '?group=',
+  signin = 'signin',
+  login = 'users',
 }
 
 export interface IWordsData {
