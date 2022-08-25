@@ -7,7 +7,6 @@ import AudioCall from './pages/audiocall/audioCall';
 import SprintGame from './pages/sprint/sprintGame';
 import Auth from './pages/authorization/Auth';
 import Statistic from './pages/statistic/statistic';
-import Authorization from "./pages/authorization/authorization";
 import { IUserData, PageTypes, URL } from '../asset/utils/types';
 
 class Controller extends Component {

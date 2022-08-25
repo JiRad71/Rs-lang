@@ -2,9 +2,8 @@ import MainPage from '../../app/pages/main/mainpage';
 import TextBook from '../../app/pages/textBook/textBook';
 import AudioCall from '../../app/pages/audioCall/audioCall';
 import SprintGame from '../../app/pages/sprint/SprintGame';
-import Authorization from '../../app/pages/authorization/authorization';
 
-export type PageTypes = MainPage | TextBook | AudioCall | SprintGame | Authorization;
+export type PageTypes = MainPage | TextBook | AudioCall | SprintGame;
 
 export enum URL {
   url = 'https://rss-lang-backends.herokuapp.com/words/',
