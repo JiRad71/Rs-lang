@@ -5,7 +5,7 @@ interface IUsersAnswer {
   question: string,
   rightAnswer: string,
   translate: string,
-  usersAnswer: boolean,
+  usersAnswer: string,
   result: boolean,
 }
 

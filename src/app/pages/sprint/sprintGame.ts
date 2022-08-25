@@ -18,7 +18,7 @@ interface IUsersAnswer {
   question: string,
   rightAnswer: string,
   translate: string,
-  usersAnswer: boolean,
+  usersAnswer: string,
   result: boolean,
 }
 
@@ -81,16 +81,21 @@ class SprintGame extends Component {
       const statData: IUsersAnswer = {
         question: question.data[0].word,
         rightAnswer: question.data[0].wordTranslate,
-        translate: question.data[1].wordTranslate,
-        usersAnswer: answer,
+        translate: question.translate,
+        usersAnswer: answer ? 'Верно' : 'Не верно',
         result: !true,
       };
       
       if (answer && question.answer === question.translate) {
         statData.result = true;
+        const score = gameField.score.node.textContent;
+        gameField.score.node.textContent = `${+score + 10}`;
       }
       if (!answer && question.answer !== question.translate) {
         statData.result = true;
+        const score = gameField.score.node.textContent;
+        gameField.score.node.textContent = `${+score + 10}`;
+
       }
       this.answers.push(statData);
       question.destroy();

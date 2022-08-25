@@ -6,8 +6,9 @@ import { IWordsData } from './interfaces';
 
 class GameField extends Component {
   onClose: () => void;
-  onAnswer: () => void;
   data: IWordsData[];
+  totalTitle: Component<HTMLElement>;
+  score: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement, data: IWordsData[]) {
     super(parentNode, 'div', 'game-field');
@@ -17,7 +18,8 @@ class GameField extends Component {
     closeBtn.node.onclick = () => this.onClose();
 
     const fieldContainer = new Component(this.node, 'div', 'container');
-    const totalTitle = new Component(fieldContainer.node, 'h3', 'total-title', 'Текущий счёт: ');
+    this.totalTitle = new Component(fieldContainer.node, 'h3', 'total-title', `Текущий счёт: `);
+    this.score = new Component(this.totalTitle.node, 'span', 'total-title__score', '0');
     const timer = new Timer(fieldContainer.node, 60);
 
     const progress = new Component(fieldContainer.node, 'div', 'progress');
@@ -25,6 +27,10 @@ class GameField extends Component {
     const circle2 = new Component(progress.node, 'span', 'progress__item');
     const circle3 = new Component(progress.node, 'span', 'progress__item');
   }
+
+  // changeTotal(num: number) {
+  //   this.count += num;
+  // }
 }
 
 export default GameField;
