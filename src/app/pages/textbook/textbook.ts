@@ -2,6 +2,7 @@ import { group } from "console";
 import Component from "../../../common/Component";
 import { IWordsData } from '../../../asset/utils/types'
 import { URL } from '../../../asset/utils/types'
+import Card from './card';
 
 class TextBook extends Component {
   words: Component<HTMLElement>;
@@ -13,6 +14,7 @@ class TextBook extends Component {
   buttonActive: Component<HTMLElement>;
   itemButtons: Component<HTMLElement>;
   chapterHard: Component<HTMLElement>;
+  card: Card;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'textbook');
@@ -21,6 +23,7 @@ class TextBook extends Component {
     this.currentPageIndex = 1;
     this.words = new Component(this.node, 'div', 'words');
     this.itemWrapper = new Component(this.words.node, 'div', 'words');
+
     this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`);
 
     const pagination = new Component(this.node, 'div', 'pagination')
@@ -38,7 +41,6 @@ class TextBook extends Component {
 
     arrowUp.node.onclick = () => location.href = '#header'
     arrowDown.node.onclick = () => location.href = '#footer'
-
 
     buttonRight.node.onclick = () => {
       if (this.currentPage < 29) {
@@ -99,7 +101,9 @@ class TextBook extends Component {
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       }
     }
-    this.chapterHard = new Component(chapters.node, 'div', 'chapter', 'Сложные слова')
+    if (localStorage.getItem('token')) {
+      this.chapterHard = new Component(chapters.node, 'div', 'chapter', 'Сложные слова');
+    }
   }
 
   private updatePagginator() {
@@ -110,46 +114,17 @@ class TextBook extends Component {
 
   private getItemWord(url: string) {
     this.getWord(url).then((data) => {
-      data.forEach((element: IWordsData) => {
-        this.item = new Component(this.itemWrapper.node, 'div', 'item');
-        // const wrapper = new Component(this.item.node, 'div', 'wrapper');
-        const itemWrapperImg = new Component(this.item.node, 'div', 'item__img');
-        const itemImg = new Component(itemWrapperImg.node, 'img');
-
-        const itemWordsTranslate = new Component(this.item.node, 'div', 'item__words-translate');
-
-        const itemWord = new Component(itemWordsTranslate.node, 'p', 'item__word')
-
-        itemImg.node.setAttribute('src', `https://rss-lang-backends.herokuapp.com/${element.image}`)
-        const itemWordEng = new Component(itemWord.node, 'span', 'item__word-eng', `${element.word}`);
-        const itemWordTranscript = new Component(itemWord.node, 'span', 'item__word-transcript', `${element.transcription}`);
-        const itemSeparator = new Component(itemWord.node, 'span', 'item__separator', `|`);
-        const itemWordTranslate = new Component(itemWord.node, 'span', 'item__word-translate', `${element.wordTranslate}`);
-        const itemSpeaker = new Component(itemWord.node, 'span', 'item__speaker');
-        itemSpeaker.node.onclick = () => {
-          new Audio(`https://rss-lang-backends.herokuapp.com/${element.audio}`).play();
-        }
-        const itemExplain = new Component(itemWordsTranslate.node, 'p', 'item__explain');
-        const itemExplainEng = new Component(itemExplain.node, 'span', 'item__explain-eng', `${element.textMeaning}`);
-        const itemExplainTranslate = new Component(itemExplain.node, 'span', 'item__explain-translate', `${element.textMeaningTranslate}`);
-        const itemSpeakerExplain = new Component(itemExplain.node, 'span', 'item__speaker');
-        itemSpeakerExplain.node.onclick = () => {
-          new Audio(`https://rss-lang-backends.herokuapp.com/${element.audioMeaning}`).play();
-        }
-        const itemExample = new Component(itemWordsTranslate.node, 'p', 'item__example');
-        const itemExampleEng = new Component(itemExample.node, 'span', 'item__example-eng', `${element.textExample}`);
-        const itemExampleTranslate = new Component(itemExample.node, 'span', 'item__example-translate', `${element.textExampleTranslate}`);
-        const itemSpeakerExample = new Component(itemExample.node, 'span', 'item__speaker');
-        itemSpeakerExample.node.onclick = () => {
-          new Audio(`https://rss-lang-backends.herokuapp.com/${element.audioExample}`).play();
-        }
-        this.itemButtons = new Component(itemWordsTranslate.node, 'div', 'item__buttons')
-        this.itemButtons.node.classList.add('hidden');
-        
-        const btnDifficult = new Component(this.itemButtons.node, 'button', 'difficult', 'Сложное')
-        const btnLearned = new Component(this.itemButtons.node, 'button', 'learned', 'Изученное')
-      });
-    })
+      if (localStorage.getItem('token')) {
+        data.forEach((element: IWordsData) => {
+          this.card = new Card(this.itemWrapper.node, element);
+          this.card.addButtons();
+        });
+      } else {
+        data.forEach((element: IWordsData) => {
+          this.card = new Card(this.itemWrapper.node, element);
+        });
+      }
+    });
   }
 
   private async getWord(url: string) {

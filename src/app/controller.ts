@@ -26,11 +26,9 @@ class Controller extends Component {
     const footer = new Footer(parentNode);
     footer.node.setAttribute('id', 'footer');
     const main = new MainPage(this.wrapperMain.node);
-    this.textbook = new TextBook(this.wrapperMain.node);
-    this.textbook.node.classList.add('hidden');
 
     this.auth = new Auth();
-    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.btnsWrap);
+    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
 
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
@@ -38,25 +36,28 @@ class Controller extends Component {
     }
     this.header.textBookBtn.node.onclick = () => {
       location.hash = this.header.textBookBtn.node.id;
-      console.log(this.textbook.itemButtons.node);
-      this.textbook.itemButtons.node.classList.remove('hidden');
-
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+      this.header.authUser.node.classList.add('hidden');
     }
    
     this.header.audioCallBtn.node.onclick = () => {
       location.hash = this.header.audioCallBtn.node.id;
+
     }
     
     this.header.sprintBtn.node.onclick = () => {
       location.hash = this.header.sprintBtn.node.id;
+
     }
     
     this.header.statisticBtn.node.onclick = () => {
       location.hash = this.header.statisticBtn.node.id;
+
     }
     
     this.header.authorizationBtn.node.onclick = () => {
       location.hash = this.header.authorizationBtn.node.id;
+
     }
   }
 
@@ -66,13 +67,13 @@ class Controller extends Component {
 
   handleRoute() {
     const route = document.location.hash ? document.location.hash.slice(1) : '';
+    this.header.updateAuth();
 
     if (route && route === 'main') {
       this.replace(this.wrapperMain, new MainPage(this.wrapperMain.node));
     }
     if (route && route === 'textbook') {
-      this.replace(this.wrapperMain, this.textbook);
-      this.textbook.node.classList.remove('hidden');
+      this.replace(this.wrapperMain, new TextBook(this.wrapperMain.node));
     }
     if (route && route === 'audio-call') {
       this.replace(this.wrapperMain, new AudioCall(this.wrapperMain.node));
@@ -88,7 +89,7 @@ class Controller extends Component {
       this.wrapperMain.node.replaceChild(authElem, this.wrapperMain.node.childNodes[0]);
       this.auth.onSignin = (inputsData: IUserData) => {
         this.auth.addOrGetUser(inputsData, `${URL.shortUrl}${URL.signin}`)
-          .then((resp) => resp.json()) // получаем токен, сохраняем в локал сторэйдж
+          .then((resp) => resp.json())
           .then((resp) => {
             window.localStorage.setItem('token', `${resp.token}`);
             window.localStorage.setItem('usersId', `${resp.userId}`);
@@ -101,7 +102,7 @@ class Controller extends Component {
             setTimeout(() => message.destroy(), 5000);
           })
           .then(() => {
-            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.btnsWrap);
+            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
 
           })
       }
@@ -112,6 +113,7 @@ class Controller extends Component {
     addEventListener('hashchange', this.handleRoute.bind(this));
     this.handleRoute();
   }
+
 }
 
 export default Controller;
