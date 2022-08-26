@@ -54,7 +54,7 @@ class SprintGame extends Component {
 
     const timer = setTimeout(() => {
       gameField.destroy();
-      const finish = new FinishGame(this.node);
+      const finish = new FinishGame(this.node, gameField.score.node.textContent);
       finish.render(this.answers);
   
       finish.nextGame = () => {

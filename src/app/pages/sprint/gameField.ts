@@ -1,6 +1,5 @@
 import Component from '../../../common/Component';
 import Timer from './timer';
-import FinishGame from './finishGame';
 import { IWordsData } from './interfaces';
 
 

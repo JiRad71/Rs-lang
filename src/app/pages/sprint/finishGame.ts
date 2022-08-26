@@ -13,14 +13,18 @@ class FinishGame extends Component {
   nextGame: () => void;
   onClose: () => void;
   results: IUsersAnswer[];
+  score: string;
 
-  constructor(parentNode: HTMLElement) {
+  constructor(parentNode: HTMLElement, score: string) {
     super(parentNode);
     this.results = [];
+    this.score = score;
   }
 
   render(results: IUsersAnswer[]) {
     const title = new Component(this.node, 'h3', '', 'Результаты игры');
+
+    const titleTotal = new Component(this.node, 'h4', '', `Ваш результат: ${this.score}`);
 
     const wrapper = new Component(this.node, 'div', 'wrapper');
 
