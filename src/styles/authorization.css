@@ -52,3 +52,7 @@
 .login:hover, .signin:hover {
   background: #2ecc71 ;
 }
+
+.message {
+  color: red;
+}
