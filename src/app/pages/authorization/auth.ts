@@ -1,7 +1,5 @@
 import Component from "../../../common/Component";
-import Footer from "../footer";
 import { IUserData, URL } from '../../../asset/utils/types';
-import createElement from "./createElement";
 
 
 class Auth {
@@ -10,8 +8,8 @@ class Auth {
   inputsData: IUserData;
 
   render(parentNode: HTMLElement) {
-    const auth = createElement(parentNode, 'div', 'authorization');
-    const form = new Component(auth, 'form', 'form');
+    const auth = new Component(parentNode, 'div', 'authorization');
+    const form = new Component(auth.node, 'form', 'form');
     const title = new Component(form.node, 'h3', 'title', 'Bведите адрес электронной почты и пароль');
     const inputEmail = document.createElement('input');
     inputEmail.className = 'input';
@@ -63,7 +61,7 @@ class Auth {
       this.onSignin(this.inputsData);
     };
 
-    return auth;
+    return auth.node;
   }
 
   async addOrGetUser(data: IUserData, url: string) {
