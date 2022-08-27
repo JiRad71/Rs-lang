@@ -26,7 +26,7 @@
 }
 
 .progress {
-  width: 100%;
+  width: 150px;
   display: flex;
   justify-content: space-around;
 }
@@ -38,6 +38,14 @@
   display: block;
   border: 2px solid black;
   border-radius: 50%;
+}
+
+.total-title {
+  text-align: center;
+}
+
+.total-title__scale {
+  display: block;
 }
 
 .passed {

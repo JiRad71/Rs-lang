@@ -10,6 +10,7 @@ class GameField extends Component {
   score: Component<HTMLElement>;
   progress: Component<HTMLElement>;
   circles: Component<HTMLElement>[];
+  scale: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement, data: IWordsData[]) {
     super(parentNode, 'div', 'game-field');
@@ -21,6 +22,7 @@ class GameField extends Component {
     const fieldContainer = new Component(this.node, 'div', 'container');
     this.totalTitle = new Component(fieldContainer.node, 'h3', 'total-title', `Текущий счёт: `);
     this.score = new Component(this.totalTitle.node, 'span', 'total-title__score', '0');
+    this.scale = new Component(this.totalTitle.node, 'span', 'total-title__scale');
     const timer = new Timer(fieldContainer.node, 60);
 
     this.progress = new Component(fieldContainer.node, 'div', 'progress');
