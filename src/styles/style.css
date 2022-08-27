@@ -3,6 +3,10 @@ body {
   height: 100vh;
 }
 
+.hidden {
+  display: none;
+}
+
 body,
 button {
   font-family: sans-serif;
