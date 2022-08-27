@@ -34,10 +34,14 @@
 .progress__item {
   width: 20px;
   height: 20px;
-  background: red;
+  background-color: grey;
   display: block;
   border: 2px solid black;
   border-radius: 50%;
+}
+
+.passed {
+  background-color: red;
 }
 
 .question-block {

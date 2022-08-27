@@ -8,6 +8,8 @@ class GameField extends Component {
   data: IWordsData[];
   totalTitle: Component<HTMLElement>;
   score: Component<HTMLElement>;
+  progress: Component<HTMLElement>;
+  circles: Component<HTMLElement>[];
 
   constructor(parentNode: HTMLElement, data: IWordsData[]) {
     super(parentNode, 'div', 'game-field');
@@ -21,15 +23,12 @@ class GameField extends Component {
     this.score = new Component(this.totalTitle.node, 'span', 'total-title__score', '0');
     const timer = new Timer(fieldContainer.node, 60);
 
-    const progress = new Component(fieldContainer.node, 'div', 'progress');
-    const circle1 = new Component(progress.node, 'span', 'progress__item');
-    const circle2 = new Component(progress.node, 'span', 'progress__item');
-    const circle3 = new Component(progress.node, 'span', 'progress__item');
+    this.progress = new Component(fieldContainer.node, 'div', 'progress');
+    this.circles = [];
+    for (let i = 0; i < 3; i += 1) {
+      this.circles.push(new Component(this.progress.node, 'span', 'progress__item'));
+    }
   }
-
-  // changeTotal(num: number) {
-  //   this.count += num;
-  // }
 }
 
 export default GameField;
