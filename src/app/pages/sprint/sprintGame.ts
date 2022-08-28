@@ -4,32 +4,15 @@ import StartGame from './startGame';
 import GameField from './gameField';
 import FinishGame from './finishGame';
 import { random } from './gameText';
-import { IWordsData } from './interfaces';
 import Question from './question';
 import AnswersHandler from './answersHandler';
-
-
-enum URL {
-  url = 'https://rss-lang-backends.herokuapp.com/words/',
-  page = '&page=',
-  group = '?group='
-}
-
-interface IUsersAnswer {
-  question: string,
-  rightAnswer: string,
-  translate: string,
-  usersAnswer: string,
-  result: boolean,
-}
+import { URL, IUsersAnswer, IWordsData, IUserWordsData} from '../../../asset/utils/types';
 
 class SprintGame extends Component {
-  // answers: IUsersAnswer[];
   answersHandler: AnswersHandler;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'sprint-game');
-    // this.answers = [];
     this.mainUpdate()
   }
 
@@ -37,20 +20,11 @@ class SprintGame extends Component {
     const startPage = new StartGame(this.node);
     startPage.onStart = (index: number) => {
       startPage.destroy();
-      this.getWords(index)
-        .then((data: IWordsData[]) => {
-          const quest = data[random(0, 19)];
-          const falseAnswer = data[random(0, 19)];
-          return [quest, falseAnswer];
-        })
-        .then((content) => {
-          this.startGame(index, content);
-        });
-      
+      this.getData(index).then((data) => this.startGame(data, index))
     }
   }
 
-  private startGame(index: number, data: IWordsData[]) {
+  private startGame(data: IWordsData[], index?: number) {
     const gameField = new GameField(this.node, data);
     this.answersHandler = new AnswersHandler(gameField);
     this.gameCycle(gameField, data, index);
@@ -63,7 +37,7 @@ class SprintGame extends Component {
   
       finish.nextGame = () => {
         finish.destroy();
-        this.startGame(index, data);
+        this.startGame(data, index);
       }
       finish.onClose = () => {
         finish.destroy();
@@ -78,7 +52,7 @@ class SprintGame extends Component {
     }
   }
 
-  private gameCycle(gameField: GameField, data: IWordsData[], index: number) {
+  private gameCycle(gameField: GameField, data: IWordsData[], index?: number) {
     const question = new Question(gameField.node, data);
 
     question.onAnswer = (answer: boolean) => {
@@ -91,57 +65,52 @@ class SprintGame extends Component {
       };
 
       this.answersHandler.handle(statData, question);
-
-      // if (answer && question.answer === question.translate) {
-      //   statData.result = true;
-      //   const score = gameField.score.node.textContent;
-      //   gameField.score.node.textContent = `${+score + 10}`;
-      // }
-      // if (!answer && question.answer !== question.translate) {
-      //   statData.result = true;
-      //   const score = gameField.score.node.textContent;
-      //   gameField.score.node.textContent = `${+score + 10}`;
-      // }
-      // if (this.answers.length > 2 && this.answers[this.answers.length - 1].result
-      //   && this.answers[this.answers.length - 2].result && statData.result) {
-      //       gameField.circles[0].node.classList.add('passed');
-      // }
-      // if (this.answers.length > 4 && this.answers[this.answers.length - 1].result
-      //   && this.answers[this.answers.length - 2].result && statData.result
-      //   && gameField.circles[0].node.classList.contains('passed')) {
-      //       gameField.circles[1].node.classList.add('passed');
-
-      // }
-      // if (this.answers.length > 6 && this.answers[this.answers.length - 1].result
-      //   && this.answers[this.answers.length - 2].result && statData.result
-      //   && gameField.circles[1].node.classList.contains('passed')) {
-      //       gameField.circles[2].node.classList.add('passed');
-
-      // }
-      // if (this.answers.length > 8 && this.answers[this.answers.length - 1].result
-      //   && this.answers[this.answers.length - 2].result && statData.result
-      //   && gameField.circles[2].node.classList.contains('passed')) {
-      //       gameField.circles[3].node.classList.add('passed');
-
-      // }
-
-      // this.answers.push(statData);
       question.destroy();
-      this.getWords(index)
-        .then((data: IWordsData[]) => {
-          const quest = data[random(0, 19)];
-          const falseAnswer = data[random(0, 19)];
-          return [quest, falseAnswer];
-        })
-        .then((content) => {
-          this.gameCycle(gameField, content, index);
-        });
+      this.getData(index).then((data) => this.gameCycle(gameField, data, index));
     }
   }
 
-  async getWords(index: number) {
+  private async getData(index?: number) {
+    try {
+      if (index && index !== 6) {
+        const resp = await this.getWords(index);
+        const quest = resp[random(0, 19)];
+        const falseAnswer = resp[random(0, 19)];
+        return [quest, falseAnswer];
+      }
+      const resp = await this.getUserWords();
+      const quest = await resp[random(0, resp.length - 1)];
+      const falseAnswer = await resp[random(0, resp.length - 1)];
+      return  [quest, falseAnswer];
+    } catch (error) {
+      console.log(error.message, 'Возможно список сложных слов пуст')
+    }
+  }
+
+  async getWords(index: number): Promise<IWordsData[]> {
     const resp = await fetch(`${URL.url}${URL.group}${index}${URL.page}${random(0, 29)}`);
     return resp.json();
+  }
+
+  async getUserWordsData() {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return resp.json();
+  }
+
+  async getUserWords() {
+    const listUserWords: IUserWordsData[] = await this.getUserWordsData();
+    const listWords: Promise<IWordsData>[] = listUserWords.map(async (word) => {
+      const resp = await fetch(`${URL.shortUrl}${URL.words}/${word.wordId}`)
+      return resp.json();
+    });
+    const listDataWords = listWords.map(async (word) => await word);
+    return listDataWords;
   }
 }
 

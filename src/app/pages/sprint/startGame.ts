@@ -13,8 +13,13 @@ class StartGame extends Component {
     const aboutGame = new Component(this.node, 'p', 'start-game__title', gameDiscription);
     const skillContainer = new Component(this.node, 'div', 'skills-container');
     for (let i = 0; i < 7; i += 1) {
-      this.btnList.push(new Component(skillContainer.node, 'button', 'skill-btn', `Уровень ${i+1}`))
+      if (i === 6) {
+        this.btnList.push(new Component(skillContainer.node, 'button', 'skill-btn', `Сложные слова`))
+      } else {
+        this.btnList.push(new Component(skillContainer.node, 'button', 'skill-btn', `Уровень ${i+1}`))
+      }
     }
+    
     this.btnList.forEach((btn, i) => {
       btn.node.onclick = () => this.onStart(i);
     })
