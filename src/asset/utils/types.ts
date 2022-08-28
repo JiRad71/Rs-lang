@@ -12,6 +12,7 @@ export enum URL {
   group = '?group=',
   signin = 'signin',
   login = 'users',
+  words = 'words'
 }
 
 export interface IWordsData {
@@ -34,4 +35,18 @@ export interface IWordsData {
 export interface IUserData {
   email: string,
   password: string,
+}
+
+export interface IUsersAnswer {
+  question: string,
+  rightAnswer: string,
+  translate: string,
+  usersAnswer: string,
+  result: boolean,
+}
+
+export interface IUserWordsData {
+  id: string,
+  difficulty: string,
+  wordId: string,
 }

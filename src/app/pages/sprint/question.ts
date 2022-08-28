@@ -1,6 +1,6 @@
 import Component from '../../../common/Component';
 import { random } from './gameText';
-import { IWordsData } from './interfaces';
+import { IWordsData } from '../../../asset/utils/types';
 
 class Question extends Component {
   onClose: () => void;

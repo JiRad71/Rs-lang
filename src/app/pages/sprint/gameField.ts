@@ -1,6 +1,7 @@
 import Component from '../../../common/Component';
 import Timer from './timer';
-import { IWordsData } from './interfaces';
+import { URL, IUsersAnswer, IWordsData, IUserWordsData} from '../../../asset/utils/types';
+
 
 
 class GameField extends Component {

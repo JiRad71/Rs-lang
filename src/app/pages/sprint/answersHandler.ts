@@ -66,8 +66,6 @@ class AnswersHandler {
       this.gameField.circles.forEach((e) => e.node.classList.remove('passed'));
       this.scale = 10;
       this.countAnswer = 0;
-      console.log('log');
-      
       this.addAnswer(data);
     }
   }
