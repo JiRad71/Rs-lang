@@ -12,7 +12,8 @@ class StartGame extends Component {
     const title = new Component(this.node, 'h3', 'start-game__title', 'Игра Спринт');
     const aboutGame = new Component(this.node, 'p', 'start-game__title', gameDiscription);
     const skillContainer = new Component(this.node, 'div', 'skills-container');
-    for (let i = 0; i < 7; i += 1) {
+    const countBtns = localStorage.getItem('token') ? 7: 6;
+    for (let i = 0; i < countBtns; i += 1) {
       if (i === 6) {
         this.btnList.push(new Component(skillContainer.node, 'button', 'skill-btn', `Сложные слова`))
       } else {
