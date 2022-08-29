@@ -124,7 +124,8 @@ class TextBook extends Component {
           this.card = new Card(this.itemWrapper.node, element);
         });
       }
-    });
+    })
+    .catch(() => console.log('Войдите в аккаунт для того, что бы продолжить'));
   }
 
   private async getWord(url: string) {
