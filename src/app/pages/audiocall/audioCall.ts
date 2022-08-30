@@ -8,18 +8,23 @@ import { URL } from '../../../asset/utils/types'
 class AudioCall extends Component {
   model: DataModel;
   categoryIndex: number;
+  preloader: Component<HTMLElement>;
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'audio-call');
+
     this.mainCycle()
   }
 
   private gameCycle(categoryIndex: number) {
+    this.preloader = new Component(this.node, 'div', 'preloader', 'loading...');
+    const resUrl = []
+    for (let i = 0; i < 30; i++) {
+      resUrl.push(`${URL.url}${URL.group}${categoryIndex}${URL.page}${i}`)
+    }
+
     this.model = new DataModel()
-    this.model.build(
-      `${URL.url}${URL.group}${categoryIndex}${URL.page}${this.getRandome(0, 29)}`,
-      `${URL.url}${URL.group}${categoryIndex}${URL.page}${this.getRandome(0, 29)}`,
-      `${URL.url}${URL.group}${categoryIndex}${URL.page}${this.getRandome(0, 29)}`
-    ).then(res => {
+    this.model.build(...resUrl).then(res => {
+      this.preloader.destroy();
 
       const gameFild = new GameFildPage(this.node, categoryIndex, this.model.getQuestions())
 
@@ -37,10 +42,6 @@ class AudioCall extends Component {
           this.mainCycle()
         }
 
-        // gameOverPage.onNext = () => {
-        //   gameOverPage.destroy()
-        //   this.gameCycle(categoryIndex + 1)
-        // }
       }
     })
   }

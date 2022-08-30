@@ -43,9 +43,6 @@ class GameOverPage extends Component {
 
     })
 
-    console.log(aresults);
-
-
     resultIndicator.node.textContent = results.map((it) => {
       return it.rightAnswer.translate === it.userAnswer.translate ? it.rightAnswer.translate : it.userAnswer.translate
     }).join(' ')

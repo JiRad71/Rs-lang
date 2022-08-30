@@ -127,3 +127,12 @@
   background-color: #6b6b6b;
   color: white;
 }
+
+.preloader {
+  font-weight: bold;
+  font-size: 9vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
