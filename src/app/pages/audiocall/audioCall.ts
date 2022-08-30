@@ -16,7 +16,7 @@ class AudioCall extends Component {
   }
 
   private gameCycle(categoryIndex: number) {
-    this.preloader = new Component(this.node, 'div', 'preloader', 'loading...');
+    this.preloader = new Component(this.node, 'div', 'preloader');
     const resUrl = []
     for (let i = 0; i < 30; i++) {
       resUrl.push(`${URL.url}${URL.group}${categoryIndex}${URL.page}${i}`)

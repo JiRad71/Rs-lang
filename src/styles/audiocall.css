@@ -131,6 +131,9 @@
 .preloader {
   font-weight: bold;
   font-size: 9vh;
+  background-image: url(../asset/how-to-create-css-preloader.gif);
+  width: 800px;
+  height: 600px;
   position: absolute;
   top: 50%;
   left: 50%;
