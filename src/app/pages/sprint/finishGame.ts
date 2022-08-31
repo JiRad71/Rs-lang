@@ -1,19 +1,12 @@
 import Component from '../../../common/Component';
-
-
-interface IUsersAnswer {
-  question: string,
-  rightAnswer: string,
-  translate: string,
-  usersAnswer: string,
-  result: boolean,
-}
+import { IUsersAnswer } from '../../../asset/utils/types';
 
 class FinishGame extends Component {
   nextGame: () => void;
   onClose: () => void;
   results: IUsersAnswer[];
   score: string;
+  btnRestart: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement, score: string) {
     super(parentNode);
@@ -51,8 +44,8 @@ class FinishGame extends Component {
       }
     });
 
-    const btnRestart = new Component(wrapper.node, 'button', '', 'Играть ещё');
-    btnRestart.node.onclick = () => this.nextGame();
+    this.btnRestart = new Component(wrapper.node, 'button', '', 'Играть ещё');
+    this.btnRestart.node.onclick = () => this.nextGame();
     const btnExit = new Component(wrapper.node, 'button', '', 'Выход');
     btnExit.node.onclick = () => this.onClose();
   }
