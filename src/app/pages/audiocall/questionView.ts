@@ -10,7 +10,6 @@ class QuestionView extends Component {
 
     this.game = new Component(this.node, 'div', 'game', '')
 
-
     const question = new Component(this.game.node, 'div', 'voice', '')
     const voice = new Audio(`https://rss-lang-backends.herokuapp.com/${questionData.voiceUrl}`)
     question.node.onclick = () => {
