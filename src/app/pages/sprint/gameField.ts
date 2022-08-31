@@ -1,11 +1,10 @@
 import Component from '../../../common/Component';
 import Timer from './timer';
-import { URL, IUsersAnswer, IWordsData, IUserWordsData} from '../../../asset/utils/types';
-
-
+import { IWordsData } from '../../../asset/utils/types';
 
 class GameField extends Component {
   onClose: () => void;
+  onKeybord: (answer: boolean) => void;
   data: IWordsData[];
   totalTitle: Component<HTMLElement>;
   score: Component<HTMLElement>;
@@ -16,6 +15,10 @@ class GameField extends Component {
   constructor(parentNode: HTMLElement, data: IWordsData[]) {
     super(parentNode, 'div', 'game-field');
     this.data = data;
+    this.node.setAttribute('id', 'game-field')
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      this.checkAnswer(e);
+    }, true);
 
     const closeBtn = new Component(this.node, 'button', 'close-btn', 'close');
     closeBtn.node.onclick = () => this.onClose();
@@ -30,6 +33,14 @@ class GameField extends Component {
     this.circles = [];
     for (let i = 0; i < 3; i += 1) {
       this.circles.push(new Component(this.progress.node, 'span', 'progress__item'));
+    }
+  }
+
+  checkAnswer(e: KeyboardEvent) {
+    if (e.key === 'ArrowLeft') {
+      this.onKeybord(true);
+    } else if (e.key === 'ArrowRight') {
+      this.onKeybord(false);
     }
   }
 }
