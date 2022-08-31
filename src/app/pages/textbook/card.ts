@@ -1,7 +1,6 @@
 import { IWordsData } from "../../../asset/utils/types";
 import Component from "../../../common/Component";
 
-
 class Card extends Component {
   itemWordsTranslate: Component<HTMLElement>;
 

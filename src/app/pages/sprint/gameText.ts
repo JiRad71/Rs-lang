@@ -4,5 +4,3 @@ export const gameDiscription = `
 Если перевод соответствует нажмите "Верно", иначе - кнопку "Не верно".
 Наберите как можно больше очков и узнайте какие ответы верные, а какие слова Вам нужно подучить.
 `;
-
-export const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
