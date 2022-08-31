@@ -1,16 +1,11 @@
 import GameField from './gameField';
 import Question from './question';
-
-interface IUsersAnswer {
-  question: string,
-  rightAnswer: string,
-  translate: string,
-  usersAnswer: string,
-  result: boolean,
-}
+import { IUsersAnswer } from '../../../asset/utils/types';
 
 class AnswersHandler {
   answers: IUsersAnswer[];
+  rightAnswers: IUsersAnswer[];
+  failAnswers: IUsersAnswer[];
   gameField: GameField;
   scale: number;
   countAnswer = 0;
@@ -18,15 +13,27 @@ class AnswersHandler {
   constructor(gameField: GameField) {
     this.gameField = gameField;
     this.answers = [];
+    this.rightAnswers = [];
+    this.failAnswers = [];
     this.scale = 10;
   }
 
-  addAnswer(data: IUsersAnswer) {
+  addAnswer(data: IUsersAnswer, right: boolean) {
+    right ? this.rightAnswers.push(data) : this.failAnswers.push(data);
+
     this.answers.push(data);
   }
 
   clear() {
     this.answers = [];
+  }
+
+  getLearnWord() {
+    return this.rightAnswers;
+  }
+
+  getHardWord() {
+    return this.failAnswers;
   }
 
   handle(data: IUsersAnswer, question: Question) {
@@ -37,7 +44,6 @@ class AnswersHandler {
       const score = this.gameField.score.node.textContent;
       this.gameField.score.node.textContent = `${+score + this.scale}`;
       this.gameField.scale.node.textContent = `(+${this.scale} за правильный ответ)`;
-
 
       if (!this.gameField.circles[0].node.classList.contains('passed')) {
         this.gameField.circles[0].node.classList.add('passed');
@@ -60,13 +66,13 @@ class AnswersHandler {
         this.countAnswer = 0;
       }
 
-      this.addAnswer(data);
+      this.addAnswer(data, true);
 
     } else {
       this.gameField.circles.forEach((e) => e.node.classList.remove('passed'));
       this.scale = 10;
       this.countAnswer = 0;
-      this.addAnswer(data);
+      this.addAnswer(data, false);
     }
   }
 
