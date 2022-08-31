@@ -55,6 +55,7 @@ class SprintGame extends Component {
         const count = this.answersHandler.getLearnWord().length + data.learnedWords;
         this.putLearnedWord({learnedWords: count});
         this.answersHandler.clear();
+        this.counter = 0;
       })
         .catch(() => console.log('Вы не авторизованы'));
       
@@ -77,17 +78,23 @@ class SprintGame extends Component {
 
   gameCycle(gameField: GameField, data: IWordsData[], index?: number, page?: string) {
     const question = new Question(gameField.node, data);
-
-    gameField.onKeybord = (answer: boolean) => {
-      this.toHandle(answer, question);
-      if (this.counter >= 19) this.endGame(gameField);
-      this.isTextbook(gameField, data, index, page);
-    }
+    document.onkeydown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        this.toHandle(true, question);
+        if (this.counter >= 19) this.endGame(gameField);
+        this.isTextbook(gameField, index, page);
+        
+      } else if (e.key === 'ArrowRight') {
+        this.toHandle(false, question);
+        if (this.counter >= 19) this.endGame(gameField);
+        this.isTextbook(gameField, index, page);
+      }
+    };
 
     question.onAnswer = (answer: boolean) => {
       this.toHandle(answer, question);
       if (this.counter >= 19) this.endGame(gameField);
-      this.isTextbook(gameField, data, index, page);
+      this.isTextbook(gameField, index, page);
     }
   }
 
@@ -103,6 +110,7 @@ class SprintGame extends Component {
       this.updateUserWords(this.answersHandler.rightAnswers);
       this.updateUserWords(this.answersHandler.failAnswers);
       this.answersHandler.clear();
+      this.counter = 0;
     })
       .catch(() => console.log('Вы не авторизованы'));
   
@@ -118,7 +126,7 @@ class SprintGame extends Component {
     question.destroy();
   }
 
-  isTextbook(gameField: GameField, data: IWordsData[], index?: number, page?: string) {
+  isTextbook(gameField: GameField, index?: number, page?: string) {
     if (page) {
       this.getData(index, true).then((data) => this.gameCycle(gameField, data, index, page));
     } else {

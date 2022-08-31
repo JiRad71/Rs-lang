@@ -26,6 +26,8 @@ class AnswersHandler {
 
   clear() {
     this.answers = [];
+    this.rightAnswers = [];
+    this.failAnswers = [];
   }
 
   getLearnWord() {

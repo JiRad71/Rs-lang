@@ -9,7 +9,7 @@ class Question extends Component {
   answer: string;
   translate: string;
 
-  constructor(parentNode: HTMLElement | null, data?: IWordsData[]) {
+  constructor(parentNode: HTMLElement | null, data: IWordsData[]) {
     super(parentNode, 'div', 'question-block');
     if (data) {
       this.data = data;
