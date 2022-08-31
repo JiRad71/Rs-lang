@@ -46,9 +46,8 @@ class SprintGame extends Component {
   startGame(data: IWordsData[], index?: number, page?: string) {
     const gameField = new GameField(this.node, data);
     this.answersHandler = new AnswersHandler(gameField);
-    this.gameCycle(gameField, data, index, page);
-
-    const timer = setTimeout(() => {
+    gameField.timer.onFinish = () => {
+      gameField.timer.off();
       gameField.destroy();
       const finish = new FinishGame(this.node, gameField.score.node.textContent);
       finish.render(this.answersHandler.answers);
@@ -67,13 +66,13 @@ class SprintGame extends Component {
         finish.destroy();
         this.mainUpdate();
       }
-    }, 60000)
-
+    }
     gameField.onClose = () => {
       gameField.destroy();
-      clearTimeout(timer);
       this.mainUpdate();
     }
+    this.gameCycle(gameField, data, index, page);
+
   }
 
   gameCycle(gameField: GameField, data: IWordsData[], index?: number, page?: string) {
@@ -93,6 +92,7 @@ class SprintGame extends Component {
   }
 
   endGame(gameField: GameField) {
+    gameField.timer.off();
     gameField.destroy();
     const finish = new FinishGame(this.node, gameField.score.node.textContent);
     finish.render(this.answersHandler.answers);
