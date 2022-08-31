@@ -53,6 +53,7 @@ export interface IUserWordsData {
   id: string,
   difficulty: string,
   wordId: string,
+  optional?: createUserWordOption,
 }
 
 export interface ICreateUserWord {
@@ -61,7 +62,8 @@ export interface ICreateUserWord {
 }
 
 export interface createUserWordOption {
-  stat: string[],
+  rightAnswer: number,
+  falseAnswer: number,
 }
 
 export interface IUserStat {

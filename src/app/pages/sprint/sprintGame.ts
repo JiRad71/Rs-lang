@@ -100,7 +100,8 @@ class SprintGame extends Component {
     this.getLearnedWord().then((data: IUserStat) => {
       const count = this.answersHandler.getLearnWord().length + data.learnedWords;
       this.putLearnedWord({learnedWords: count});
-      
+      this.updateUserWords(this.answersHandler.rightAnswers);
+      this.updateUserWords(this.answersHandler.failAnswers);
       this.answersHandler.clear();
     })
       .catch(() => console.log('Вы не авторизованы'));
@@ -162,6 +163,38 @@ class SprintGame extends Component {
     }
   }
 
+  async updateUserWords(data: IUsersAnswer[]) {
+    const userWords: IUserWordsData[] = await this.getUserWordsData();
+    
+    if (data[0].result) {
+      for (let i = 0; i < data.length; i += 1) {
+        const word = userWords.find((e) => e.wordId === data[i].id);
+        if (word) {
+          word.difficulty = 'easy';
+          word.optional.rightAnswer += 1;
+          this.createUserWord(word.wordId, {difficulty: word.difficulty, optional: word.optional}, 'PUT');
+        } else {
+          const update: ICreateUserWord = {difficulty: 'normal'};
+          update.optional = {rightAnswer: 1, falseAnswer: 0};
+          this.createUserWord(data[i].id, update, 'POST');
+        }
+      }
+    } else {
+      for (let i = 0; i < data.length; i += 1) {
+        const word = userWords.find((e) => e.wordId === data[i].id);
+        if (word) {
+          word.optional.falseAnswer += 1;
+          word.difficulty = +word.optional.falseAnswer > +word.optional.rightAnswer ? 'hard' : 'normal';
+          this.createUserWord(word.wordId, {difficulty: word.difficulty, optional: word.optional}, 'PUT');
+        } else {
+          const update: ICreateUserWord = {difficulty: 'normal'};
+          update.optional = {rightAnswer: 0, falseAnswer: 1};
+          this.createUserWord(data[i].id, update, 'POST');
+        }
+      }
+    }
+  }
+
   async getWords(index: number, page?: string): Promise<IWordsData[]> {
     const param = !page ? random(0, 29): page;
     const resp = await fetch(`${URL.url}${URL.group}${index}${URL.page}${param}`);
@@ -213,9 +246,9 @@ class SprintGame extends Component {
     return resp.json();
   }
 
-  async createUserWord(id: string, data: ICreateUserWord) {
+  async createUserWord(id: string, data: ICreateUserWord, method: string) {
     const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}/${id}`, {
-      method: 'POST',
+      method: method,
       headers: {
         'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
         'Accept': 'application/json',
