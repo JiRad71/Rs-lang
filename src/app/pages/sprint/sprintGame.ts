@@ -1,40 +1,64 @@
-import './sprint.css';
+import '../../../styles/sprint.css';
 import Component from '../../../common/Component';
 import StartGame from './startGame';
 import GameField from './gameField';
 import FinishGame from './finishGame';
-import { random } from './gameText';
+import { random } from '../../../asset/utils/usefull';
 import Question from './question';
 import AnswersHandler from './answersHandler';
-import { URL, IUsersAnswer, IWordsData, IUserWordsData} from '../../../asset/utils/types';
+import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord} from '../../../asset/utils/types';
 
 class SprintGame extends Component {
   answersHandler: AnswersHandler;
+  question: Question;
+  chapter: string;
+  page: string;
+  counter: number;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'sprint-game');
-    this.mainUpdate()
-  }
-
-  private mainUpdate() {
-    const startPage = new StartGame(this.node);
-    startPage.onStart = (index: number) => {
-      startPage.destroy();
-      this.getData(index).then((data) => this.startGame(data, index))
+    this.counter = 0;
+    this.chapter = localStorage.getItem('currChapter');
+    this.page = localStorage.getItem('currPage');
+    if (this.chapter) {
+      this.mainUpdate(this.chapter, this.page);
+    } else {
+      this.mainUpdate();
     }
   }
 
-  private startGame(data: IWordsData[], index?: number) {
+  mainUpdate(chapter?: string, page?: string) {
+    if (chapter) {
+      this.getData(+chapter, true).then((data) => {
+        this.startGame(data, +chapter, page);
+      })
+    } else {
+      const startPage = new StartGame(this.node);
+      startPage.onStart = (index: number) => {
+        startPage.destroy();
+        this.getData(index).then((data) => {
+          this.startGame(data, index)
+        })
+      }
+    }
+  }
+
+  startGame(data: IWordsData[], index?: number, page?: string) {
     const gameField = new GameField(this.node, data);
     this.answersHandler = new AnswersHandler(gameField);
-    this.gameCycle(gameField, data, index);
+    this.gameCycle(gameField, data, index, page);
 
     const timer = setTimeout(() => {
       gameField.destroy();
       const finish = new FinishGame(this.node, gameField.score.node.textContent);
       finish.render(this.answersHandler.answers);
-      this.answersHandler.clear();
-  
+      this.getLearnedWord().then((data: IUserStat) => {
+        const count = this.answersHandler.getLearnWord().length + data.learnedWords;
+        this.putLearnedWord({learnedWords: count});
+        this.answersHandler.clear();
+      })
+        .catch(() => console.log('Вы не авторизованы'));
+      
       finish.nextGame = () => {
         finish.destroy();
         this.startGame(data, index);
@@ -52,43 +76,95 @@ class SprintGame extends Component {
     }
   }
 
-  private gameCycle(gameField: GameField, data: IWordsData[], index?: number) {
+  gameCycle(gameField: GameField, data: IWordsData[], index?: number, page?: string) {
     const question = new Question(gameField.node, data);
 
-    question.onAnswer = (answer: boolean) => {
-      const statData: IUsersAnswer = {
-        question: question.data[0].word,
-        rightAnswer: question.data[0].wordTranslate,
-        translate: question.translate,
-        usersAnswer: answer ? 'Верно' : 'Не верно',
-        result: !true,
-      };
+    gameField.onKeybord = (answer: boolean) => {
+      this.toHandle(answer, question);
+      if (this.counter >= 19) this.endGame(gameField);
+      this.isTextbook(gameField, data, index, page);
+    }
 
-      this.answersHandler.handle(statData, question);
-      question.destroy();
+    question.onAnswer = (answer: boolean) => {
+      this.toHandle(answer, question);
+      if (this.counter >= 19) this.endGame(gameField);
+      this.isTextbook(gameField, data, index, page);
+    }
+  }
+
+  endGame(gameField: GameField) {
+    gameField.destroy();
+    const finish = new FinishGame(this.node, gameField.score.node.textContent);
+    finish.render(this.answersHandler.answers);
+    finish.btnRestart.destroy();
+    this.getLearnedWord().then((data: IUserStat) => {
+      const count = this.answersHandler.getLearnWord().length + data.learnedWords;
+      this.putLearnedWord({learnedWords: count});
+      
+      this.answersHandler.clear();
+    })
+      .catch(() => console.log('Вы не авторизованы'));
+  
+    finish.onClose = () => {
+      finish.destroy();
+      location.hash = 'textbook';
+    }
+  }
+
+  toHandle(answer: boolean, question: Question) {
+    const statData = this.getStatData(answer, question);
+    this.answersHandler.handle(statData, question);
+    question.destroy();
+  }
+
+  isTextbook(gameField: GameField, data: IWordsData[], index?: number, page?: string) {
+    if (page) {
+      this.getData(index, true).then((data) => this.gameCycle(gameField, data, index, page));
+    } else {
       this.getData(index).then((data) => this.gameCycle(gameField, data, index));
     }
   }
 
-  private async getData(index?: number) {
+  getStatData(answer: boolean, question: Question) {
+    const statData: IUsersAnswer = {
+      id: question.data[0].id,
+      group: question.data[0].group,
+      page: question.data[0].page,
+      question: question.data[0].word,
+      rightAnswer: question.data[0].wordTranslate,
+      translate: question.translate,
+      usersAnswer: answer ? 'Верно' : 'Не верно',
+      result: !true,
+    };
+   return statData;
+  }
+
+  private async getData(index?: number, textbook?: boolean) {
     try {
-      if (index && index !== 6) {
+      if (textbook) {
+        const resp = await this.getWords(+this.chapter, this.page);
+        const quest = resp[this.counter];
+        const falseAnswer = resp[random(0, 19)];
+        this.counter += 1;
+        return [quest, falseAnswer];
+      } else if ((index && index !== 6) || index === 0) {
         const resp = await this.getWords(index);
         const quest = resp[random(0, 19)];
         const falseAnswer = resp[random(0, 19)];
         return [quest, falseAnswer];
-      }
+      } 
       const resp = await this.getUserWords();
       const quest = await resp[random(0, resp.length - 1)];
       const falseAnswer = await resp[random(0, resp.length - 1)];
       return  [quest, falseAnswer];
     } catch (error) {
-      console.log(error.message, 'Возможно список сложных слов пуст')
+      console.log('Возможно список сложных слов пуст')
     }
   }
 
-  async getWords(index: number): Promise<IWordsData[]> {
-    const resp = await fetch(`${URL.url}${URL.group}${index}${URL.page}${random(0, 29)}`);
+  async getWords(index: number, page?: string): Promise<IWordsData[]> {
+    const param = !page ? random(0, 29): page;
+    const resp = await fetch(`${URL.url}${URL.group}${index}${URL.page}${param}`);
     return resp.json();
   }
 
@@ -111,6 +187,43 @@ class SprintGame extends Component {
     });
     const listDataWords = listWords.map(async (word) => await word);
     return listDataWords;
+  }
+
+  async getLearnedWord() {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.stat}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return resp.json();
+  }
+
+  async putLearnedWord(data: IUserStat) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.stat}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return resp.json();
+  }
+
+  async createUserWord(id: string, data: ICreateUserWord) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}/${id}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return resp.json();
   }
 }
 

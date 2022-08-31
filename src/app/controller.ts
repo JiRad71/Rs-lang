@@ -7,7 +7,7 @@ import AudioCall from './pages/audiocall/audioCall';
 import SprintGame from './pages/sprint/sprintGame';
 import Auth from './pages/authorization/Auth';
 import Statistic from './pages/statistic/statistic';
-import { IUserData, PageTypes, URL } from '../asset/utils/types';
+import { IUserData, URL } from '../asset/utils/types';
 
 class Controller extends Component {
   wrapperMain: Component<HTMLElement>;
@@ -15,17 +15,19 @@ class Controller extends Component {
   header: Header;
   textbook: TextBook;
   auth: Auth;
+  root: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode);
     this.header = new Header(parentNode);
 
     this.header.node.setAttribute('id', 'header');
-    this.wrapperMain = new Component(parentNode, 'div', 'wrapper-main');
+    this.root = new Component(parentNode, 'div', 'root');
+    this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
     const footer = new Footer(parentNode);
     footer.node.setAttribute('id', 'footer');
     const main = new MainPage(this.wrapperMain.node);
-
+  
     this.auth = new Auth();
     this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
 
@@ -45,23 +47,23 @@ class Controller extends Component {
     }
     
     this.header.sprintBtn.node.onclick = () => {
-      location.hash = this.header.sprintBtn.node.id;
+      if (location.hash === '#textbook') {
+        location.hash = this.header.sprintBtn.node.id;
 
+      } else {
+        location.hash = this.header.sprintBtn.node.id;
+        localStorage.removeItem('currChapter');
+        localStorage.removeItem('currPage');
+      }
     }
     
     this.header.statisticBtn.node.onclick = () => {
       location.hash = this.header.statisticBtn.node.id;
-
     }
     
     this.header.authorizationBtn.node.onclick = () => {
       location.hash = this.header.authorizationBtn.node.id;
-
     }
-  }
-
-  private replace(place: Component<HTMLElement>, newPage: PageTypes) {
-    place.node.replaceChild(newPage.node, place.node.childNodes[0]);
   }
 
   handleRoute() {
@@ -69,19 +71,29 @@ class Controller extends Component {
     this.header.updateAuth();
 
     if (route && route === 'main') {
-      this.replace(this.wrapperMain, new MainPage(this.wrapperMain.node));
+      this.wrapperMain.destroy();
+      this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
+      const main = new MainPage(this.wrapperMain.node);
     }
     if (route && route === 'textbook') {
-      this.replace(this.wrapperMain, new TextBook(this.wrapperMain.node));
+      this.wrapperMain.destroy();
+      this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
+      const textbook = new TextBook(this.wrapperMain.node);
     }
     if (route && route === 'audio-call') {
-      this.replace(this.wrapperMain, new AudioCall(this.wrapperMain.node));
+      this.wrapperMain.destroy();
+      this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
+      const audioCall =  new AudioCall(this.wrapperMain.node);
     }
     if (route && route === 'sprint') {
-      this.replace(this.wrapperMain, new SprintGame(this.wrapperMain.node));
+      this.wrapperMain.destroy();
+      this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
+      const sprint =  new SprintGame(this.wrapperMain.node);
     }
     if (route && route === 'statistic') {
-      this.replace(this.wrapperMain, new Statistic(this.wrapperMain.node));
+      this.wrapperMain.destroy();
+      this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
+      const statistic =  new Statistic(this.wrapperMain.node);
     }
     if (route && route === 'authorization') {
       const authElem = this.auth.render(this.wrapperMain.node);
