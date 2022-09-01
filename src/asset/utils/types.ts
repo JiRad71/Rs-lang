@@ -13,7 +13,10 @@ export enum URL {
   signin = 'signin',
   login = 'users',
   words = 'words',
-  stat = 'statistics'
+  stat = 'statistics',
+  aggregatedWords = 'aggregatedWords',
+  wordPerPage = 'wordsPerPage=20',
+  filter = 'filter='
 }
 
 export interface IWordsData {
@@ -31,6 +34,7 @@ export interface IWordsData {
   wordTranslate: string
   textMeaningTranslate: string
   textExampleTranslate: string
+  _id: string
 }
 
 export interface IUserData {
