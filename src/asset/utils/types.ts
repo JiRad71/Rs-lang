@@ -3,7 +3,7 @@ import TextBook from '../../app/pages/textBook/textBook';
 import AudioCall from '../../app/pages/audioCall/audioCall';
 import SprintGame from '../../app/pages/sprint/SprintGame';
 
-export type PageTypes = MainPage | TextBook | AudioCall | SprintGame;
+export type PageTypes = MainPage | TextBook | AudioCall | SprintGame | void;
 
 export enum URL {
   url = 'https://rss-lang-backends.herokuapp.com/words/',
@@ -12,6 +12,8 @@ export enum URL {
   group = '?group=',
   signin = 'signin',
   login = 'users',
+  words = 'words',
+  stat = 'statistics'
 }
 
 export interface IWordsData {
@@ -34,4 +36,43 @@ export interface IWordsData {
 export interface IUserData {
   email: string,
   password: string,
+}
+
+export interface IUsersAnswer {
+  id: string,
+  group: number,
+  page: number,
+  question: string,
+  rightAnswer: string,
+  translate: string,
+  usersAnswer: string,
+  result: boolean,
+}
+
+export interface IUserWordsData {
+  id: string,
+  difficulty: string,
+  wordId: string,
+  optional?: createUserWordOption,
+}
+
+export interface ICreateUserWord {
+  difficulty: string,
+  optional?: createUserWordOption,
+}
+
+export interface createUserWordOption {
+  rightAnswer: number,
+  falseAnswer: number,
+}
+
+export interface IUserStat {
+  learnedWords: number,
+  optional?: {
+    game: string,
+    successCount: number,
+    failCount: number,
+    page: number,
+    group: number,
+  }
 }

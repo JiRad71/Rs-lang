@@ -1,6 +1,4 @@
 import Component from "../../common/Component";
-import Auth from "./authorization/Auth";
-import { URL } from '../../asset/utils/types';
 
 class Header extends Component {
   btnList: Component[] = [];
@@ -15,12 +13,9 @@ class Header extends Component {
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'header', 'header');
-
-    // const namesBtns: string[] = ['Textbook', 'Audio Call', 'Sprint', 'Statistic'];
     const wrapper = new Component(this.node, 'div', 'wrapper');
     this.mainBtn = new Component(wrapper.node, 'button', 'logo', 'RSLang');
     this.mainBtn.node.setAttribute('id', 'main');
-
 
     const nav = new Component(wrapper.node, 'nav', 'navigation');
     const menu = new Component(nav.node, 'div', 'navigation-menu');

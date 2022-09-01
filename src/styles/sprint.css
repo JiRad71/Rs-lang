@@ -1,0 +1,93 @@
+@import './timer.css';
+
+.game-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.close-btn {
+ align-self: flex-end;
+}
+
+.timer-container {
+  width: 140px;
+  height: 140px;
+  position: relative;
+}
+
+.progress {
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.progress__item {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+  display: block;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.total-title {
+  text-align: center;
+}
+
+.total-title__scale {
+  display: block;
+}
+
+.passed {
+  background-color: red;
+}
+
+.question-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.question {
+  font-size: 50px;
+  border-bottom: 2px solid black;
+  padding: 50px;
+  margin: 0;
+}
+
+.translate {
+  font-size: 30px;
+  margin: 0;
+  padding: 50px;
+
+}
+
+.btn-answer {
+  width: 150px;
+  height: 60px;
+  cursor: pointer;
+  color: white;
+  margin: 10px;
+  border: 5px solid lightblue;
+  border-radius: 15px;
+}
+
+.btn-true {
+  background-color: rgb(9, 191, 9);
+}
+
+.btn-false {
+  background-color: rgb(185, 27, 53);
+}

@@ -1,4 +1,3 @@
-import { group } from "console";
 import Component from "../../../common/Component";
 import { IWordsData } from '../../../asset/utils/types'
 import { URL } from '../../../asset/utils/types'
@@ -23,8 +22,13 @@ class TextBook extends Component {
     this.currentPageIndex = 1;
     this.words = new Component(this.node, 'div', 'words');
     this.itemWrapper = new Component(this.words.node, 'div', 'words');
-
-    this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`);
+    if (!localStorage.getItem('currChapter')) {
+      localStorage.setItem('currChapter', `${this.currentChapter}`);
+      localStorage.setItem('currPage', `${this.currentPage}`);
+      this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`);
+    } else {
+      this.getItemWord(`${URL.url}${URL.group}${localStorage.getItem('currChapter')}${URL.page}${localStorage.getItem('currPage')}`);
+    }
 
     const pagination = new Component(this.node, 'div', 'pagination')
     const buttonStart = new Component(pagination.node, 'div', 'button_start none_active', '&lt;&lt;')
@@ -46,6 +50,7 @@ class TextBook extends Component {
       if (this.currentPage < 29) {
         this.currentPage++
         this.currentPageIndex++
+        localStorage.setItem('currPage', `${this.currentPage}`);
         this.updatePagginator();
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       } else { buttonRight.node.classList.add('none_active') }
@@ -59,6 +64,7 @@ class TextBook extends Component {
       if (this.currentPage) {
         this.currentPage--
         this.currentPageIndex--
+        localStorage.setItem('currPage', `${this.currentPage}`);
         this.updatePagginator();
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       }
@@ -71,6 +77,7 @@ class TextBook extends Component {
     buttonEnd.node.onclick = () => {
       this.currentPage = 29;
       this.currentPageIndex = 30;
+      localStorage.setItem('currPage', `${this.currentPage}`);
       this.updatePagginator();
       this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       buttonStart.node.classList.remove('none_active')
@@ -82,6 +89,7 @@ class TextBook extends Component {
     buttonStart.node.onclick = () => {
       this.currentPage = 0;
       this.currentPageIndex = 1;
+      localStorage.setItem('currPage', `${this.currentPage}`);
       this.updatePagginator();
       this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       buttonStart.node.classList.add('none_active')
@@ -97,6 +105,8 @@ class TextBook extends Component {
         this.currentChapter = i;
         this.currentPage = 0;
         this.currentPageIndex = 1;
+        localStorage.setItem('currChapter', `${this.currentChapter}`);
+        localStorage.setItem('currPage', `${this.currentPage}`);
         this.updatePagginator();
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       }
@@ -124,7 +134,8 @@ class TextBook extends Component {
           this.card = new Card(this.itemWrapper.node, element);
         });
       }
-    });
+    })
+    .catch(() => console.log('Войдите в аккаунт для того, что бы продолжить'));
   }
 
   private async getWord(url: string) {
