@@ -10,9 +10,12 @@ type IGameResults = {
 class GameOverPage extends Component {
   onNext: () => void;
   onCategories: (categories: string) => void
-  resultTable: Component<HTMLElement>;
-  resultTr: Component<HTMLElement>;
+  resultList: Component<HTMLElement>;
+  resultRight: Component<HTMLElement>;
   game: Component<HTMLElement>;
+  resultWrong: Component<HTMLElement>;
+  resultRightItem: Component<HTMLElement>;
+  resultWrongItem: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement, results: IGameResults) {
     super(parentNode);
@@ -21,53 +24,51 @@ class GameOverPage extends Component {
     let countRight = 0
     let countWrong = 0
 
-    const resultTable = new Component(this.game.node, 'table', '', '')
-    this.resultTr = new Component(resultTable.node, 'tr', '', '')
-    const resultTdAnswer = new Component(this.resultTr.node, 'td', '', 'Ответ')
-    const resultTdTranslate = new Component(this.resultTr.node, 'td', '', 'Перевод')
-
-    const aresults = results.map((it) => {
-      return it.rightAnswer.translate === it.userAnswer.translate ? it.rightAnswer : it.userAnswer
-    })
+    const resultList = new Component(this.game.node, 'div', 'result-list', '')
+    this.resultRight = new Component(resultList.node, 'div', 'result-right', '')
+    const headerRight = new Component(this.resultRight.node, 'h3', 'heading', 'Правильные ответы')
 
 
     results.forEach(i => {
       const voiceRight = new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`)
 
       if (i.rightAnswer.translate === i.userAnswer.translate) {
-        this.resultTr = new Component(resultTable.node, 'tr', 'rightAnswer', '')
-        new Component(this.resultTr.node, 'td', '', `${i.rightAnswer.translate}`)
-        new Component(this.resultTr.node, 'td', '', `${i.rightAnswer.word}`)
-        const voiceRightAnswer = new Component(this.resultTr.node, 'td', 'voice', '')
+        this.resultRightItem = new Component(this.resultRight.node, 'p', 'rightAnswer', '')
+        const voiceRightAnswer = new Component(this.resultRightItem.node, 'span', 'voice-stat', '')
         voiceRightAnswer.node.onclick = () => {
           new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`).play();
         }
         voiceRightAnswer.node.append(voiceRight)
-        new Component(this.resultTr.node, 'td', '', 'Знаю')
+        new Component(this.resultRightItem.node, 'span', '', ` ${i.rightAnswer.translate} - `)
+        new Component(this.resultRightItem.node, 'span', '', `${i.rightAnswer.word}`)
         countRight++
-
       }
     })
+    const countRightComponent = new Component(this.resultRight.node, 'div', 'count-right', 'Знаю всего: ');
+    const countRightComponentNumber = new Component(countRightComponent.node, 'span', 'count-right-number', `${countRight}`);
+
+
+    this.resultWrong = new Component(resultList.node, 'div', '', '')
+    const headerWrong = new Component(this.resultWrong.node, 'h3', 'heading', 'Ошибочные ответы')
 
     results.forEach(i => {
       const voiceWrong = new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`)
 
-
       if (i.rightAnswer.translate !== i.userAnswer.translate) {
-        this.resultTr = new Component(resultTable.node, 'tr', 'falseAnswer', '')
-        new Component(this.resultTr.node, 'td', '', `${i.userAnswer.translate}`)
-        new Component(this.resultTr.node, 'td', '', `${i.userAnswer.word}`)
-        const voiceWrongAnswer = new Component(this.resultTr.node, 'td', 'voice', '')
+        this.resultWrongItem = new Component(this.resultWrong.node, 'p', 'falseAnswer', '')
+        const voiceWrongAnswer = new Component(this.resultWrongItem.node, 'span', 'voice-stat', '')
         voiceWrongAnswer.node.onclick = () => {
           new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`).play();
         }
         voiceWrongAnswer.node.append(voiceWrong)
-        new Component(this.resultTr.node, 'td', '', 'Не знаю')
+        new Component(this.resultWrongItem.node, 'span', '', ` ${i.userAnswer.translate} - `)
+        new Component(this.resultWrongItem.node, 'span', '', `${i.userAnswer.word}`)
         countWrong++
       }
     })
-    const countRightComponent = new Component(this.game.node, 'div', 'count-right', `${countRight}`);
-    const countWrongComponent = new Component(this.game.node, 'div', 'count-Wrong', `${countWrong}`);
+    const countWrongComponent = new Component(this.resultWrong.node, 'p', 'count-wrong', 'Ошибок всего: ');
+    const countWrongComponentNumber = new Component(countWrongComponent.node, 'span', 'count-wrong-number', `${countWrong}`);
+
 
     const categoriesButton = new Component(this.node, 'button', 'category-button', 'К выбору категории')
     categoriesButton.node.onclick = () => this.onCategories('categories')

@@ -16,7 +16,7 @@ class CategoriesPage extends Component {
     this.buttons = new Component(this.game.node, 'div', 'chapters');
 
     for (let i = 0; i < 6; i++) {
-      const button = new Component(this.buttons.node, 'button', 'chapter', `Раздел ${(i + 1).toString()}`)
+      const button = new Component(this.buttons.node, 'button', `chapter${(i + 1).toString()} chapter-categories`, `Раздел ${(i + 1).toString()}`)
       button.node.onclick = () => this.onSelect(i)
     }
   }

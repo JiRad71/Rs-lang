@@ -39,7 +39,7 @@ class GameFildPage extends Component {
       onFinish()
       return
     }
-    this.progressIndicator.node.textContent = `${index + 1} слово из ${questions.length}`
+    this.progressIndicator.node.textContent = `${index + 1}-е слово из ${questions.length}`
     this.answersIndicator.node.innerHTML = this.results.map((it) => {
       return it.rightAnswer.translate === it.userAnswer.translate ? `<span class="right-answer"></span>` : `<span class="false-answer"></span>`
     }).join(' ')

@@ -14,9 +14,6 @@ export interface Ianswers {
 
 export class DataModel {
   data: Array<IWordsData>
-  data1: Array<IWordsData>;
-  data2: Array<IWordsData>;
-  data3: Array<IWordsData>;
   dataRes: IWordsData[];
   constructor() {
     this.data

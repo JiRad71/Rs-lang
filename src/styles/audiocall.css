@@ -21,10 +21,23 @@
   filter: invert(30%) sepia(20%) saturate(13%) hue-rotate(14deg) brightness(97%) contrast(88%);
   cursor: pointer;
   transition: .5s;
-  margin-bottom: 12vh;
+  margin-bottom: 5vh;
 }
 
-.voice:hover {
+.voice-stat {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url(../asset/Speaker_Icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(30%) sepia(20%) saturate(13%) hue-rotate(14deg) brightness(97%) contrast(88%);
+  cursor: pointer;
+  transition: .5s;
+}
+
+.voice:hover,
+.voice-stat:hover {
   filter: invert(0%) sepia(0%) saturate(7489%) hue-rotate(296deg) brightness(94%) contrast(103%);
 }
 
@@ -61,12 +74,17 @@
   box-shadow: none;
 }
 
-.rightAnswer {
-  background-color: green;
+.rightAnswer,
+.falseAnswer {
+  display: flex;
+  gap: 5px;
+  color: #4a4a4a;
+  font-size: 1.4rem;
 }
 
-.falseAnswer {
-  background-color: red;
+.falseAnswer span,
+.rightAnswer span {
+  align-self: center;
 }
 
 .category-button {
@@ -121,6 +139,14 @@
   border: 1px solid black;
   font-weight: bold;
   transition: .5s;
+  width: 200px;
+  height: 60px;
+}
+
+@media (max-width:850px) {
+  .answer-button {
+    width: 120px;
+  }
 }
 
 .answer-button:hover {
@@ -138,4 +164,48 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.count-right-number {
+  display: inline-block;
+  padding: 0px 15px;
+  border-radius: 14px;
+  background-color: #67ff30;
+  color: white;
+}
+
+.count-wrong-number {
+  display: inline-block;
+  padding: 0px 15px;
+  border-radius: 14px;
+  background-color: #ff3030;
+  color: white;
+}
+
+.chapter1 {
+  background-color: #ff3030;
+}
+
+.chapter2 {
+  background-color: #ffa930;
+}
+
+.chapter3 {
+  background-color: #ffff30;
+}
+
+.chapter4 {
+  background-color: #60ff30;
+}
+
+.chapter5 {
+  background-color: #30dcff;
+}
+
+.chapter6 {
+  background-color: #ff30dc;
+}
+
+.chapter-categories:hover {
+  color: white;
 }
