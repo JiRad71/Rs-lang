@@ -1,10 +1,7 @@
-import Card from '../../app/pages/textBook/card';
 import Component from '../../common/Component';
-import { URL, IWordsData, IUserData, ICreateUserWord, IUserStat, IUsersAnswer, IUserWordsData } from './types'
+import { URL, IWordsData, IUserData, ICreateUserWord, IUserStat, IWordPerDay, ICreateStat } from './types'
 
 export class Request {
-  constructor() {
-  }
 
   public async getWord(url: string) {
     const resp = await fetch(url);
@@ -145,6 +142,53 @@ export class Request {
       body: JSON.stringify(data),
     });
     return resp.json();
+  }
 
+  async getStatistic() {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.stat}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return resp.json();
+  }
+
+  async putStatistic(data: IUserStat) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.stat}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return resp.json();
+  }
+
+  async getWordPerDay() {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.settings}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return resp.json();
+  }
+
+  async putWordPerDay(data: IWordPerDay) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.settings}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return resp.json();
   }
 }

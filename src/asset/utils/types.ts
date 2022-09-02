@@ -16,7 +16,8 @@ export enum URL {
   stat = 'statistics',
   aggregatedWords = 'aggregatedWords',
   wordPerPage = 'wordsPerPage=20',
-  filter = 'filter='
+  filter = 'filter=',
+  settings = 'settings',
 }
 
 export interface IWordsData {
@@ -57,26 +58,51 @@ export interface IUserWordsData {
   id: string,
   difficulty: string,
   wordId: string,
-  optional?: createUserWordOption,
+  optional?: ICreateUserWordOption,
 }
 
 export interface ICreateUserWord {
   difficulty: string,
-  optional?: createUserWordOption,
+  optional?: ICreateUserWordOption,
 }
 
-export interface createUserWordOption {
+export interface ICreateUserWordOption {
   rightAnswer: number,
   falseAnswer: number,
+  used?: boolean,
 }
 
 export interface IUserStat {
   learnedWords: number,
   optional?: {
-    game: string,
-    successCount: number,
-    failCount: number,
-    page: number,
-    group: number,
+    date?: string,
+    newWords?: number,
+    learnedWords?: number,
+    rightAnswers?: number,
+    sprint?: {
+      newWords: number,
+      rightAnswers: number,
+      series: number,
+    },
+    audioCall?: {
+      newWords: number,
+      rightAnswers: number,
+      series: number,
+    },
   }
+}
+
+export interface ICreateStat {
+  learnedWords: number,
+  optional?: {
+    learnedWords?: number,
+    date?: string, 
+  }
+}
+
+export interface IWordPerDay {
+  wordsPerDay: number,
+  optional?: {
+    value: string,
+  },
 }
