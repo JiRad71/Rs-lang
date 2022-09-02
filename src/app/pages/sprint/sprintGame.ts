@@ -70,6 +70,7 @@ class SprintGame extends Component {
     }
     gameField.onClose = () => {
       gameField.destroy();
+      gameField.timer.off();
       this.mainUpdate();
     }
     this.gameCycle(gameField, data, index, page);
