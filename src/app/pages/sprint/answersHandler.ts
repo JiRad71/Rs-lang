@@ -1,6 +1,6 @@
 import GameField from './gameField';
 import Question from './question';
-import { IUsersAnswer } from '../../../asset/utils/types';
+import { IUsersAnswer, IUserWordsData } from '../../../asset/utils/types';
 
 class AnswersHandler {
   answers: IUsersAnswer[];
@@ -9,13 +9,19 @@ class AnswersHandler {
   gameField: GameField;
   scale: number;
   countAnswer = 0;
+  newWords: number;
+  series: number;
+  seriesList: number[];
 
   constructor(gameField: GameField) {
     this.gameField = gameField;
     this.answers = [];
     this.rightAnswers = [];
     this.failAnswers = [];
+    this.newWords = 0;
     this.scale = 10;
+    this.series = 0;
+    this.seriesList = [];
   }
 
   addAnswer(data: IUsersAnswer, right: boolean) {
@@ -32,6 +38,11 @@ class AnswersHandler {
 
   getLearnWord() {
     return this.rightAnswers;
+  }
+
+  getBestSeries() {
+    const sort = this.seriesList.sort((a, b) => a - b);
+    return sort[sort.length - 1];
   }
 
   getHardWord() {
@@ -67,12 +78,14 @@ class AnswersHandler {
         this.scale *= 2;
         this.countAnswer = 0;
       }
-
+      this.series += 1;
       this.addAnswer(data, true);
 
     } else {
       this.gameField.circles.forEach((e) => e.node.classList.remove('passed'));
       this.scale = 10;
+      this.seriesList.push(this.series);
+      this.series = 0;
       this.countAnswer = 0;
       this.addAnswer(data, false);
     }

@@ -7,19 +7,21 @@ import AudioCall from './pages/audiocall/audioCall';
 import SprintGame from './pages/sprint/sprintGame';
 import Auth from './pages/authorization/Auth';
 import Statistic from './pages/statistic/statistic';
-import { IUserData, URL } from '../asset/utils/types';
+import { IUserData, IUserStat, URL } from '../asset/utils/types';
+import { Request } from "../asset/utils/requests";
 
 class Controller extends Component {
   wrapperMain: Component<HTMLElement>;
-  onReqest: () => void;
   header: Header;
   textbook: TextBook;
   auth: Auth;
   root: Component<HTMLElement>;
   footer: Footer;
+  reqest: Request;
+  wrapper: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement) {
-    super(parentNode);
+    super(null);
     this.header = new Header(parentNode);
 
     this.header.node.setAttribute('id', 'header');
@@ -28,6 +30,8 @@ class Controller extends Component {
     this.footer = new Footer(null);
     this.footer.node.setAttribute('id', 'footer');
     const main = new MainPage(this.wrapperMain.node);
+
+    this.reqest = new Request();
   
     this.auth = new Auth();
     this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
@@ -108,26 +112,62 @@ class Controller extends Component {
       this.footer.destroy();
       const authElem = this.auth.render(this.wrapperMain.node);
       this.wrapperMain.node.replaceChild(authElem, this.wrapperMain.node.childNodes[0]);
+
+      this.auth.onLogin = (inputsData: IUserData) => {
+        this.auth.addOrGetUser(inputsData, `${URL.shortUrl}${URL.login}`);
+      }
+
       this.auth.onSignin = (inputsData: IUserData) => {
         this.auth.addOrGetUser(inputsData, `${URL.shortUrl}${URL.signin}`)
           .then((resp) => resp.json())
           .then((resp) => {
             window.localStorage.setItem('token', `${resp.token}`);
             window.localStorage.setItem('usersId', `${resp.userId}`);
-            setTimeout(() => {
-              window.localStorage.removeItem('token');
-            }, 14400000) 
+          })
+          .then(() => {
+            this.checkStat();
+          })
+          .then(() => {
+            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+          })
+          .then(() => {
+            this.wrapperMain.destroy();
+            location.hash = 'main';
           })
           .catch(() => {
             const message = new Component(authElem, 'span', 'message', 'Неверный пароль.');
             setTimeout(() => message.destroy(), 5000);
           })
-          .then(() => {
-            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
-
-          })
       }
       this.footer = new Footer(document.body);
+    }
+  }
+
+  async checkStat() {
+    try {
+      const stat = await this.reqest.getStatistic();
+      console.log(stat);
+      
+    } catch (error) {
+      const newStat: IUserStat = await this.reqest.putStatistic({
+        learnedWords: 0,
+        optional: {
+          date: new Date().toLocaleDateString(),
+          newWords: 0,
+          learnedWords: 0,
+          rightAnswers: 0,
+          sprint: {
+            newWords: 0,
+            rightAnswers: 0,
+            series: 0,
+          },
+          audioCall: {
+            newWords: 0,
+            rightAnswers: 0,
+            series: 0,
+          },
+        }
+      });
     }
   }
 

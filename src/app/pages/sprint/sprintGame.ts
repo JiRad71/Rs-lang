@@ -6,6 +6,7 @@ import FinishGame from './finishGame';
 import { random } from '../../../asset/utils/usefull';
 import Question from './question';
 import AnswersHandler from './answersHandler';
+import { Request } from '../../../asset/utils/requests';
 import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord} from '../../../asset/utils/types';
 
 class SprintGame extends Component {
@@ -14,10 +15,12 @@ class SprintGame extends Component {
   chapter: string;
   page: string;
   counter: number;
+  request: Request;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'sprint-game');
     this.counter = 0;
+    this.request = new Request();
     this.chapter = localStorage.getItem('currChapter');
     this.page = localStorage.getItem('currPage');
     if (this.chapter) {
@@ -106,10 +109,11 @@ class SprintGame extends Component {
     finish.btnRestart.destroy();
     this.getLearnedWord().then((data: IUserStat) => {
       const count = this.answersHandler.getLearnWord().length + data.learnedWords;
-      this.putLearnedWord({learnedWords: count});
-      this.updateUserWords(this.answersHandler.rightAnswers);
-      this.updateUserWords(this.answersHandler.failAnswers);
-      this.answersHandler.clear();
+      // this.putLearnedWord({learnedWords: count, optional: {}});
+      const right = this.updateUserWords(this.answersHandler.rightAnswers);
+      const fail = this.updateUserWords(this.answersHandler.failAnswers);
+      Promise.all([right, fail]).then(() => this.saveResults(this.answersHandler.answers.length, this.answersHandler.rightAnswers.length))
+        .then(() => this.answersHandler.clear());
       this.counter = 0;
     })
       .catch(() => console.log('Вы не авторизованы'));
@@ -118,6 +122,52 @@ class SprintGame extends Component {
       finish.destroy();
       location.hash = 'textbook';
     }
+  }
+
+  saveResults(countAnswer: number, countRightAnswer: number) {
+    this.request.getStatistic().then((data: IUserStat) => {
+      const count = countRightAnswer + data.learnedWords;
+      console.log(this.answersHandler.newWords);
+      console.log( data.optional.newWords);
+      
+      if (new Date().toLocaleDateString() === data.optional.date) {
+        this.request.putStatistic({
+          learnedWords: count,
+          optional: {
+            date: new Date().toLocaleDateString(),
+            rightAnswers: data.optional.sprint.rightAnswers ?
+            (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
+            : Math.floor(100 / (countAnswer / countRightAnswer)),
+            newWords: data.optional.newWords + this.answersHandler.newWords,
+            sprint: {
+              newWords: data.optional.sprint.newWords ? this.answersHandler.newWords + data.optional.sprint.newWords : this.answersHandler.newWords,
+              rightAnswers: data.optional.sprint.rightAnswers ?
+                (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
+                : Math.floor(100 / (countAnswer / countRightAnswer)),
+              series: this.checkBestSeries(data.optional.sprint.series, this.answersHandler.getBestSeries()),
+            }
+          }
+        });
+      } else {
+        this.request.putStatistic({
+          learnedWords: count,
+          optional: {
+            date: new Date().toLocaleDateString(),
+            rightAnswers: countAnswer,
+            sprint: {
+              newWords: this.answersHandler.newWords,
+              rightAnswers: Math.floor(100 / (countAnswer / countRightAnswer)),
+              series: this.answersHandler.getBestSeries(),
+            }
+          }
+        });
+      }
+      
+    })
+  }
+
+  checkBestSeries(series: number, newSeries: number) {
+    return series > newSeries ? series : newSeries;
   }
 
   toHandle(answer: boolean, question: Question) {
@@ -180,10 +230,12 @@ class SprintGame extends Component {
         if (word) {
           word.difficulty = 'easy';
           word.optional.rightAnswer += 1;
+          word.optional.used = true;
           this.createUserWord(word.wordId, {difficulty: word.difficulty, optional: word.optional}, 'PUT');
         } else {
           const update: ICreateUserWord = {difficulty: 'normal'};
-          update.optional = {rightAnswer: 1, falseAnswer: 0};
+          update.optional = {rightAnswer: 1, falseAnswer: 0, used: true};
+          this.answersHandler.newWords += 1;
           this.createUserWord(data[i].id, update, 'POST');
         }
       }
@@ -192,11 +244,13 @@ class SprintGame extends Component {
         const word = userWords.find((e) => e.wordId === data[i].id);
         if (word) {
           word.optional.falseAnswer += 1;
+          word.optional.used = true;
           word.difficulty = +word.optional.falseAnswer > +word.optional.rightAnswer ? 'hard' : 'normal';
           this.createUserWord(word.wordId, {difficulty: word.difficulty, optional: word.optional}, 'PUT');
         } else {
           const update: ICreateUserWord = {difficulty: 'normal'};
-          update.optional = {rightAnswer: 0, falseAnswer: 1};
+          this.answersHandler.newWords += 1;
+          update.optional = {rightAnswer: 0, falseAnswer: 1, used: true};
           this.createUserWord(data[i].id, update, 'POST');
         }
       }
