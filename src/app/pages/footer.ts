@@ -12,7 +12,6 @@ class Footer extends Component {
     const linkRSS = new Component(contentRight.node, 'a', 'right_link');
     linkRSS.node.setAttribute('href', 'https://rs.school/index.html');
 
-
   }
 }
 
