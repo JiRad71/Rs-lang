@@ -85,6 +85,7 @@ class Controller extends Component {
     if (route && route === 'textbook') {
       this.footer.destroy();
       this.wrapperMain.destroy();
+      localStorage.removeItem('hardWord');
       this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
       const textbook = new TextBook(this.wrapperMain.node);
       this.footer = new Footer(document.body);
