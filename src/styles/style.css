@@ -14,8 +14,13 @@ button {
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  color: #ffffff;
+  /* color: #ffffff; */
   text-decoration: none;
+}
+
+.header button,
+.footer {
+  color: #ffffff;
 }
 
 @media (max-width: 950px) {
@@ -40,12 +45,13 @@ button:hover {
 .main,
 .footer {
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0;
 }
 
 .header {
   height: 70px;
-  background: #202020;
+  background: #09003d;
+  padding: 0 20px;
 }
 
 .header button {
@@ -170,7 +176,8 @@ main a {
 
 .footer {
   max-width: 100%;
-  background-color: #202020;
+  background-color: #09003d;
+  padding: 20px;
 }
 
 .footer .wrapper {
