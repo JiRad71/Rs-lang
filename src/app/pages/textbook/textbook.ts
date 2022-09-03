@@ -100,6 +100,7 @@ class TextBook extends Component {
     for (let i = 0; i < 6; i++) {
       const chapter = new Component(chapters.node, 'div', 'chapter', `Раздел ${i + 1}`)
       chapter.node.onclick = () => {
+        localStorage.removeItem('hardWord')
         this.currentChapter = i;
         this.currentPage = 0;
         this.currentPageIndex = 1;
@@ -116,6 +117,7 @@ class TextBook extends Component {
     if (localStorage.getItem('token')) {
       this.chapterHard = new Component(chapters.node, 'div', 'chapter', 'Сложные слова');
       this.chapterHard.node.onclick= ()=> {
+        localStorage.setItem('hardWord', '1')
         this.currentPage = 0;
         this.currentPageIndex = 1;
         this.buttonStart.node.classList.add('none_active')
