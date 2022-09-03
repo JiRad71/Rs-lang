@@ -26,10 +26,11 @@ export class DataModel {
       const answers: Array<Ianswers> = []
       const answersCount = 4
       const correctAnswerIndex = Math.floor(Math.random() * answersCount)
+      const correctAnswer1 = this.dataRes[Math.floor(Math.random() * this.dataRes.length)]
       const correctAnswer = {
-        word: this.dataRes[i].word,
-        translate: this.dataRes[i].wordTranslate,
-        voice: this.dataRes[i].audio
+        word: correctAnswer1.word,
+        translate: correctAnswer1.wordTranslate,
+        voice: correctAnswer1.audio
       }
 
       for (let j = 0; j < answersCount; j++) {
@@ -50,7 +51,7 @@ export class DataModel {
       }
 
       const question: IQuestionData = {
-        voiceUrl: this.dataRes[i].audio,
+        voiceUrl: correctAnswer1.audio,
         answers: answers,
         correctAnswerIndex: correctAnswerIndex
       }
