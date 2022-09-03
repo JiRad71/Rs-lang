@@ -5,7 +5,7 @@ class MainPage extends Component {
     super(parentNode, 'div', 'main');
     
     const about = new Component(this.node, 'div', 'about');
-    const title = new Component(about.node, 'h2', '', 'О приложении');
+    const title = new Component(about.node, 'h2', 'main-title', 'О приложении');
     const text = new Component(about.node, 'p', '');
     text.node.textContent = `RS Lang – приложение для изучения иностранных слов, включающее электронный учебник с базой слов для изучения, мини-игры для их повторения, страницу статистики для отслеживания индивидуального прогресса.`;
 

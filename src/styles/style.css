@@ -110,7 +110,7 @@ button:hover {
 }
 
 .root{ 
-  min-height: calc(100% - 165px);
+  min-height: calc(100% - 140px);
 }
 
 .wrapper-main {
@@ -120,6 +120,11 @@ button:hover {
 .main .wrapper {
   max-width: 1440px;
   margin: 0 auto;
+}
+
+.main-title {
+  padding: 20px 0;
+  margin: 0;
 }
 
 .heading {

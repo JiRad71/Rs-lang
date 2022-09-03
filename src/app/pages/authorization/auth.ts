@@ -5,12 +5,14 @@ import { IUserData, URL } from '../../../asset/utils/types';
 class Auth {
   parent: HTMLElement;
   onSignin: (data: IUserData) => void;
+  onLogin: (data: IUserData) => void;
   inputsData: IUserData;
+  title: Component<HTMLElement>;
 
   render(parentNode: HTMLElement) {
     const auth = new Component(parentNode, 'div', 'authorization');
     const form = new Component(auth.node, 'form', 'form');
-    const title = new Component(form.node, 'h3', 'title', 'Bведите адрес электронной почты и пароль');
+    this.title = new Component(form.node, 'h3', 'title', 'Bведите адрес электронной почты и пароль');
     const inputEmail = document.createElement('input');
     inputEmail.className = 'input';
     inputEmail.setAttribute('type', 'email');
@@ -40,21 +42,19 @@ class Auth {
 
     this.inputsData = { email: inputEmail.value, password: inputPassword.value };
 
-    buttonLogin.node.onclick = (e: Event) => {
-      e.preventDefault();
-      const data = { email: inputEmail.value, password: inputPassword.value };
-
-      if (!inputEmail.value || !inputPassword.value) {
+    buttonLogin.node.onclick = () => {
+      if (!this.inputsData.email || !this.inputsData.password) {
         const message = new Component(form.node, 'span', 'message', 'Please enter your email and password.');
         setTimeout(() => message.destroy(), 5000);
       }
 
-      if (inputPassword.value.length < 8) {
+      if (this.inputsData.password.length < 8) {
         const message = new Component(form.node, 'span', 'message', 'The password must contain at least 8 characters .');
         setTimeout(() => message.destroy(), 5000);
       }
-
-      this.addOrGetUser(data, `${URL.shortUrl}${URL.login}`);
+      this.onLogin(this.inputsData);
+      this.title.node.textContent = `Ваша учетная запись создана, теперь можете войти`;
+      buttonLogin.destroy();
     };
 
     buttonSignin.node.onclick = () => {
