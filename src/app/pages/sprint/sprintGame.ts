@@ -256,7 +256,6 @@ class SprintGame extends Component {
             used: true,
             method: 'POST',
           };
-
           this.adapter.add(newData);
           this.answersHandler.newWords += 1;
         }
@@ -286,8 +285,8 @@ class SprintGame extends Component {
             used: true,
             method: 'POST',
           }
-
           this.adapter.add(newData);
+          this.answersHandler.newWords += 1;
         }
       }
     }
