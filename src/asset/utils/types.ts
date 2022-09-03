@@ -90,7 +90,7 @@ export interface IUserStat {
       series: number,
     },
     audioCall?: {
-      newWords: number,
+      newWords?: number,
       rightAnswers: number,
       series: number,
     },
@@ -101,7 +101,7 @@ export interface ICreateStat {
   learnedWords: number,
   optional?: {
     learnedWords?: number,
-    date?: string, 
+    date?: string,
   }
 }
 

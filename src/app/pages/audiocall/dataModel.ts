@@ -23,8 +23,6 @@ export class DataModel {
   constructor() {
     this.data
     this.request = new Request();
-    console.log(this.data);
-
   }
 
   public getQuestions() {
@@ -35,7 +33,7 @@ export class DataModel {
       const answersCount = 4
       const correctAnswerIndex = Math.floor(Math.random() * answersCount)
       const correctAnswer1 = this.dataRes[Math.floor(Math.random() * this.dataRes.length)]
-      console.log(this.dataRes);
+
 
       const correctAnswer = {
         word: correctAnswer1.word,
@@ -86,7 +84,6 @@ export class DataModel {
       }
 
       for (let j = 0; j < answersCount; j++) {
-        console.log(this.varWords, 'asd');
 
         if (correctAnswerIndex == j) {
           answers.push(correctAnswer)
