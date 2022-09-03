@@ -21,7 +21,7 @@ class FinishGame extends Component {
 
     const table = new Component(wrapper.node, 'table', 'results-table');
 
-    const row = new Component(table.node, 'tr', 'table-row');
+    const row = new Component(table.node, 'tr', 'table-game-row');
     const column1 = new Component(row.node, 'th', 'table-column', 'Номер п/п');
     const column2 = new Component(row.node, 'th', 'table-column', 'Слово');
     const column3 = new Component(row.node, 'th', 'table-column', 'Вариант ответа');
@@ -29,7 +29,7 @@ class FinishGame extends Component {
     const column5 = new Component(row.node, 'th', 'table-column', 'Правильный ответ');
 
     results.forEach((res, i) => {
-      const row = new Component(table.node, 'tr', 'table-row');
+      const row = new Component(table.node, 'tr', 'table-game-row');
       const frame = new Component(row.node, 'td', 'table-column', `${i+1}`);
       const frame1 = new Component(row.node, 'td', 'table-column', `${res.question}`);
       const frame3 = new Component(row.node, 'td', 'table-column', `${res.translate}`);

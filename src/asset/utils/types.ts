@@ -70,6 +70,7 @@ export interface IUsersAnswer {
   translate: string,
   usersAnswer: string,
   result: boolean,
+  used?: boolean
 }
 
 export interface SprintStat {
@@ -89,7 +90,7 @@ export interface InputData {
 }
 
 export interface IUserWordsData {
-  id: string,
+  id?: string,
   difficulty: string,
   wordId: string,
   optional?: ICreateUserWordOption,
