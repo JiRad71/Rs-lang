@@ -89,7 +89,6 @@ class Auth {
         .then((data) => data)
         .then((data) => {
           authBtn.node.classList.add('hidden');
-          authUser.node.textContent = `${data.email}`;
           if (location.hash === '#textbook') {
             authUser.node.classList.add('hidden');
           } else {
