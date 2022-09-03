@@ -76,6 +76,14 @@ button:hover {
   margin-left: 30px;
 }
 
+.auth .navigation-menu__item:last-child {
+  width: 32px;
+  height: 32px;
+  list-style-type: none;
+  margin-left: 30px;
+  background: url('../asset/user.png');
+}
+
 @media (max-width: 768px) {
   .navigation-menu__item {
     margin-left: 10px;
