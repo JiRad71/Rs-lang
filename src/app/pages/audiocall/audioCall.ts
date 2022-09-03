@@ -3,47 +3,79 @@ import CategoriesPage from "./categoriesPage";
 import GameFildPage from "./gameFildPage";
 import GameOverPage from "./gameOverPage";
 import { DataModel } from "./dataModel";
-import { URL } from '../../../asset/utils/types'
+import { Request } from '../../../asset/utils/requests'
+import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord } from '../../../asset/utils/types'
 
 class AudioCall extends Component {
   model: DataModel;
   categoryIndex: number;
+  request: Request
   preloader: Component<HTMLElement>;
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'audio-call');
+    this.request = new Request();
 
     this.mainCycle()
   }
 
   private gameCycle(categoryIndex: number) {
     this.preloader = new Component(this.node, 'div', 'preloader');
-    const resUrl = []
-    for (let i = 0; i < 30; i++) {
-      resUrl.push(`${URL.url}${URL.group}${categoryIndex}${URL.page}${i}`)
-    }
+    if (categoryIndex === 6) {
 
-    this.model = new DataModel()
-    this.model.build(...resUrl).then(res => {
-      this.preloader.destroy();
+      this.model = new DataModel()
+      this.model.buildHard().then(res => {
+        this.preloader.destroy();
 
-      const gameFild = new GameFildPage(this.node, categoryIndex, this.model.getQuestions())
+        const gameFild = new GameFildPage(this.node, categoryIndex, this.model.getQuestionsHard())
 
-      gameFild.onBack = () => {
-        gameFild.destroy()
-        this.mainCycle()
-      }
-
-      gameFild.onFinish = (result) => {
-        gameFild.destroy()
-        const gameOverPage = new GameOverPage(this.node, result)
-
-        gameOverPage.onCategories = () => {
-          gameOverPage.destroy()
+        gameFild.onBack = () => {
+          gameFild.destroy()
           this.mainCycle()
         }
 
+        gameFild.onFinish = (result) => {
+          gameFild.destroy()
+          const gameOverPage = new GameOverPage(this.node, result)
+
+          gameOverPage.onCategories = () => {
+            gameOverPage.destroy()
+            this.mainCycle()
+          }
+
+        }
+      })
+
+    } else {
+      const resUrl = []
+      for (let i = 0; i < 30; i++) {
+        resUrl.push(`${URL.url}${URL.group}${categoryIndex}${URL.page}${i}`)
       }
-    })
+      this.model = new DataModel()
+      this.model.build(resUrl).then(res => {
+        this.preloader.destroy();
+
+        const gameFild = new GameFildPage(this.node, categoryIndex, this.model.getQuestions())
+
+        gameFild.onBack = () => {
+          gameFild.destroy()
+          this.mainCycle()
+        }
+
+        gameFild.onFinish = (result) => {
+          gameFild.destroy()
+          const gameOverPage = new GameOverPage(this.node, result)
+
+          gameOverPage.onCategories = () => {
+            gameOverPage.destroy()
+            this.mainCycle()
+          }
+
+        }
+      })
+    }
+
+
+
   }
 
   private mainCycle() {

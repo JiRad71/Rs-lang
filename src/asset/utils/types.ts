@@ -37,6 +37,11 @@ export interface IWordsData {
   _id: string
 }
 
+export interface IAggregatedWords {
+  paginatedResults: IWordsData[]
+  totalCount: number[]
+}
+
 export interface IUserData {
   email: string,
   password: string,
