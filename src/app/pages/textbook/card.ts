@@ -1,12 +1,17 @@
-import { IWordsData } from "../../../asset/utils/types";
+import { ICreateUserWord, IUserData, IUserStat, IWordsData } from "../../../asset/utils/types";
 import Component from "../../../common/Component";
-
+import { Request } from "../../../asset/utils/requests"
 
 class Card extends Component {
   itemWordsTranslate: Component<HTMLElement>;
+  request: Request;
+  element: IWordsData;
 
   constructor(parentNode: HTMLElement, element: IWordsData) {
     super(parentNode, 'div', 'item');
+    this.request = new Request()
+    this.element = element;
+
     const itemWrapperImg = new Component(this.node, 'div', 'item__img');
     const itemImg = new Component(itemWrapperImg.node, 'img');
     this.itemWordsTranslate = new Component(this.node, 'div', 'item__words-translate');
@@ -37,10 +42,37 @@ class Card extends Component {
     }
   }
 
-  addButtons() {
+  addButtons(difficult?: boolean) {
     const itemButtons = new Component(this.itemWordsTranslate.node, 'div', 'item__buttons');
-    const btnDifficult = new Component(itemButtons.node, 'button', 'difficult', 'Сложное');
+    if (difficult) {
+      const btnDifficult = new Component(itemButtons.node, 'button', 'difficult', 'Сложное');
+      btnDifficult.node.onclick = () => {
+        const userWords: ICreateUserWord = {
+          difficulty: 'hard',
+          optional: {
+            rightAnswer: 0,
+            falseAnswer: 0
+          }
+        }
+        this.request.createUserWord(this.element._id, userWords, 'POST')
+        btnDifficult.node.classList.add('hard')
+        this.destroy();
+      }
+    }
     const btnLearned = new Component(itemButtons.node, 'button', 'learned', 'Изученное');
+    btnLearned.node.onclick = () => {
+      console.log(this.element._id, 'test');
+      this.destroy();
+      this.request.getLearnedWord()
+        .then((data: IUserStat) => {
+          data.learnedWords++;
+          const param = {
+            learnedWords: data.learnedWords
+          }
+          this.request.putLearnedWord(param)
+        })
+      this.request.deleteUserWord(this.element._id);
+    }
   }
 }
 
