@@ -67,9 +67,17 @@ export interface ICreateUserWord {
 }
 
 export interface ICreateUserWordOption {
-  rightAnswer: number,
-  falseAnswer: number,
-  used?: boolean,
+  sprint: {
+    rightAnswer: number,
+    falseAnswer: number,
+    used?: boolean,
+  },
+  audioCall: {
+    rightAnswer: number,
+    falseAnswer: number,
+    used?: boolean,
+  }
+ 
 }
 
 export interface IUserStat {
