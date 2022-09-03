@@ -10,8 +10,6 @@ import { Request } from '../../../asset/utils/requests';
 import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord, IUserWordsDataCastom, ICreateUserWordCastom} from '../../../asset/utils/types';
 import Adapter from '../../../asset/utils/adapter';
 
-
-
 class SprintGame extends Component {
   answersHandler: AnswersHandler;
   question: Question;
@@ -90,7 +88,7 @@ class SprintGame extends Component {
         this.toHandle(true, question);
         if (this.counter >= this.generalDataLength) this.endGame(gameField);
         this.isTextbook(gameField, index, page);
-        
+
       } else if (e.key === 'ArrowRight') {
         this.toHandle(false, question);
         if (this.counter >= this.generalDataLength) this.endGame(gameField);
@@ -108,6 +106,7 @@ class SprintGame extends Component {
   endGame(gameField: GameField) {
     gameField.timer.off();
     gameField.destroy();
+    document.onkeydown = null;
     const finish = new FinishGame(this.node, gameField.score.node.textContent);
     finish.render(this.answersHandler.answers);
     finish.btnRestart.destroy();
@@ -119,6 +118,7 @@ class SprintGame extends Component {
       })
       .then(() => this.answersHandler.clear());
     this.counter = 0;
+
     finish.onClose = () => {
       finish.destroy();
       location.hash = 'textbook';
@@ -128,15 +128,14 @@ class SprintGame extends Component {
   saveResults(countAnswer: number, countRightAnswer: number) {
     this.request.getStatistic().then((data: IUserStat) => {
       const count = countRightAnswer + data.learnedWords;
-      
       if (new Date().toLocaleDateString() === data.optional.date) {
         this.request.putStatistic({
           learnedWords: count,
           optional: {
             date: new Date().toLocaleDateString(),
             rightAnswers: data.optional.sprint.rightAnswers ?
-            (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
-            : Math.floor(100 / (countAnswer / countRightAnswer)),
+              (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
+              : Math.floor(100 / (countAnswer / countRightAnswer)),
             newWords: data.optional.newWords + this.answersHandler.newWords,
             sprint: {
               newWords: data.optional.sprint.newWords ? this.answersHandler.newWords + data.optional.sprint.newWords : this.answersHandler.newWords,
@@ -161,7 +160,7 @@ class SprintGame extends Component {
           }
         });
       }
-      
+
     })
   }
 
@@ -194,7 +193,7 @@ class SprintGame extends Component {
       usersAnswer: answer ? 'Верно' : 'Не верно',
       result: !true,
     };
-   return statData;
+    return statData;
   }
 
   private async getData(index?: number, textbook?: boolean) {
@@ -219,11 +218,13 @@ class SprintGame extends Component {
         const quest = resp[random(0, 19)];
         const falseAnswer = resp[random(0, 19)];
         return [quest, falseAnswer];
-      } 
-      const resp = await this.getUserWords();
-      const quest = await resp[random(0, resp.length - 1)];
-      const falseAnswer = await resp[random(0, resp.length - 1)];
-      return  [quest, falseAnswer];
+      }
+      const resp = await this.request.aggregatedWords(0, `{"userWord.difficulty":"hard"}`)
+      this.generalDataLength = resp[0].paginatedResults.length;
+      this.counter += 1;
+      const quest = resp[0].paginatedResults[random(0, resp[0].paginatedResults.length - 1)];
+      const falseAnswer = resp[0].paginatedResults[random(0, resp[0].paginatedResults.length - 1)];
+      return [quest, falseAnswer];
     } catch (error) {
       console.log('Возможно список сложных слов пуст')
     }
@@ -256,7 +257,6 @@ class SprintGame extends Component {
             used: true,
             method: 'POST',
           };
-
           this.adapter.add(newData);
           this.answersHandler.newWords += 1;
         }
@@ -286,7 +286,6 @@ class SprintGame extends Component {
             used: true,
             method: 'POST',
           }
-
           this.adapter.add(newData);
         }
       }
@@ -295,7 +294,7 @@ class SprintGame extends Component {
   }
 
   async getWords(index: number, page?: string): Promise<IWordsData[]> {
-    const param = !page ? random(0, 29): page;
+    const param = !page ? random(0, 29) : page;
     const resp = await fetch(`${URL.url}${URL.group}${index}${URL.page}${param}`);
     return resp.json();
   }
