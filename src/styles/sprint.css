@@ -147,7 +147,20 @@
 }
 
 .btn-restart,
-.btn-exit,
+.btn-exit {
+  height: 60px;
+  width: 80px;
+  cursor: pointer;
+  color: black;
+  border: 0;
+  border-radius: 15px;
+  transition: 0.3s;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+-4px -4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
 .skills-container button {
   height: 60px;
   cursor: pointer;
@@ -236,6 +249,29 @@
 
 .result-table {
   width: 750px;
+  border: 2px solid black;
+}
+
+.bg-right-answer {
+  background: #99FF66;
+  border: 2px solid black;
+
+}
+
+.bg-fail-answer {
+  background: #CC6666;
+  border: 2px solid black;
+
+}
+
+.table-row {
+  border: 2px solid black;
+
+}
+
+.table-column {
+  border: 2px solid black;
+
 }
 
 @media (max-width: 958px) {

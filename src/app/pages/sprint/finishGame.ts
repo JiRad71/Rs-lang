@@ -21,24 +21,24 @@ class FinishGame extends Component {
 
     const table = new Component(wrapper.node, 'table', 'results-table');
 
-    const row = new Component(table.node, 'tr', '');
-    const column1 = new Component(row.node, 'th', '', 'Номер п/п');
-    const column2 = new Component(row.node, 'th', '', 'Слово');
-    const column3 = new Component(row.node, 'th', '', 'Вариант ответа');
-    const column4 = new Component(row.node, 'th', '', 'Ваш ответ');
-    const column5 = new Component(row.node, 'th', '', 'Правильный ответ');
+    const row = new Component(table.node, 'tr', 'table-row');
+    const column1 = new Component(row.node, 'th', 'table-column', 'Номер п/п');
+    const column2 = new Component(row.node, 'th', 'table-column', 'Слово');
+    const column3 = new Component(row.node, 'th', 'table-column', 'Вариант ответа');
+    const column4 = new Component(row.node, 'th', 'table-column', 'Ваш ответ');
+    const column5 = new Component(row.node, 'th', 'table-column', 'Правильный ответ');
 
     results.forEach((res, i) => {
-      const row = new Component(table.node, 'tr', '');
-      const frame = new Component(row.node, 'td', '', `${i+1}`);
-      const frame1 = new Component(row.node, 'td', '', `${res.question}`);
-      const frame3 = new Component(row.node, 'td', '', `${res.translate}`);
-      const frame4 = new Component(row.node, 'td', '', `${res.usersAnswer}`);
-      const frame2 = new Component(row.node, 'td', '', `${res.rightAnswer}`);
+      const row = new Component(table.node, 'tr', 'table-row');
+      const frame = new Component(row.node, 'td', 'table-column', `${i+1}`);
+      const frame1 = new Component(row.node, 'td', 'table-column', `${res.question}`);
+      const frame3 = new Component(row.node, 'td', 'table-column', `${res.translate}`);
+      const frame4 = new Component(row.node, 'td', 'table-column', `${res.usersAnswer}`);
+      const frame2 = new Component(row.node, 'td', 'table-column', `${res.rightAnswer}`);
       if (res.result) {
-        row.node.style.backgroundColor = '#14c80b';
+        row.node.classList.add('bg-right-answer');
       } else {
-        row.node.style.backgroundColor = '#c80b0e';
+        row.node.classList.add('bg-fail-answer');
       }
     });
 
