@@ -63,6 +63,16 @@ export class Request {
     });
     return resp.json();
   }
+  async aggregatedUserWords(filter: string) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.aggregatedWords}?${URL.filter}${encodeURIComponent(filter)}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    return resp.json();
+  }
   async aggregatedWords(pageNumber: number, filter: string) {
     const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.aggregatedWords}?${URL.page}${pageNumber}&${URL.wordPerPage}&${URL.filter}${encodeURIComponent(filter)}`, {
       headers: {

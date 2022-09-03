@@ -29,6 +29,8 @@
 
 .staistics__games-table {
   width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
 }
 
 .statistics__game-buttons {

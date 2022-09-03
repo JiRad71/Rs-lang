@@ -52,13 +52,19 @@ export interface IUsersAnswer {
   translate: string,
   usersAnswer: string,
   result: boolean,
+  used?: boolean
 }
 
 export interface IUserWordsData {
-  id: string,
+  id?: string,
   difficulty: string,
   wordId: string,
   optional?: ICreateUserWordOption,
+}
+
+export interface IAggregatedWord {
+  paginatedResults: IWordsData[],
+  totalCount: number[]
 }
 
 export interface ICreateUserWord {
@@ -67,12 +73,12 @@ export interface ICreateUserWord {
 }
 
 export interface ICreateUserWordOption {
-  sprint: {
+  sprint?: {
     rightAnswer: number,
     falseAnswer: number,
     used?: boolean,
   },
-  audioCall: {
+  audioCall?: {
     rightAnswer: number,
     falseAnswer: number,
     used?: boolean,

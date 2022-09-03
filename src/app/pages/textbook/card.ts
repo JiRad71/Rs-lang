@@ -49,10 +49,6 @@ class Card extends Component {
       btnDifficult.node.onclick = () => {
         const userWords: ICreateUserWord = {
           difficulty: 'hard',
-          optional: {
-            rightAnswer: 0,
-            falseAnswer: 0
-          }
         }
         this.request.createUserWord(this.element._id, userWords, 'POST')
         btnDifficult.node.classList.add('hard')
@@ -64,10 +60,6 @@ class Card extends Component {
       this.destroy();
       const userWords: ICreateUserWord = {
         difficulty: 'easy',
-        optional: {
-          rightAnswer: 0,
-          falseAnswer: 0
-        }
       }
       this.request.createUserWord(this.element._id, userWords, 'POST')
       this.request.getLearnedWord()

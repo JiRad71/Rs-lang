@@ -165,7 +165,7 @@
   font-weight: bold;
   cursor: pointer;
   border: none;
-  color: #ffffff;
+  color: #000000;
   font-size: 14px;
 }
 
@@ -179,11 +179,11 @@
   width: 50%;
   height: 100%;
   border-radius: 0;
-  background-color: #3e3e3e;
+  background-color: #666565;
   font-weight: bold;
   cursor: pointer;
   border: none;
-  color: #ffffff;
+  color: #000000;
   font-size: 14px;
 }
 
@@ -225,23 +225,28 @@
   text-align: center;
   letter-spacing: 0.06em;
 }
-
+.none_active{
+  background-color: wheat;
+  cursor:not-allowed;
+}
 .button_active {
-  background: #CDCDCD;
+  background: wheat;
+  border: 2px solid #2e2b2b;
 }
 
 .button_start,
 .button_left,
 .buttom_right,
 .buttom_end {
-  border: 2px solid #CDCDCD;
+  border: 2px solid #2e2b2b;
+  background: wheat;
 }
 
 .button_start:hover,
 .button_left:hover,
 .buttom_right:hover,
 .buttom_end:hover {
-  background: #CDCDCD;
+  background-color: rgb(172, 138, 76);
   cursor: pointer;
 }
 
@@ -249,18 +254,18 @@
 .button_left.none_active,
 .buttom_right.none_active,
 .buttom_end.none_active {
-  border: 2px solid #CDCDCD;
-  color: #CDCDCD;
+  border: 2px solid #2e2b2b;
+  color: #000000;
 }
 
 .button_start.none_active:hover,
 .button_left.none_active:hover,
 .buttom_right.none_active:hover,
 .buttom_end.none_active:hover {
-  border: 2px solid #CDCDCD;
-  color: #CDCDCD;
-  background-color: transparent;
-  cursor: auto;
+  border: 2px solid #2e2b2b;
+  color: #000000;
+  background-color: rgb(172, 138, 76);
+  cursor:not-allowed;
 }
 
 .chapters {
@@ -270,18 +275,20 @@
   margin: 30px auto;
   justify-content: center;
   line-height: 30px;
+  
 }
 
 .chapter {
-  border: 1px solid #CDCDCD;
+  border: 1px solid #2e2b2b;
   border-radius: 10px;
+  background: wheat;
   cursor: pointer;
   padding: 5px;
   transition: .5s;
 }
 
 .chapter:hover {
-  background-color: #CDCDCD;
+  background-color: rgb(172, 138, 76);
 }
 
 /* arrows */
