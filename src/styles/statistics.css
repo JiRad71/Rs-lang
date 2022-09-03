@@ -27,8 +27,8 @@
   background-color: #bdbdbd;
 }
 
-.staistics__games-table td {
-  padding: 5px;
+.staistics__games-table {
+  width: 100%;
 }
 
 .statistics__game-buttons {
@@ -62,6 +62,23 @@
 
 #tutorial {
   background-color: #000000;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.table-column-title {
+  padding: 5px;
+}
+
+.table-column-value {
+  width: 80px;
+  text-align: start;
+  padding: 5px;
+
 }
 
 @media (max-width: 950px) {

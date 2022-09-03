@@ -61,8 +61,15 @@ class Card extends Component {
     }
     const btnLearned = new Component(itemButtons.node, 'button', 'learned', 'Изученное');
     btnLearned.node.onclick = () => {
-      console.log(this.element._id, 'test');
       this.destroy();
+      const userWords: ICreateUserWord = {
+        difficulty: 'easy',
+        optional: {
+          rightAnswer: 0,
+          falseAnswer: 0
+        }
+      }
+      this.request.createUserWord(this.element._id, userWords, 'POST')
       this.request.getLearnedWord()
         .then((data: IUserStat) => {
           data.learnedWords++;
