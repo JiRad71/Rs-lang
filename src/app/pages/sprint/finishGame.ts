@@ -9,15 +9,13 @@ class FinishGame extends Component {
   btnRestart: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement, score: string) {
-    super(parentNode);
+    super(parentNode, 'div', 'finish-game');
     this.results = [];
     this.score = score;
   }
 
   render(results: IUsersAnswer[]) {
-    const title = new Component(this.node, 'h3', '', 'Результаты игры');
-
-    const titleTotal = new Component(this.node, 'h4', '', `Ваш результат: ${this.score}`);
+    const titleTotal = new Component(this.node, 'h3', 'finish-game__title', `Ваш результат: ${this.score} очков`);
 
     const wrapper = new Component(this.node, 'div', 'wrapper');
 
@@ -44,9 +42,10 @@ class FinishGame extends Component {
       }
     });
 
-    this.btnRestart = new Component(wrapper.node, 'button', '', 'Играть ещё');
+    const btnsWrap = new Component(wrapper.node, 'div', 'btns-wrapper');
+    this.btnRestart = new Component(btnsWrap.node, 'button', 'btn-restart', 'Играть ещё');
     this.btnRestart.node.onclick = () => this.nextGame();
-    const btnExit = new Component(wrapper.node, 'button', '', 'Выход');
+    const btnExit = new Component(btnsWrap.node, 'button', 'btn-exit', 'Выход');
     btnExit.node.onclick = () => this.onClose();
   }
 }

@@ -18,7 +18,7 @@ class GameField extends Component {
     this.data = data;
     this.node.setAttribute('id', 'game-field')
 
-    const closeBtn = new Component(this.node, 'button', 'close-btn', 'close');
+    const closeBtn = new Component(this.node, 'button', 'close-btn');
     closeBtn.node.onclick = () => this.onClose();
 
     const fieldContainer = new Component(this.node, 'div', 'container');

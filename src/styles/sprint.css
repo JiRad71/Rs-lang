@@ -5,6 +5,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(to right, #eef2f3, #8e9eab);
+  
+}
+
+.start-game {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to right, #eef2f3, #8e9eab);
+  width: 950px;
+  height: 600px;
+  margin: 0 auto;
+  border-radius: 15px;
+  transform: translate(0, 13%);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+-4px -4px 8px 0px rgba(34, 60, 80, 0.2);
+
+}
+
+.start-game__title {
+  font-size: 28px;
+}
+
+.start-game__text {
+  width: 73%;
+  text-align: center;
 }
 
 .container {
@@ -16,12 +43,17 @@
 }
 
 .close-btn {
- align-self: flex-end;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0;
+  align-self: flex-end;
+  background: url('../asset/close.png');
 }
 
 .timer-container {
-  width: 140px;
-  height: 140px;
+  width: 70px;
+  height: 70px;
   position: relative;
 }
 
@@ -34,22 +66,22 @@
 .progress__item {
   width: 20px;
   height: 20px;
-  background-color: grey;
+  background: url('../asset/empty-star.png');
   display: block;
-  border: 2px solid black;
-  border-radius: 50%;
 }
 
 .total-title {
   text-align: center;
+  margin-bottom: 0;
 }
 
 .total-title__scale {
   display: block;
+  margin-bottom: 0;
 }
 
 .passed {
-  background-color: red;
+  background: url('../asset/star.png');
 }
 
 .question-block {
@@ -86,8 +118,144 @@
 
 .btn-true {
   background-color: rgb(9, 191, 9);
+
 }
 
 .btn-false {
   background-color: rgb(185, 27, 53);
+}
+
+.skills-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  margin-top: 40px;
+}
+
+.finish-game .wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.btns-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-restart,
+.btn-exit,
+.skills-container button {
+  height: 60px;
+  cursor: pointer;
+  color: black;
+  border: 0;
+  border-radius: 15px;
+  transition: 0.3s;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+-4px -4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+
+.skill-btn {
+  background-color: #ff3030;
+}
+
+
+.skill-btn-0 {
+  background-color: #b6fbff;
+}
+
+.skill-btn-1 {
+  background-color: #ffa930;
+}
+
+.skill-btn-2 {
+  background-color: #ffff30;
+}
+
+.skill-btn-3 {
+  background-color: #60ff30;
+}
+
+.skill-btn-4 {
+  background-color: #30dcff;
+}
+
+.skill-btn-5 {
+  background-color: #ff30dc;
+}
+
+.skill-btn:hover {
+  background-color: #f05107;
+  color: white;
+}
+
+.skill-btn-0:hover {
+  background-color: #b6fbff;
+  color: white;
+}
+
+.skill-btn-1:hover  {
+  background-color: #ffa930;
+  color: white;
+}
+
+.skill-btn-2:hover  {
+  background-color: #eeee0d;
+  color: white;
+}
+
+.skill-btn-3:hover  {
+  background-color: #60ff30;
+  color: white;
+}
+
+.skill-btn-4:hover  {
+  background-color: #30dcff;
+  color: white;
+}
+
+.skill-btn-5:hover  {
+  background-color: #ff30dc;
+  color: white;
+}
+
+.finish-game {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: linear-gradient(to right, #eef2f3, #8e9eab);
+}
+
+.result-table {
+  width: 750px;
+}
+
+@media (max-width: 958px) {
+  .start-game {
+    width: 95%;
+  }
+
+  .start-game__text {
+    font-size: 18px;
+    width: 80%;
+  }
+
+  .skills-container {
+    flex-wrap: wrap;
+  }
+  
+}
+
+@media (max-width: 658px) {
+  .start-game {
+    height: auto;
+  }
 }
