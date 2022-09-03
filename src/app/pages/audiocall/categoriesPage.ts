@@ -15,9 +15,17 @@ class CategoriesPage extends Component {
     this.descrioption = new Component(this.game.node, 'p', 'descrioption', 'В игре Аудовызов вы должны выбрать перевод услышанного слова.');
     this.buttons = new Component(this.game.node, 'div', 'chapters');
 
-    for (let i = 0; i < 6; i++) {
-      const button = new Component(this.buttons.node, 'button', `chapter${(i + 1).toString()} chapter-categories`, `Раздел ${(i + 1).toString()}`)
-      button.node.onclick = () => this.onSelect(i)
+    const countBtns = localStorage.getItem('token') ? 7 : 6;
+    for (let i = 0; i < countBtns; i++) {
+
+      if (i === 6) {
+        const button = new Component(this.buttons.node, 'button', `chapter chapter-categories`, 'Сложные слова')
+        button.node.onclick = () => this.onSelect(i)
+      } else {
+        const button = new Component(this.buttons.node, 'button', `chapter${(i + 1).toString()} chapter-categories`, `Раздел ${(i + 1).toString()}`)
+        button.node.onclick = () => this.onSelect(i)
+      }
+
     }
   }
 }
