@@ -38,6 +38,11 @@ export interface IWordsData {
   _id: string
 }
 
+export interface IAggregatedWords {
+  paginatedResults: IWordsData[]
+  totalCount: number[]
+}
+
 export interface IUserWordsCustom {
   difficulty: string,
   wordId?: string,
@@ -145,7 +150,7 @@ export interface IUserStat {
       series: number,
     },
     audioCall?: {
-      newWords: number,
+      newWords?: number,
       rightAnswers: number,
       series: number,
     },
@@ -156,7 +161,7 @@ export interface ICreateStat {
   learnedWords: number,
   optional?: {
     learnedWords?: number,
-    date?: string, 
+    date?: string,
   }
 }
 
