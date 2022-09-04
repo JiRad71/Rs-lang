@@ -26,8 +26,12 @@ class Header extends Component {
     this.sprintBtn = new Component(menu.node, 'button', 'navigation-menu__item', 'Спринт');
     this.sprintBtn.node.setAttribute('id', 'sprint');
 
+    
     this.statisticBtn = new Component(menu.node, 'button', 'navigation-menu__item', 'Статистика');
     this.statisticBtn.node.setAttribute('id', 'statistic');
+    if (!localStorage.getItem('token')) {
+      this.statisticBtn.node.classList.add('hidden');
+    }
 
     this.btnsWrap = new Component(wrapper.node, 'div', 'auth');
     this.authorizationBtn = new Component(this.btnsWrap.node, 'button', 'navigation-menu__item', 'Bход | Регистрация');
@@ -35,6 +39,7 @@ class Header extends Component {
 
     this.authUser = new Component(this.btnsWrap.node, 'button', 'navigation-menu__item');
     this.authUser.node.classList.add('hidden');
+    this.authUser.node.setAttribute('title', 'Выйти');
   }
 
   updateAuth() {

@@ -27,14 +27,14 @@ class Controller extends Component {
     this.header.node.setAttribute('id', 'header');
     this.root = new Component(parentNode, 'div', 'root');
     this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
-    this.footer = new Footer(null);
+    this.footer = new Footer(parentNode);
     this.footer.node.setAttribute('id', 'footer');
     const main = new MainPage(this.wrapperMain.node);
 
     this.reqest = new Request();
   
     this.auth = new Auth();
-    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.statisticBtn);
 
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
@@ -119,6 +119,7 @@ class Controller extends Component {
       }
 
       this.auth.onSignin = (inputsData: IUserData) => {
+        this.header.statisticBtn.node.classList.remove('hidden');
         this.auth.addOrGetUser(inputsData, `${URL.shortUrl}${URL.signin}`)
           .then((resp) => resp.json())
           .then((resp) => {
@@ -129,7 +130,7 @@ class Controller extends Component {
             this.checkStat();
           })
           .then(() => {
-            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.statisticBtn);
           })
           .then(() => {
             this.wrapperMain.destroy();

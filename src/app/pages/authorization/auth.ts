@@ -76,7 +76,7 @@ class Auth {
     return resp;
   }
 
-  checkUser(authBtn: Component<HTMLElement>, authUser: Component<HTMLElement>) {
+  checkUser(authBtn: Component<HTMLElement>, authUser: Component<HTMLElement>, statBtn?: Component<HTMLElement>) {
     if (window.localStorage.getItem('token')) {
       const resp = fetch(`${URL.shortUrl}${URL.login}/${window.localStorage.getItem('usersId')}`, {
         headers: {
@@ -100,6 +100,7 @@ class Auth {
             authBtn.node.classList.remove('hidden');
             window.localStorage.removeItem('usersId');
             window.localStorage.removeItem('token');
+            statBtn.node.classList.toggle('hidden');
           }
         })
         .catch(() => console.log('Вы не зарегистрированы'));
