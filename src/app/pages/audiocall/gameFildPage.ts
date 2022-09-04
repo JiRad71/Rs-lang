@@ -50,11 +50,13 @@ class GameFildPage extends Component {
 
       this.results.push({
         rightAnswer: {
+          wordId: questions[index].answers[questions[index].correctAnswerIndex].wordId,
           word: questions[index].answers[questions[index].correctAnswerIndex].word,
           translate: questions[index].answers[questions[index].correctAnswerIndex].translate,
           voice: questions[index].answers[questions[index].correctAnswerIndex].voice
         },
         userAnswer: {
+          wordId: questions[index].answers[answerIndex].wordId,
           word: questions[index].answers[answerIndex].word,
           translate: questions[index].answers[answerIndex].translate,
           voice: questions[index].answers[answerIndex].voice

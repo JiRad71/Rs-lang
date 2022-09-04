@@ -9,6 +9,7 @@ export interface IQuestionData {
 }
 
 export interface Ianswers {
+  wordId: string,
   word: string;
   translate: string;
   voice: string;
@@ -36,6 +37,7 @@ export class DataModel {
 
 
       const correctAnswer = {
+        wordId: correctAnswer1.id,
         word: correctAnswer1.word,
         translate: correctAnswer1.wordTranslate,
         voice: correctAnswer1.audio
@@ -48,6 +50,7 @@ export class DataModel {
         } else {
           const variantWord1 = this.dataRes[Math.floor(Math.random() * this.dataRes.length)]
           const variantWord = {
+            wordId: variantWord1.id,
             word: variantWord1.word,
             translate: variantWord1.wordTranslate,
             voice: variantWord1.audio
@@ -78,6 +81,7 @@ export class DataModel {
       const correctAnswer1 = this.dataHard[0].paginatedResults[Math.floor(Math.random() * this.dataHard[0].paginatedResults.length)]
 
       const correctAnswer = {
+        wordId: correctAnswer1._id,
         word: correctAnswer1.word,
         translate: correctAnswer1.wordTranslate,
         voice: correctAnswer1.audio
@@ -91,6 +95,7 @@ export class DataModel {
           const variantWord1 = this.varWords[Math.floor(Math.random() * this.varWords.length)]
 
           const variantWord = {
+            wordId: variantWord1.id,
             word: variantWord1.word,
             translate: variantWord1.wordTranslate,
             voice: variantWord1.audio

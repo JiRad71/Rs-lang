@@ -157,15 +157,16 @@ class SprintGame extends Component {
           optional: {
             date: new Date().toLocaleDateString(),
             rightAnswers: countAnswer,
+            newWords: this.answersHandler.newWords,
             sprint: {
               newWords: this.answersHandler.newWords,
               rightAnswers: Math.floor(100 / (countAnswer / countRightAnswer)),
               series: this.answersHandler.getBestSeries(),
             },
             audioCall: {
-              newWords: data.optional.audioCall.newWords,
-              rightAnswers: data.optional.audioCall.rightAnswers,
-              series: data.optional.audioCall.series,
+              newWords: 0,
+              rightAnswers: 0,
+              series: 0,
             }
           }
         });
