@@ -1,5 +1,5 @@
 import Component from '../../common/Component';
-import { URL, IWordsData, IUserData, ICreateUserWord, IUserStat, IWordPerDay, ICreateStat } from './types'
+import { URL, IWordsData, IUserData, ICreateUserWord, IUserStat, IWordPerDay, ICreateStat, IUserWordsCustom } from './types'
 
 export class Request {
 
@@ -60,6 +60,30 @@ export class Request {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data),
+    });
+    return resp.json();
+  }
+
+  async createUserWordCastom(id: string, data: IUserWordsCustom, method: string) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}/${id}`, {
+      method: method,
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return resp.json();
+  }
+
+  async aggregatedUserWords(filter: string) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.aggregatedWords}?${URL.filter}${encodeURIComponent(filter)}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     });
     return resp.json();
   }

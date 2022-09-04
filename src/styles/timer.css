@@ -63,46 +63,46 @@
 
 .timer.minute {
   background: rgba(0, 0, 0, .2);
-  height: 120px;
-  left: 10px;
-  width: 120px;
-  top: 10px;
+  height: 70px;
+  left: 0;
+  width: 70px;
+  top: 0;
 }
 
 .timer.minute .hand span {
   animation-duration: 60s;
   border-top-color: rgba(223, 13, 219, 0.87);
   border-right-color:  rgba(223, 13, 219, 0.87);
-  border-width: 60px;
+  border-width: 35px;
 }
 
 .timer.minute:after {
-  height: 100px;
-  left: 10px;
-  width: 100px;
-  top: 10px;
+  height: 55px;
+  left: 8px;
+  width: 55px;
+  top: 8px;
 }
 
 .face {
   background: rgba(0, 0, 0, .1);
   border-radius: 50%;
-  height: 40px;
-  left: 10px;
-  padding: 65px 40px 0;
+  height: 70px;
+  left: 0;
+  padding: 0px 0px 0;
   position: absolute;
-  width: 40px;
+  width: 70px;
   text-align: center;
-  top: 25px;
+  top: 0;
   color: papayawhip;
 }
 
 .timer-count {
   border-radius: 20px;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 400;
   position: absolute;
-  top: 27px;
-  width: 120px;
+  top: 20px;
+  width: 70px;
   left: 0;
 }
 
