@@ -28,7 +28,8 @@ class Statistic extends Component {
   
       const tr3 = new Component(gamesTable.node, 'tr', 'table-row');
       const td5 = new Component(tr3.node, 'td', 'table-column-title', 'Количество изученных слов за день');
-      const td6 = new Component(tr3.node, 'td', 'table-column-value', `${data.learnedWords}`);
+      this.request.aggregatedUserWords(`{"userWord.difficulty":"easy"}`)
+        .then((data) => new Component(tr3.node, 'td', 'table-column-value', `${data[0].totalCount.length ? data[0].totalCount[0].count : 0}`));
   
       const staisticsWords = new Component(statisticsSimple.node, 'div', 'staistics__words statistics__item');
       const titleH3Words = new Component(staisticsWords.node, 'h3', '', 'Статистика по игре Спринт');
