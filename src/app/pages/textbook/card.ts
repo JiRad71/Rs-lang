@@ -1,4 +1,4 @@
-import { ICreateUserWord, IUserData, IUserStat, IWordsData } from "../../../asset/utils/types";
+import { ICastom, ICreateUserWord, IUserData, IUserStat, IUserWordsCustom, IWordsData } from "../../../asset/utils/types";
 import Component from "../../../common/Component";
 import { Request } from "../../../asset/utils/requests"
 
@@ -47,10 +47,23 @@ class Card extends Component {
     if (difficult) {
       const btnDifficult = new Component(itemButtons.node, 'button', 'difficult', 'Сложное');
       btnDifficult.node.onclick = () => {
-        const userWords: ICreateUserWord = {
+        const userWords: IUserWordsCustom = {
           difficulty: 'hard',
+          optional: {
+            rightAnswers: 0,
+            sprint: {
+              rightAnswer : 0,
+              falseAnswer: 0,
+              used: false,
+            },
+            audioCall: {
+              rightAnswer: 0,
+              falseAnswer: 0,
+              used: false,
+            },
+          }
         }
-        this.request.createUserWord(this.element._id, userWords, 'POST')
+        this.request.createUserWordCastom(this.element._id, userWords, 'POST')
         btnDifficult.node.classList.add('hard')
         this.destroy();
       }
@@ -58,10 +71,23 @@ class Card extends Component {
     const btnLearned = new Component(itemButtons.node, 'button', 'learned', 'Изученное');
     btnLearned.node.onclick = () => {
       this.destroy();
-      const userWords: ICreateUserWord = {
+      const userWords: IUserWordsCustom = {
         difficulty: 'easy',
+        optional: {
+          rightAnswers: 0,
+          sprint: {
+            rightAnswer : 0,
+            falseAnswer: 0,
+            used: false,
+          },
+          audioCall: {
+            rightAnswer: 0,
+            falseAnswer: 0,
+            used: false,
+          },
+        }
       }
-      this.request.createUserWord(this.element._id, userWords, 'POST')
+      this.request.createUserWordCastom(this.element._id, userWords, 'POST')
       this.request.getLearnedWord()
         .then((data: IUserStat) => {
           data.learnedWords++;

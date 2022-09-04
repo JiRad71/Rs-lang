@@ -143,6 +143,11 @@ class SprintGame extends Component {
                 (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
                 : Math.floor(100 / (countAnswer / countRightAnswer)),
               series: this.checkBestSeries(data.optional.sprint.series, this.answersHandler.getBestSeries()),
+            },
+            audioCall: {
+              newWords: data.optional.audioCall.newWords,
+              rightAnswers: data.optional.audioCall.rightAnswers,
+              series: data.optional.audioCall.series,
             }
           }
         });
@@ -156,6 +161,11 @@ class SprintGame extends Component {
               newWords: this.answersHandler.newWords,
               rightAnswers: Math.floor(100 / (countAnswer / countRightAnswer)),
               series: this.answersHandler.getBestSeries(),
+            },
+            audioCall: {
+              newWords: data.optional.audioCall.newWords,
+              rightAnswers: data.optional.audioCall.rightAnswers,
+              series: data.optional.audioCall.series,
             }
           }
         });
