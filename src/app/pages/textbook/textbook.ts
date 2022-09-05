@@ -133,7 +133,7 @@ class TextBook extends Component {
         
         this.card = new Card(this.itemWrapper.node, element);
         this.card.addButtons(false);
-        this.card.node.style.backgroundColor = 'red';
+        this.card.node.style.backgroundColor = '#f88585';
        }));
       }
     }
