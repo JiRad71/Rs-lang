@@ -49,6 +49,7 @@
   border: 0;
   align-self: flex-end;
   background: url('../asset/close.png');
+  margin: 30px;
 }
 
 .timer-container {

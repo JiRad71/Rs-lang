@@ -89,8 +89,8 @@
 
 .category-button {
   position: absolute;
-  top: 80px;
-  right: 10px;
+  top: 100px;
+  right: 30px;
   background-color: transparent;
   border: 1px solid black;
   font-weight: bold;
@@ -131,7 +131,9 @@
 
 .answers-buttons {
   display: flex;
+  justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .answer-button {
