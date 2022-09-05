@@ -155,6 +155,17 @@ export class Request {
     return resp.json();
   }
 
+  async getUserWord(wordId: string) {
+    const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}/${wordId}`, {
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return resp.json();
+  }
+
   async updateUserWords(data: ICreateUserWord) {
     const resp = await fetch(`${URL.shortUrl}${URL.login}/${localStorage.getItem('usersId')}/${URL.words}`, {
       method: 'PUT',

@@ -63,7 +63,13 @@ class Card extends Component {
             },
           }
         }
-        this.request.createUserWordCastom(this.element._id, userWords, 'POST')
+        this.request.getUserWord(this.element._id)
+          .then((data) => {
+            this.request.createUserWordCastom(this.element._id, userWords, 'PUT')
+          })
+          .catch(() => {
+            this.request.createUserWordCastom(this.element._id, userWords, 'POST')
+          }) 
         btnDifficult.node.classList.add('hard')
         this.destroy();
       }
