@@ -20,6 +20,12 @@ class TextBook extends Component {
   buttonStart: Component<HTMLElement>;
   buttonRight: Component<HTMLElement>;
   buttonEnd: Component<HTMLElement>;
+  chapter1: Component<HTMLElement>;
+  chapter2: Component<HTMLElement>;
+  chapter3: Component<HTMLElement>;
+  chapter4: Component<HTMLElement>;
+  chapter5: Component<HTMLElement>;
+  chapter6: Component<HTMLElement>;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'textbook');
@@ -95,8 +101,9 @@ class TextBook extends Component {
       this.buttonRight.node.classList.remove('none_active')
       this.buttonEnd.node.classList.remove('none_active')
     }
-
+    const chapterNumber = new Component(this.node, 'div', 'chapterNmb', `Текущий раздел: ${+localStorage.getItem('currChapter')+1}`)
     const chapters = new Component(this.node, 'div', 'chapters')
+
     for (let i = 0; i < 6; i++) {
       const chapter = new Component(chapters.node, 'div', 'chapter', `Раздел ${i + 1}`)
       chapter.node.onclick = () => {
@@ -110,6 +117,7 @@ class TextBook extends Component {
         this.buttonEnd.node.classList.remove('none_active')
         localStorage.setItem('currChapter', `${this.currentChapter}`);
         localStorage.setItem('currPage', `${this.currentPage}`);
+        chapterNumber.node.textContent = `Текущий раздел: ${+localStorage.getItem('currChapter')+1}`
         this.updatePagginator();
         this.getItemWord(`${URL.url}${URL.group}${this.currentChapter}${URL.page}${this.currentPage}`)
       }
@@ -135,6 +143,14 @@ class TextBook extends Component {
         )
       }
     }
+    const verticalArrows = new Component(this.node, 'div', 'vertical-arrows')
+    const arrowUp = new Component(verticalArrows.node, 'button', 'arrow-up')
+    const arrowUpElement = new Component(arrowUp.node, 'i', 'arrow up')
+    const arrowDown = new Component(verticalArrows.node, 'button', 'arrow-down')
+    const arrowDownElement = new Component(arrowDown.node, 'i', 'arrow down')
+
+    arrowUp.node.onclick = () => document.documentElement.scrollTop = 0;;
+    arrowDown.node.onclick = () => window.scrollTo(0,document.body.scrollHeight);
   }
 
   private updatePagginator() {
