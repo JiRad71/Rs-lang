@@ -1,0 +1,98 @@
+.statistics-simple,
+.statistics-term {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 30px auto;
+}
+
+.statistics-term {
+  display: none;
+}
+
+.statistics__item {
+  display: flex;
+  width: 520px;
+  flex-direction: column;
+  padding: 0 30px 30px 30px;
+  align-items: center;
+  box-shadow: 5px 5px 2px 1px rgb(0 0 255 / 20%);
+  border: 1px solid #cfcfcf;
+  border-radius: 22px;
+}
+
+.staistics__games {
+  background-color: #bdbdbd;
+}
+
+.staistics__games-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.statistics__game-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  margin: 30px auto 0 auto;
+  justify-content: center;
+  line-height: 30px;
+}
+
+.statistics__game-button {
+  border: 3px solid #ffffff;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px 20px;
+  transition: .5s;
+  color: #ffffff;
+}
+
+.statistics__game-button.statistics__btn-active {
+  border: 3px solid #000000;
+  color: #000000;
+}
+
+.statistics__game-button:hover {
+  border: 3px solid #000000;
+  color: #000000;
+}
+
+#tutorial {
+  background-color: #000000;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.table-column-title {
+  padding: 5px;
+}
+
+.table-column-value {
+  width: 80px;
+  text-align: start;
+  padding: 5px;
+
+}
+
+@media (max-width: 950px) {
+  body .wrapper-main .statistics {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  body .wrapper-main .statistics {
+    font-size: 12px;
+    line-height: 20px;
+  }
+}

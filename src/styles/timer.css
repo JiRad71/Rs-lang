@@ -1,0 +1,130 @@
+.timer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  position: absolute;
+}
+
+
+.timer:after {
+  background: #111;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 80px;
+  left: 10px;
+  position: absolute;
+  width: 80px;
+  top: 10px;
+}
+
+.timer .hand {
+  float: left;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 50%;
+}
+
+.timer .hand span {
+  border: 50px solid rgba(0, 255, 255, .4);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  display: block;
+  height: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(225deg);
+  width: 0;
+}
+
+.timer .hand:first-child {
+  transform: rotate(180deg);
+}
+
+.timer .hand span {
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.timer .hand:first-child span {
+  animation-name: spin1;
+}
+
+.timer .hand:last-child span {
+  animation-name: spin2; 
+}
+
+.timer.minute {
+  background: rgba(0, 0, 0, .2);
+  height: 70px;
+  left: 0;
+  width: 70px;
+  top: 0;
+}
+
+.timer.minute .hand span {
+  animation-duration: 60s;
+  border-top-color: rgba(223, 13, 219, 0.87);
+  border-right-color:  rgba(223, 13, 219, 0.87);
+  border-width: 35px;
+}
+
+.timer.minute:after {
+  height: 55px;
+  left: 8px;
+  width: 55px;
+  top: 8px;
+}
+
+.face {
+  background: rgba(0, 0, 0, .1);
+  border-radius: 50%;
+  height: 70px;
+  left: 0;
+  padding: 0px 0px 0;
+  position: absolute;
+  width: 70px;
+  text-align: center;
+  top: 0;
+  color: papayawhip;
+}
+
+.timer-count {
+  border-radius: 20px;
+  font-size: 30px;
+  font-weight: 400;
+  position: absolute;
+  top: 20px;
+  width: 70px;
+  left: 0;
+}
+
+@keyframes spin1 {
+  0% {
+    transform: rotate(225deg);
+  }
+  50% {
+    transform: rotate(225deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
+
+@keyframes spin2 {
+  0% {
+    transform: rotate(225deg);
+  }
+  50% {
+    transform: rotate(405deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
