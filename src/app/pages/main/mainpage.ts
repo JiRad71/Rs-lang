@@ -42,19 +42,29 @@ class MainPage extends Component {
     const imgDev = new Component(priceItem.node, 'div', 'img_dev-teamLead');
     const dev = new Component(priceItem.node, 'h3', '', 'Кирилл');
     const desc = new Component(priceItem.node, 'p', '', 'Тимлид, бэкэнд');
-    const git = new Component(priceItem.node, 'button', 'bg_gold btn', 'GitHub');
+    const gitAnkorTeamlead = new Component(priceItem.node, 'a');
+    gitAnkorTeamlead.node.setAttribute('href', 'https://github.com/JiRad71')
+    gitAnkorTeamlead.node.setAttribute('target', '_blank')
+    const git = new Component(gitAnkorTeamlead.node, 'button', 'bg_gold btn', 'GitHub');
+   
 
     const priceItem1 = new Component(flexContainerPrice.node, 'div', 'price_item');
     const imgDev1 = new Component(priceItem1.node, 'div', 'img_dev-coding');
     const dev1 = new Component(priceItem1.node, 'h3', '', 'Артём');
     const desc1 = new Component(priceItem1.node, 'p', '', 'Спринт, статистика');
-    const git1 = new Component(priceItem1.node, 'button', 'bg_gold btn', 'GitHub');
+    const gitAnkorCoding = new Component(priceItem1.node, 'a');
+    gitAnkorCoding.node.setAttribute('href', 'https://github.com/RTinIT')
+    gitAnkorCoding.node.setAttribute('target', '_blank')
+    const git1 = new Component(gitAnkorCoding.node, 'button', 'bg_gold btn', 'GitHub');
 
     const priceItem2 = new Component(flexContainerPrice.node, 'div', 'price_item');
     const imgDev2 = new Component(priceItem2.node, 'div', 'img_dev-layouts');
     const dev2 = new Component(priceItem2.node, 'h3', '', 'Алексей');
     const desc2 = new Component(priceItem2.node, 'p', '', 'Аудиовызов, вёрстка');
-    const git2 = new Component(priceItem2.node, 'button', 'bg_gold btn', 'GitHub');
+    const gitAnkorLayouts = new Component(priceItem2.node, 'a');
+    gitAnkorLayouts.node.setAttribute('href', 'https://github.com/AlexKul84')
+    gitAnkorLayouts.node.setAttribute('target', '_blank')
+    const git2 = new Component(gitAnkorLayouts.node, 'button', 'bg_gold btn', 'GitHub');
 
 
     // const about = new Component(this.node, 'div', 'about');

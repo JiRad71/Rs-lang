@@ -119,24 +119,18 @@ a:hover {
     padding: 0 60px;
     background-position: right center;
   }
+  .wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 420px) {
   .hero {
     padding: 0 20px;
   }
-}
 
-.hero .wrap {
-  padding-top: 250px;
-  margin-left: 60px;
-}
-
-@media (max-width: 768px) {
-  .hero .wrap {
-    padding-top: 168px;
-    margin-left: 0;
-  }
 }
 
 .hero_text {

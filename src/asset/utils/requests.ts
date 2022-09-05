@@ -39,6 +39,17 @@ export class Request {
     }
   }
 
+ async getUser(){
+  const resp = fetch(`${URL.shortUrl}${URL.login}/${window.localStorage.getItem('usersId')}`, {
+    headers: {
+      'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  });
+  return (await resp).json();
+ }
+
   async addOrGetUser(data: IUserData, url: string) {
     const resp = await fetch(url, {
       method: 'POST',

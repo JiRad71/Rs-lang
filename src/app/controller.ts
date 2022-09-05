@@ -36,26 +36,26 @@ class Controller extends Component {
     this.reqest = new Request();
   
     this.auth = new Auth();
-    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.statisticBtn);
+    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu, this.header.statisticBtn);
 
     this.main.bgGold.node.onclick=()=>{
       location.hash = this.header.textBookBtn.node.id;
-      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
-      this.header.authUser.node.classList.add('hidden');
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+      this.header.userMenu.node.classList.add('hidden');
     }
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
-
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
     }
     this.header.textBookBtn.node.onclick = () => {
       location.hash = this.header.textBookBtn.node.id;
-      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
-      this.header.authUser.node.classList.add('hidden');
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+      this.header.userMenu.node.classList.add('hidden');
     }
    
     this.header.audioCallBtn.node.onclick = () => {
       location.hash = this.header.audioCallBtn.node.id;
-
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
     }
     
     this.header.sprintBtn.node.onclick = () => {
@@ -89,8 +89,8 @@ class Controller extends Component {
       const main = new MainPage(this.wrapperMain.node);
       main.bgGold.node.onclick=()=>{
         location.hash = this.header.textBookBtn.node.id;
-        this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
-        this.header.authUser.node.classList.add('hidden');
+        this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+        this.header.userMenu.node.classList.add('hidden');
       }
 
       this.footer = new Footer(document.body);
@@ -143,7 +143,7 @@ class Controller extends Component {
             this.checkStat();
           })
           .then(() => {
-            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.statisticBtn);
+            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu, this.header.statisticBtn);
           })
           .then(() => {
             this.wrapperMain.destroy();

@@ -76,7 +76,7 @@ class Auth {
     return resp;
   }
 
-  checkUser(authBtn: Component<HTMLElement>, authUser: Component<HTMLElement>, statBtn?: Component<HTMLElement>) {
+  checkUser(authBtn: Component<HTMLElement>, authUser: Component<HTMLElement>, userMenu:  Component<HTMLElement>, statBtn?: Component<HTMLElement>) {
     if (window.localStorage.getItem('token')) {
       const resp = fetch(`${URL.shortUrl}${URL.login}/${window.localStorage.getItem('usersId')}`, {
         headers: {
@@ -90,17 +90,17 @@ class Auth {
         .then((data) => {
           authBtn.node.classList.add('hidden');
           if (location.hash === '#textbook') {
-            authUser.node.classList.add('hidden');
+            userMenu.node.classList.add('hidden');
           } else {
-            authUser.node.classList.remove('hidden');
+            console.log('Не текстбук');
+            userMenu.node.classList.remove('hidden');
           }
           authUser.node.onclick = () => {
-            authUser.node.textContent = '';
-            authUser.node.classList.add('hidden');
+            userMenu.node.classList.add('hidden');
             authBtn.node.classList.remove('hidden');
             window.localStorage.removeItem('usersId');
             window.localStorage.removeItem('token');
-            statBtn.node.classList.toggle('hidden');
+            // statBtn.node.classList.toggle('hidden');
           }
         })
         .catch(() => console.log('Вы не зарегистрированы'));
