@@ -79,6 +79,7 @@ class AnswersHandler {
         this.countAnswer = 0;
       }
       this.series += 1;
+      this.seriesList.push(this.series);
       this.addAnswer(data, true);
 
     } else {

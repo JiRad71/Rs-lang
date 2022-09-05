@@ -52,36 +52,85 @@ class GameOverPage extends Component {
     const categoriesButton = new Component(this.node, 'button', 'category-button', 'К выбору категории')
     categoriesButton.node.onclick = () => this.onCategories('categories')
 
-    this.request.getUserWordsData().then((data: IUserWordsDataCastom[]) => {
-      const check = data.some((e) => e.wordId);
-
-      results.forEach((i, index) => {
-        const voiceRight = new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`);
-        const voiceWrong = new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`);
-        
-        if (check) {
-          const word = data.find((e) => e.wordId === i.rightAnswer.wordId);
-          if (word && word.optional.audioCall.used) {
-            this.checkAnswer(word, i, voiceRight, voiceWrong);
-
+    if (localStorage.getItem('token')) {
+      this.request.getUserWordsData().then((data: IUserWordsDataCastom[]) => {
+        const check = data.some((e) => e.wordId);
+  
+        results.forEach((i, index) => {
+          const voiceRight = new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`);
+          const voiceWrong = new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`);
+          
+          if (check) {
+            const word = data.find((e) => e.wordId === i.rightAnswer.wordId);
+            if (word && word.optional.audioCall.used) {
+              this.checkAnswer(word, i, voiceRight, voiceWrong);
+  
+            } else {
+              this.checkAnswer(null, i, voiceRight, voiceWrong);
+            }
+  
           } else {
             this.checkAnswer(null, i, voiceRight, voiceWrong);
+   
           }
+        })
+  
+        const countRightComponent = new Component(this.resultRight.node, 'div', 'count-right', 'Знаю всего: ');
+        const countWrongComponent = new Component(this.resultWrong.node, 'p', 'count-wrong', 'Ошибок всего: ');
+        console.log(this.newWords);
+        console.log(this.series);
+        console.log(this.getBestSeries());
+        
+  
+        const countRightComponentNumber = new Component(countRightComponent.node, 'span', 'count-right-number', `${this.countRight}`);
+        const countWrongComponentNumber = new Component(countWrongComponent.node, 'span', 'count-wrong-number', `${this.countWrong}`);
+        
+      })
+        .then(() => {
+          this.saveResults(this.countAnswer, this.countRight);
+        });
+    } else {
 
-        } else {
-          this.checkAnswer(null, i, voiceRight, voiceWrong);
- 
+      results.forEach(i => {
+
+        if (i.rightAnswer.translate === i.userAnswer.translate) {
+          const voiceRight = new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`);
+
+          this.resultRightItem = new Component(this.resultRight.node, 'p', 'rightAnswer')
+          const voiceRightAnswer = new Component(this.resultRightItem.node, 'span', 'voice-stat')
+          voiceRightAnswer.node.onclick = () => {
+            new Audio(`https://rss-lang-backends.herokuapp.com/${i.rightAnswer.voice}`).play();
+          }
+          new Component(this.resultRightItem.node, 'span', '', ` ${i.rightAnswer.word} - `)
+          new Component(this.resultRightItem.node, 'span', '', `${i.rightAnswer.translate}`)
+          this.countRight++
+          voiceRightAnswer.node.append(voiceRight);
+
         }
       })
 
+      results.forEach(i => {
+        if (i.rightAnswer.translate !== i.userAnswer.translate) {
+          const voiceWrong = new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`);
+
+          this.resultWrongItem = new Component(this.resultWrong.node, 'p', 'falseAnswer')
+          const voiceWrongAnswer = new Component(this.resultWrongItem.node, 'span', 'voice-stat')
+          voiceWrongAnswer.node.onclick = () => {
+            new Audio(`https://rss-lang-backends.herokuapp.com/${i.userAnswer.voice}`).play();
+          }
+          voiceWrongAnswer.node.append(voiceWrong);
+          new Component(this.resultWrongItem.node, 'span', '', ` ${i.userAnswer.word} - `)
+          new Component(this.resultWrongItem.node, 'span', '', `${i.userAnswer.translate}`)
+          this.countWrong++
+        }
+      })
+  
       const countRightComponent = new Component(this.resultRight.node, 'div', 'count-right', 'Знаю всего: ');
       const countWrongComponent = new Component(this.resultWrong.node, 'p', 'count-wrong', 'Ошибок всего: ');
       const countRightComponentNumber = new Component(countRightComponent.node, 'span', 'count-right-number', `${this.countRight}`);
       const countWrongComponentNumber = new Component(countWrongComponent.node, 'span', 'count-wrong-number', `${this.countWrong}`);
-    })
-      .then(() => {
-        this.saveResults(this.countAnswer, this.countRight);
-      });
+    }
+
   }
 
   checkAnswer(word: IUserWordsDataCastom | null, data: { rightAnswer: Ianswers, userAnswer: Ianswers }, voiceRight: HTMLAudioElement, voiceWrong: HTMLAudioElement) {
@@ -93,8 +142,8 @@ class GameOverPage extends Component {
         new Audio(`https://rss-lang-backends.herokuapp.com/${data.rightAnswer.voice}`).play();
       }
       voiceRightAnswer.node.append(voiceRight);
-      new Component(this.resultRightItem.node, 'span', '', ` ${data.rightAnswer.translate} - `)
-      new Component(this.resultRightItem.node, 'span', '', `${data.rightAnswer.word}`)
+      new Component(this.resultRightItem.node, 'span', '', ` ${data.rightAnswer.word} - `)
+      new Component(this.resultRightItem.node, 'span', '', `${data.rightAnswer.translate}`)
       this.countRight++
       this.series += 1;
 
@@ -106,8 +155,8 @@ class GameOverPage extends Component {
         new Audio(`https://rss-lang-backends.herokuapp.com/${data.userAnswer.voice}`).play();
       }
       voiceWrongAnswer.node.append(voiceWrong)
-      new Component(this.resultWrongItem.node, 'span', '', ` ${data.userAnswer.translate} - `)
-      new Component(this.resultWrongItem.node, 'span', '', `${data.userAnswer.word}`)
+      new Component(this.resultWrongItem.node, 'span', '', ` ${data.userAnswer.word} - `)
+      new Component(this.resultWrongItem.node, 'span', '', `${data.userAnswer.translate}`)
       this.countWrong++
       this.seriesList.push(this.series);
     }

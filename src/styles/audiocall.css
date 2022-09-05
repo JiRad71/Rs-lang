@@ -89,8 +89,8 @@
 
 .category-button {
   position: absolute;
-  top: 80px;
-  right: 10px;
+  top: 100px;
+  right: 30px;
   background-color: transparent;
   border: 1px solid black;
   font-weight: bold;
@@ -131,7 +131,9 @@
 
 .answers-buttons {
   display: flex;
+  justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .answer-button {
@@ -157,9 +159,9 @@
 .preloader {
   font-weight: bold;
   font-size: 9vh;
-  background-image: url(../asset/how-to-create-css-preloader1.gif);
-  width: 250px;
-  height: 230px;
+  background-image: url(../asset/preloader.gif);
+  width: 900px;
+  height: 600px;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -23,7 +23,7 @@ button {
 
   body,
   button {
-    font-size: 12px;
+    font-size: 18px;
     line-height: 20px;
   }
 }
@@ -33,15 +33,14 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+/* button:hover {
   color: #968659;
-}
+} */
 
 .header,
 .main,
 .footer {
   margin: 0 auto;
-  padding: 0 40px;
 }
 
 .header {
@@ -56,8 +55,7 @@ button:hover {
 
 .header .wrapper {
   display: flex;
-  justify-content: space-between;
-  max-width: 1440px;
+  justify-content: space-around;
   align-items: center;
   height: 70px;
   margin: 0 auto;
@@ -76,14 +74,55 @@ button:hover {
   list-style-type: none;
   margin-left: 30px;
 }
+.navigation-menu__item:hover {
+  color: #968659;
+}
 
-.auth .navigation-menu__item:last-child {
+.burger{
+  z-index: 10001;
+}
+
+.burger-overlay {
+  border-radius: 24px;
+  position: fixed;
+  height: 15vh;
+  padding: 0 10px;
+  right: 32px;
+  top: 70px;
+  overflow: auto;
+  z-index: 10000;
+  background: #202020;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.burger-menu{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0 0 0;
+  padding: 0;
+}
+.burger-menu__li {
+  list-style-type: none;
+  cursor: default;
+}
+
+.burger-menu__li_btn:hover{
+  color: #968659;
+}
+.burger-menu__li_btn{
+ cursor: pointer;
+}
+.auth .navigation-menu__items:last-child {
   width: 32px;
   height: 32px;
   list-style-type: none;
   margin-left: 30px;
   background: url('../asset/user.png');
 }
+
 
 @media (max-width: 768px) {
   .navigation-menu__item {
@@ -118,11 +157,11 @@ button:hover {
   color: #000000;
 }
 
-.root{ 
+.root {
   min-height: calc(100% - 140px);
   background: linear-gradient(to right, #eef2f3, #8e9eab);
   background-size: auto auto;
-  
+
 }
 
 .wrapper-main {
@@ -130,7 +169,6 @@ button:hover {
 }
 
 .main .wrapper {
-  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -182,8 +220,7 @@ main a {
 
 .footer .wrapper {
   height: 70px;
-  max-width: 1440px;
-  margin: 0 auto;
+  margin: 0 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
