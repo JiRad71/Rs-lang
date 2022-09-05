@@ -110,8 +110,8 @@ class SprintGame extends Component {
     const finish = new FinishGame(this.node, gameField.score.node.textContent);
     finish.render(this.answersHandler.answers);
     finish.btnRestart.destroy();
-    const right = this.updateUserWords(this.answersHandler.rightAnswers);
-    const fail = this.updateUserWords(this.answersHandler.failAnswers);
+    const right = this.answersHandler.rightAnswers.length ? this.updateUserWords(this.answersHandler.rightAnswers): 0;
+    const fail = this.answersHandler.failAnswers.length ? this.updateUserWords(this.answersHandler.failAnswers) : 0;
     Promise.all([right, fail])
       .then(() => {
         this.saveResults(this.answersHandler.answers.length, this.answersHandler.rightAnswers.length);
@@ -195,7 +195,7 @@ class SprintGame extends Component {
 
   getStatData(answer: boolean, question: Question) {
     const statData: IUsersAnswer = {
-      id: question.data[0].id,
+      id: question.data[0].id || question.data[0]._id,
       group: question.data[0].group,
       page: question.data[0].page,
       question: question.data[0].word,
@@ -232,8 +232,8 @@ class SprintGame extends Component {
       }
       const resp = await this.request.aggregatedWords(0, `{"userWord.difficulty":"hard"}`)
       this.generalDataLength = resp[0].paginatedResults.length;
+      const quest = resp[0].paginatedResults[this.counter];
       this.counter += 1;
-      const quest = resp[0].paginatedResults[random(0, resp[0].paginatedResults.length - 1)];
       const falseAnswer = resp[0].paginatedResults[random(0, resp[0].paginatedResults.length - 1)];
       return [quest, falseAnswer];
     } catch (error) {
@@ -243,11 +243,10 @@ class SprintGame extends Component {
 
   async updateUserWords(data: IUsersAnswer[]) {
     const userWords: IUserWordsDataCastom[] = await this.getUserWordsData();
-    
     if (data[0].result) {
       for (let i = 0; i < data.length; i += 1) {
         const word = userWords.find((e) => e.wordId === data[i].id);
-        if (word && word.optional.sprint.used) {
+        if (word && word.optional.sprint.used || !word.optional.sprint.used) {
           const newData = {
             game: 'sprint',
             wordId: word.wordId,
@@ -275,7 +274,7 @@ class SprintGame extends Component {
     } else {
       for (let i = 0; i < data.length; i += 1) {
         const word = userWords.find((e) => e.wordId === data[i].id);
-        if (word && word.optional.sprint.used) {
+        if (word && word.optional.sprint.used || !word.optional.sprint.used) {
           const newData = {
             game: 'sprint',
             wordId: word.wordId,
