@@ -58,8 +58,8 @@ class SprintGame extends Component {
       gameField.destroy();
       const finish = new FinishGame(this.node, gameField.score.node.textContent);
       finish.render(this.answersHandler.answers);
-      const right = this.updateUserWords(this.answersHandler.rightAnswers);
-      const fail = this.updateUserWords(this.answersHandler.failAnswers);
+      const right = this.answersHandler.rightAnswers.length ? this.updateUserWords(this.answersHandler.rightAnswers): 0;
+      const fail = this.answersHandler.failAnswers.length ? this.updateUserWords(this.answersHandler.failAnswers) : 0;
       Promise.all([right, fail]).then(() => this.saveResults(this.answersHandler.answers.length, this.answersHandler.rightAnswers.length))
         .then(() => this.answersHandler.clear());
       this.counter = 0;
@@ -134,13 +134,13 @@ class SprintGame extends Component {
           optional: {
             date: new Date().toLocaleDateString(),
             rightAnswers: data.optional.sprint.rightAnswers ?
-              (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
+              Math.floor((data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2)
               : Math.floor(100 / (countAnswer / countRightAnswer)),
             newWords: data.optional.newWords + this.answersHandler.newWords,
             sprint: {
               newWords: data.optional.sprint.newWords ? this.answersHandler.newWords + data.optional.sprint.newWords : this.answersHandler.newWords,
               rightAnswers: data.optional.sprint.rightAnswers ?
-                (data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2
+                Math.floor((data.optional.sprint.rightAnswers + Math.floor(100 / (countAnswer / countRightAnswer))) / 2)
                 : Math.floor(100 / (countAnswer / countRightAnswer)),
               series: this.checkBestSeries(data.optional.sprint.series, this.answersHandler.getBestSeries()),
             },
@@ -246,18 +246,9 @@ class SprintGame extends Component {
     if (data[0].result) {
       for (let i = 0; i < data.length; i += 1) {
         const word = userWords.find((e) => e.wordId === data[i].id);
-        if (word && word.optional.sprint.used || !word.optional.sprint.used) {
-          const newData = {
-            game: 'sprint',
-            wordId: word.wordId,
-            difficulty: 'easy',
-            rightAnswer: word.optional.sprint.rightAnswer += 1,
-            falseAnswer: word.optional.sprint.falseAnswer,
-            used: true,
-            method: 'PUT',
-          }
-          this.adapter.add(newData);
-        } else {
+        console.log(word);
+        
+        if (!word) {
           const newData = {
             game: 'sprint',
             wordId: data[i].id,
@@ -269,24 +260,37 @@ class SprintGame extends Component {
           };
           this.adapter.add(newData);
           this.answersHandler.newWords += 1;
+        } else {
+          if (word.optional.sprint.used) {
+            const newData = {
+              game: 'sprint',
+              wordId: word.wordId,
+              difficulty: 'easy',
+              rightAnswer: word.optional.sprint.rightAnswer += 1,
+              falseAnswer: word.optional.sprint.falseAnswer,
+              used: true,
+              method: 'PUT',
+            }
+            this.adapter.add(newData);
+          } else {
+            const newData = {
+              game: 'sprint',
+              wordId: data[i].id,
+              difficulty: 'normal',
+              rightAnswer: 1,
+              falseAnswer: 0,
+              used: true,
+              method: 'PUT',
+            };
+            this.adapter.add(newData);
+            this.answersHandler.newWords += 1;
+          }
         }
       }
     } else {
       for (let i = 0; i < data.length; i += 1) {
         const word = userWords.find((e) => e.wordId === data[i].id);
-        if (word && word.optional.sprint.used || !word.optional.sprint.used) {
-          const newData = {
-            game: 'sprint',
-            wordId: word.wordId,
-            difficulty: +word.optional.sprint.falseAnswer > +word.optional.sprint.rightAnswer ? 'hard' : 'normal',
-            rightAnswer: word.optional.sprint.rightAnswer,
-            falseAnswer: word.optional.sprint.falseAnswer += 1,
-            used: true,
-            method: 'PUT',
-          }
-
-          this.adapter.add(newData);
-        } else {
+        if (!word) {
           const newData = {
             game: 'sprint',
             wordId: data[i].id,
@@ -298,6 +302,31 @@ class SprintGame extends Component {
           }
           this.adapter.add(newData);
           this.answersHandler.newWords += 1;
+        } else {
+          if (word.optional.sprint.used) {
+            const newData = {
+              game: 'sprint',
+              wordId: word.wordId,
+              difficulty: +word.optional.sprint.falseAnswer > +word.optional.sprint.rightAnswer ? 'hard' : 'normal',
+              rightAnswer: word.optional.sprint.rightAnswer,
+              falseAnswer: word.optional.sprint.falseAnswer += 1,
+              used: true,
+              method: 'PUT',
+            }
+            this.adapter.add(newData);
+          } else {
+            const newData = {
+              game: 'sprint',
+              wordId: data[i].id,
+              difficulty: 'normal',
+              rightAnswer: 0,
+              falseAnswer: 1,
+              used: true,
+              method: 'PUT',
+            }
+            this.adapter.add(newData);
+            this.answersHandler.newWords += 1;
+          }
         }
       }
     }
