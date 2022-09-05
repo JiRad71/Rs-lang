@@ -34,22 +34,22 @@ class Auth {
       this.inputsData.password = inputPassword.value;
     }
     
-    const buttonLogin = new Component(form.node, 'button', 'login', 'Log in');
+    const buttonLogin = new Component(form.node, 'button', 'login', 'Регистрация');
     buttonLogin.node.setAttribute('type', 'button');
 
-    const buttonSignin = new Component(form.node, 'button', 'signin', 'Sign in');
+    const buttonSignin = new Component(form.node, 'button', 'signin', 'Войти');
     buttonSignin.node.setAttribute('type', 'button');
 
     this.inputsData = { email: inputEmail.value, password: inputPassword.value };
 
     buttonLogin.node.onclick = () => {
       if (!this.inputsData.email || !this.inputsData.password) {
-        const message = new Component(form.node, 'span', 'message', 'Please enter your email and password.');
+        const message = new Component(form.node, 'span', 'message', 'Пожалуйста введите ваш email и пароль');
         setTimeout(() => message.destroy(), 5000);
       }
 
       if (this.inputsData.password.length < 8) {
-        const message = new Component(form.node, 'span', 'message', 'The password must contain at least 8 characters .');
+        const message = new Component(form.node, 'span', 'message', 'Пароль должен содержать минимум 8 символов');
         setTimeout(() => message.destroy(), 5000);
       }
       this.onLogin(this.inputsData);
@@ -92,7 +92,6 @@ class Auth {
           if (location.hash === '#textbook') {
             userMenu.node.classList.add('hidden');
           } else {
-            console.log('Не текстбук');
             userMenu.node.classList.remove('hidden');
           }
           authUser.node.onclick = () => {
@@ -100,7 +99,6 @@ class Auth {
             authBtn.node.classList.remove('hidden');
             window.localStorage.removeItem('usersId');
             window.localStorage.removeItem('token');
-            // statBtn.node.classList.toggle('hidden');
           }
         })
         .catch(() => console.log('Вы не зарегистрированы'));
