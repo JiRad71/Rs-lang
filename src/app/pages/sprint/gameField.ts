@@ -22,17 +22,22 @@ class GameField extends Component {
     closeBtn.node.onclick = () => this.onClose();
 
     const fieldContainer = new Component(this.node, 'div', 'container');
-    this.totalTitle = new Component(fieldContainer.node, 'h3', 'total-title', `Текущий счёт: `);
-    this.score = new Component(this.totalTitle.node, 'span', 'total-title__score', '0');
-    this.scale = new Component(this.totalTitle.node, 'span', 'total-title__scale');
-    this.timer = new Timer(fieldContainer.node, 60);
-    this.timer.on();
 
-    this.progress = new Component(fieldContainer.node, 'div', 'progress');
-    this.circles = [];
-    for (let i = 0; i < 3; i += 1) {
-      this.circles.push(new Component(this.progress.node, 'span', 'progress__item'));
+    this.timer = new Timer(fieldContainer.node, 60);
+
+    if (data[0] || data[1]) {
+      this.totalTitle = new Component(fieldContainer.node, 'h3', 'total-title', `Текущий счёт: `);
+      this.score = new Component(this.totalTitle.node, 'span', 'total-title__score', '0');
+      this.scale = new Component(this.totalTitle.node, 'span', 'total-title__scale');
+      this.timer.on();
+      this.progress = new Component(fieldContainer.node, 'div', 'progress');
+      this.circles = [];
+      for (let i = 0; i < 3; i += 1) {
+        this.circles.push(new Component(this.progress.node, 'span', 'progress__item'));
+      }
     }
+
+    
   }
 }
 

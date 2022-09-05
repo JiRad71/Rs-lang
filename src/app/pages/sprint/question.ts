@@ -11,7 +11,7 @@ class Question extends Component {
 
   constructor(parentNode: HTMLElement | null, data: IWordsData[]) {
     super(parentNode, 'div', 'question-block');
-    if (data) {
+    if (data[0] && data[1]) {
       this.data = data;
       this.answer = this.data[0].wordTranslate;
       this.translate = this.data[random(0, 1)].wordTranslate;
@@ -25,6 +25,8 @@ class Question extends Component {
       
       btnTrue.node.onclick = () => this.onAnswer(true);
       btnFalse.node.onclick = () => this.onAnswer(false);
+    } else {
+      const message = new Component(this.node, 'h3', 'question-block__message', 'Список сложных слов пуст');
     }
 
   }
