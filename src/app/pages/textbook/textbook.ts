@@ -1,5 +1,5 @@
 import Component from "../../../common/Component";
-import { IWordsData } from '../../../asset/utils/types'
+import { IAgrWord, IUserWordsDataCastom, IWordsData } from '../../../asset/utils/types'
 import { URL } from '../../../asset/utils/types'
 import Card from './card';
 import { Request } from "../../../asset/utils/requests"
@@ -139,8 +139,8 @@ class TextBook extends Component {
         
         this.card = new Card(this.itemWrapper.node, element)
         this.card.addButtons(false);
-       })
-        )
+        this.card.node.style.backgroundColor = 'red';
+       }));
       }
     }
     const verticalArrows = new Component(this.node, 'div', 'vertical-arrows')
@@ -149,7 +149,7 @@ class TextBook extends Component {
     const arrowDown = new Component(verticalArrows.node, 'button', 'arrow-down')
     const arrowDownElement = new Component(arrowDown.node, 'i', 'arrow down')
 
-    arrowUp.node.onclick = () => document.documentElement.scrollTop = 0;;
+    arrowUp.node.onclick = () => document.documentElement.scrollTop = 0;
     arrowDown.node.onclick = () => window.scrollTo(0,document.body.scrollHeight);
   }
 
@@ -161,12 +161,45 @@ class TextBook extends Component {
 
   private getItemWord(url: string) {
       if (localStorage.getItem('token')) {
-        this.request.aggregatedAllWords(+localStorage.getItem('currPage'),'{"$or":[{"userWord.difficulty":"normal"},{"userWord":null}]}', +localStorage.getItem('currChapter'))
-        .then((data)=>{
-          data[0].paginatedResults.forEach((element: IWordsData) => {
-          this.card = new Card(this.itemWrapper.node, element);
-          this.card.addButtons(true);
-        })});
+        // this.request.aggregatedAllWords(+localStorage.getItem('currPage'),'{"$or":[{"userWord.difficulty":"hard"}', +localStorage.getItem('currChapter'))
+        // .then((data) => {
+        //   data[0].paginatedResults.forEach((element: IWordsData) => {
+        //     this.card = new Card(this.itemWrapper.node, element);
+        //     this.card.addButtons(true);
+        //     this.card.node.classList.add('hard');
+        //   })
+        // })
+        this.request.aggregatedAllWords(+localStorage.getItem('currPage'),'{"$or":[{"userWord.difficulty":"easy"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"normal"},{"userWord":null}]}', +localStorage.getItem('currChapter'))
+          .then((agrData)=>{
+              agrData[0].paginatedResults.forEach((element: IAgrWord) => {
+                if (element.userWord) {
+                  if (element.userWord.difficulty === 'hard') {
+                    this.card = new Card(this.itemWrapper.node, element);
+                    this.card.addButtons(true);
+                    this.card.node.classList.add('hard');
+                  } else if (element.userWord.difficulty === 'easy') {
+                    this.card = new Card(this.itemWrapper.node, element);
+                    this.card.addButtons(true);
+                    this.card.node.classList.add('easy');
+                  } 
+                } else {
+                  this.card = new Card(this.itemWrapper.node, element);
+                  this.card.addButtons(true);
+                }
+             
+              
+              })
+          });
+            
+        // this.request.aggregatedAllWords(+localStorage.getItem('currPage'),'{"$or":[{"userWord.difficulty":"easy"}', +localStorage.getItem('currChapter'))
+        //   .then((data) => {
+        //     data[0].paginatedResults.forEach((element: IWordsData) => {
+        //       this.card = new Card(this.itemWrapper.node, element);
+        //       this.card.addButtons(true);
+        //       this.card.node.classList.add('easy');
+        //     })
+        //   })
+       
       } else {
         this.getWord(url).then((data) => {
         data.forEach((element: IWordsData) => {
