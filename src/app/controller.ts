@@ -19,6 +19,7 @@ class Controller extends Component {
   footer: Footer;
   reqest: Request;
   wrapper: Component<HTMLElement>;
+  main: MainPage
 
   constructor(parentNode: HTMLElement) {
     super(null);
@@ -27,28 +28,34 @@ class Controller extends Component {
     this.header.node.setAttribute('id', 'header');
     this.root = new Component(parentNode, 'div', 'root');
     this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
-    this.footer = new Footer(null);
+    this.footer = new Footer(parentNode);
     this.footer.node.setAttribute('id', 'footer');
-    const main = new MainPage(this.wrapperMain.node);
+    this.main = new MainPage(this.wrapperMain.node);
+
 
     this.reqest = new Request();
   
     this.auth = new Auth();
-    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+    this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu, this.header.statisticBtn);
 
+    this.main.bgGold.node.onclick=()=>{
+      location.hash = this.header.textBookBtn.node.id;
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+      this.header.userMenu.node.classList.add('hidden');
+    }
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
-
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
     }
     this.header.textBookBtn.node.onclick = () => {
       location.hash = this.header.textBookBtn.node.id;
-      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
-      this.header.authUser.node.classList.add('hidden');
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+      this.header.userMenu.node.classList.add('hidden');
     }
    
     this.header.audioCallBtn.node.onclick = () => {
       location.hash = this.header.audioCallBtn.node.id;
-
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
     }
     
     this.header.sprintBtn.node.onclick = () => {
@@ -80,6 +87,12 @@ class Controller extends Component {
       this.wrapperMain.destroy();
       this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
       const main = new MainPage(this.wrapperMain.node);
+      main.bgGold.node.onclick=()=>{
+        location.hash = this.header.textBookBtn.node.id;
+        this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu);
+        this.header.userMenu.node.classList.add('hidden');
+      }
+
       this.footer = new Footer(document.body);
     }
     if (route && route === 'textbook') {
@@ -119,6 +132,7 @@ class Controller extends Component {
       }
 
       this.auth.onSignin = (inputsData: IUserData) => {
+        this.header.statisticBtn.node.classList.remove('hidden');
         this.auth.addOrGetUser(inputsData, `${URL.shortUrl}${URL.signin}`)
           .then((resp) => resp.json())
           .then((resp) => {
@@ -129,7 +143,7 @@ class Controller extends Component {
             this.checkStat();
           })
           .then(() => {
-            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+            this.auth.checkUser(this.header.authorizationBtn, this.header.authUser, this.header.userMenu, this.header.statisticBtn);
           })
           .then(() => {
             this.wrapperMain.destroy();

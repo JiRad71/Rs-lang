@@ -43,7 +43,7 @@ class FinishGame extends Component {
     });
 
     const btnsWrap = new Component(wrapper.node, 'div', 'btns-wrapper');
-    this.btnRestart = new Component(btnsWrap.node, 'button', 'btn-restart', 'Играть ещё');
+    this.btnRestart = new Component(btnsWrap.node, 'button', 'btn-restart', 'Играть');
     this.btnRestart.node.onclick = () => this.nextGame();
     const btnExit = new Component(btnsWrap.node, 'button', 'btn-exit', 'Выход');
     btnExit.node.onclick = () => this.onClose();

@@ -63,14 +63,19 @@ class Card extends Component {
             },
           }
         }
-        this.request.createUserWordCastom(this.element._id, userWords, 'POST')
-        btnDifficult.node.classList.add('hard')
-        this.destroy();
+        this.request.getUserWord(this.element._id)
+          .then((data) => {
+            this.request.createUserWordCastom(this.element._id, userWords, 'PUT')
+          })
+          .catch(() => {
+            this.request.createUserWordCastom(this.element._id, userWords, 'POST')
+          }) 
+        this.node.classList.add('hard');
+        this.node.classList.remove('easy');
       }
     }
     const btnLearned = new Component(itemButtons.node, 'button', 'learned', 'Изученное');
     btnLearned.node.onclick = () => {
-      this.destroy();
       const userWords: IUserWordsCustom = {
         difficulty: 'easy',
         optional: {
@@ -87,6 +92,8 @@ class Card extends Component {
           },
         }
       }
+      this.node.classList.add('easy');
+      this.node.classList.remove('hard');
       this.request.createUserWordCastom(this.element._id, userWords, 'POST')
       this.request.getLearnedWord()
         .then((data: IUserStat) => {

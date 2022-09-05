@@ -37,6 +37,26 @@ export interface IWordsData {
   textExampleTranslate: string
   _id: string
 }
+export interface IAgrWord {
+  id: string
+  group: number
+  page: number
+  word: string
+  image: string
+  audio: string
+  audioMeaning: string
+  audioExample: string
+  textMeaning: string
+  textExample: string
+  transcription: string
+  wordTranslate: string
+  textMeaningTranslate: string
+  textExampleTranslate: string
+  userWord: {
+    difficulty: string,
+  }
+  _id: string
+}
 
 export interface IAggregatedWords {
   paginatedResults: IWordsData[]
