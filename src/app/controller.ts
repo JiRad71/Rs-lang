@@ -19,6 +19,7 @@ class Controller extends Component {
   footer: Footer;
   reqest: Request;
   wrapper: Component<HTMLElement>;
+  main: MainPage;
 
   constructor(parentNode: HTMLElement) {
     super(null);
@@ -29,12 +30,17 @@ class Controller extends Component {
     this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
     this.footer = new Footer(null);
     this.footer.node.setAttribute('id', 'footer');
-    const main = new MainPage(this.wrapperMain.node);
+    this.main = new MainPage(this.wrapperMain.node);
 
     this.reqest = new Request();
   
     this.auth = new Auth();
     this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+    this.main.bgGold.node.onclick=()=>{
+      location.hash = this.header.textBookBtn.node.id;
+      this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+      this.header.authUser.node.classList.add('hidden');
+    }
 
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
@@ -80,6 +86,11 @@ class Controller extends Component {
       this.wrapperMain.destroy();
       this.wrapperMain = new Component(this.root.node, 'div', 'wrapper-main');
       const main = new MainPage(this.wrapperMain.node);
+      main.bgGold.node.onclick=()=>{
+        location.hash = this.header.textBookBtn.node.id;
+        this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
+        this.header.authUser.node.classList.add('hidden');
+      }
       this.footer = new Footer(document.body);
     }
     if (route && route === 'textbook') {
