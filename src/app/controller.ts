@@ -38,8 +38,8 @@ class Controller extends Component {
 
     this.header.mainBtn.node.onclick = () => {
       location.hash = this.header.mainBtn.node.id;
-
     }
+
     this.header.textBookBtn.node.onclick = () => {
       location.hash = this.header.textBookBtn.node.id;
       this.auth.checkUser(this.header.authorizationBtn, this.header.authUser);
@@ -48,7 +48,6 @@ class Controller extends Component {
    
     this.header.audioCallBtn.node.onclick = () => {
       location.hash = this.header.audioCallBtn.node.id;
-
     }
     
     this.header.sprintBtn.node.onclick = () => {
@@ -147,8 +146,6 @@ class Controller extends Component {
   async checkStat() {
     try {
       const stat = await this.reqest.getStatistic();
-      console.log(stat);
-      
     } catch (error) {
       const newStat: IUserStat = await this.reqest.putStatistic({
         learnedWords: 0,
@@ -176,7 +173,6 @@ class Controller extends Component {
     addEventListener('hashchange', this.handleRoute.bind(this));
     this.handleRoute();
   }
-
 }
 
 export default Controller;

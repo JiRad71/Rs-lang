@@ -4,7 +4,7 @@ import GameFildPage from "./gameFildPage";
 import GameOverPage from "./gameOverPage";
 import { DataModel } from "./dataModel";
 import { Request } from '../../../asset/utils/requests'
-import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord } from '../../../asset/utils/types'
+import { URL } from '../../../asset/utils/types'
 
 class AudioCall extends Component {
   model: DataModel;
@@ -41,7 +41,6 @@ class AudioCall extends Component {
             gameOverPage.destroy()
             this.mainCycle()
           }
-
         }
       })
 
@@ -69,13 +68,9 @@ class AudioCall extends Component {
             gameOverPage.destroy()
             this.mainCycle()
           }
-
         }
       })
     }
-
-
-
   }
 
   private mainCycle() {

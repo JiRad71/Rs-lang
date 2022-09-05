@@ -1,14 +1,12 @@
 import Component from "../../../common/Component";
-import { IQuestionData, Ianswers } from "./dataModel";
+import { Ianswers } from "./dataModel";
 import { Request } from '../../../asset/utils/requests';
-import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord, IUserWordsDataCastom } from '../../../asset/utils/types';
+import { IUserStat, IUserWordsDataCastom } from '../../../asset/utils/types';
 import Adapter from "../../../asset/utils/adapter";
-
-
 
 type IGameResults = {
   rightAnswer: Ianswers;
-  userAnswer: Ianswers
+  userAnswer: Ianswers;
 }[]
 
 class GameOverPage extends Component {
@@ -30,8 +28,6 @@ class GameOverPage extends Component {
   adapter: Adapter;
   newWords: number;
 
-
-
   constructor(parentNode: HTMLElement, results: IGameResults) {
     super(parentNode);
     this.game = new Component(this.node, 'div', 'game');
@@ -50,10 +46,8 @@ class GameOverPage extends Component {
     this.resultRight = new Component(resultList.node, 'div', 'result-right', '')
     const headerRight = new Component(this.resultRight.node, 'h3', 'heading', 'Правильные ответы')
 
-
     this.resultWrong = new Component(resultList.node, 'div', '', '')
     const headerWrong = new Component(this.resultWrong.node, 'h3', 'heading', 'Ошибочные ответы')
-
 
     const categoriesButton = new Component(this.node, 'button', 'category-button', 'К выбору категории')
     categoriesButton.node.onclick = () => this.onCategories('categories')
@@ -82,19 +76,12 @@ class GameOverPage extends Component {
 
       const countRightComponent = new Component(this.resultRight.node, 'div', 'count-right', 'Знаю всего: ');
       const countWrongComponent = new Component(this.resultWrong.node, 'p', 'count-wrong', 'Ошибок всего: ');
-      console.log(this.newWords);
-      console.log(this.series);
-      console.log(this.getBestSeries());
-      
-
       const countRightComponentNumber = new Component(countRightComponent.node, 'span', 'count-right-number', `${this.countRight}`);
       const countWrongComponentNumber = new Component(countWrongComponent.node, 'span', 'count-wrong-number', `${this.countWrong}`);
-      
     })
       .then(() => {
         this.saveResults(this.countAnswer, this.countRight);
       });
-
   }
 
   checkAnswer(word: IUserWordsDataCastom | null, data: { rightAnswer: Ianswers, userAnswer: Ianswers }, voiceRight: HTMLAudioElement, voiceWrong: HTMLAudioElement) {
@@ -123,7 +110,6 @@ class GameOverPage extends Component {
       new Component(this.resultWrongItem.node, 'span', '', `${data.userAnswer.word}`)
       this.countWrong++
       this.seriesList.push(this.series);
-
     }
   }
 

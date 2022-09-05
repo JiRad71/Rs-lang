@@ -291,8 +291,6 @@
   background-color: rgb(172, 138, 76);
 }
 
-/* arrows */
-
 .vertical-arrows {
   display: flex;
   flex-direction: column;
@@ -337,5 +335,3 @@
   -webkit-transform: rotate(45deg);
   margin-bottom: 5px;
 }
-
-/* end arrows */

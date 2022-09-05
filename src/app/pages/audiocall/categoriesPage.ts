@@ -20,14 +20,12 @@ class CategoriesPage extends Component {
 
       if (i === 6) {
         const button = new Component(this.buttons.node, 'button', `chapter chapter-categories`, 'Сложные слова')
-        button.node.onclick = () => this.onSelect(i)
+        button.node.onclick = () => this.onSelect(i);
 
       } else {
         const button = new Component(this.buttons.node, 'button', `chapter${(i + 1).toString()} chapter-categories`, `Раздел ${(i + 1).toString()}`)
-        button.node.onclick = () => this.onSelect(i)
-
+        button.node.onclick = () => this.onSelect(i);
       }
-
     }
   }
 }

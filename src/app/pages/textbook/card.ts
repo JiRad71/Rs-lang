@@ -62,9 +62,9 @@ class Card extends Component {
               used: false,
             },
           }
-        }
-        this.request.createUserWordCastom(this.element._id, userWords, 'POST')
-        btnDifficult.node.classList.add('hard')
+        };
+        this.request.createUserWordCastom(this.element._id, userWords, 'POST');
+        btnDifficult.node.classList.add('hard');
         this.destroy();
       }
     }
@@ -86,7 +86,7 @@ class Card extends Component {
             used: false,
           },
         }
-      }
+      };
       this.request.createUserWordCastom(this.element._id, userWords, 'POST')
       this.request.getLearnedWord()
         .then((data: IUserStat) => {
@@ -95,7 +95,7 @@ class Card extends Component {
             learnedWords: data.learnedWords
           }
           this.request.putLearnedWord(param)
-        })
+        });
       this.request.deleteUserWord(this.element._id);
     }
   }

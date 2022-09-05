@@ -7,7 +7,7 @@ import { random } from '../../../asset/utils/usefull';
 import Question from './question';
 import AnswersHandler from './answersHandler';
 import { Request } from '../../../asset/utils/requests';
-import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord, IUserWordsDataCastom, ICreateUserWordCastom} from '../../../asset/utils/types';
+import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, IUserWordsDataCastom, ICreateUserWordCastom} from '../../../asset/utils/types';
 import Adapter from '../../../asset/utils/adapter';
 
 class SprintGame extends Component {

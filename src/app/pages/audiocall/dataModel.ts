@@ -1,4 +1,4 @@
-import { URL, IUsersAnswer, IWordsData, IUserWordsData, IUserStat, ICreateUserWord, IAggregatedWords } from '../../../asset/utils/types'
+import { URL, IWordsData, IAggregatedWords } from '../../../asset/utils/types'
 import { Request } from '../../../asset/utils/requests'
 
 
@@ -34,8 +34,6 @@ export class DataModel {
       const answersCount = 4
       const correctAnswerIndex = Math.floor(Math.random() * answersCount)
       const correctAnswer1 = this.dataRes[Math.floor(Math.random() * this.dataRes.length)]
-
-
       const correctAnswer = {
         wordId: correctAnswer1.id,
         word: correctAnswer1.word,
@@ -151,5 +149,4 @@ export class DataModel {
     });
     return resp.json();
   }
-
 }

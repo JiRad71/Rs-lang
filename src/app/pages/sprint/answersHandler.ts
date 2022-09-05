@@ -1,6 +1,6 @@
 import GameField from './gameField';
 import Question from './question';
-import { IUsersAnswer, IUserWordsData } from '../../../asset/utils/types';
+import { IUsersAnswer } from '../../../asset/utils/types';
 
 class AnswersHandler {
   answers: IUsersAnswer[];

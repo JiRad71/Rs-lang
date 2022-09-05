@@ -1,7 +1,6 @@
 import Component from "../../../common/Component";
 import { IUserData, URL } from '../../../asset/utils/types';
 
-
 class Auth {
   parent: HTMLElement;
   onSignin: (data: IUserData) => void;

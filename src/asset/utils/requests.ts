@@ -1,5 +1,5 @@
 import Component from '../../common/Component';
-import { URL, IWordsData, IUserData, ICreateUserWord, IUserStat, IWordPerDay, ICreateStat, IUserWordsCustom } from './types'
+import { URL, IUserData, ICreateUserWord, IUserStat, IWordPerDay, IUserWordsCustom } from './types';
 
 export class Request {
 
