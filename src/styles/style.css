@@ -41,7 +41,6 @@ button:hover {
 .main,
 .footer {
   margin: 0 auto;
-  padding: 0 40px;
 }
 
 .header {
@@ -56,8 +55,7 @@ button:hover {
 
 .header .wrapper {
   display: flex;
-  justify-content: space-between;
-  max-width: 1440px;
+  justify-content: space-around;
   align-items: center;
   height: 70px;
   margin: 0 auto;
@@ -130,7 +128,6 @@ button:hover {
 }
 
 .main .wrapper {
-  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -184,8 +181,7 @@ main a {
 
 .footer .wrapper {
   height: 70px;
-  max-width: 1440px;
-  margin: 0 auto;
+  margin: 0 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
