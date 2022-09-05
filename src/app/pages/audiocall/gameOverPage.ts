@@ -77,11 +77,6 @@ class GameOverPage extends Component {
   
         const countRightComponent = new Component(this.resultRight.node, 'div', 'count-right', 'Знаю всего: ');
         const countWrongComponent = new Component(this.resultWrong.node, 'p', 'count-wrong', 'Ошибок всего: ');
-        console.log(this.newWords);
-        console.log(this.series);
-        console.log(this.getBestSeries());
-        
-  
         const countRightComponentNumber = new Component(countRightComponent.node, 'span', 'count-right-number', `${this.countRight}`);
         const countWrongComponentNumber = new Component(countWrongComponent.node, 'span', 'count-wrong-number', `${this.countWrong}`);
         

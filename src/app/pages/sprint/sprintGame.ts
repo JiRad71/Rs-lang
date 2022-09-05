@@ -246,8 +246,6 @@ class SprintGame extends Component {
     if (data[0].result) {
       for (let i = 0; i < data.length; i += 1) {
         const word = userWords.find((e) => e.wordId === data[i].id);
-        console.log(word);
-        
         if (!word) {
           const newData = {
             game: 'sprint',
