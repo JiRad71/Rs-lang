@@ -1,1 +1,1 @@
-# Rs-lang
+# Rs-lang - учебный командный проект, создан в ходе выполнения финльного задания Stage 2 The Rolling Scopes School
